@@ -89,7 +89,7 @@ class Life:
 def is_within(m: int, l: int, r: int):
     return l <= m and m <= r
 
-def printp(o: object) -> None:
+def printt(o: object) -> None: # pretty-print
     if type(o) in SEQ_TYPES and o and type(o[0]) in SEQ_TYPES:
     # isinstance(o, Grid)
         print('Grid: [')
@@ -99,11 +99,11 @@ def printp(o: object) -> None:
     elif isinstance(o, GridColl):
         print('GridColl: {')
         for grid in o:
-            printp(grid)
+            printt(grid)
         print('}')
     else:
         print(o)
 
 l = Life()
 p = l.get_all_poss_grids()
-printp(p)
+printt(p)
