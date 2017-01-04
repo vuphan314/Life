@@ -3,7 +3,7 @@
 from itertools import product
 from typing import Set, Tuple
 
-GRID_EDGE = 3 # 4: [Finished in 22.084s]
+GRID_EDGE = 2 # 4: [Finished in 22.084s]
 ITER_TYPES = {set, tuple}
 
 Cell = Tuple[int] # length: 2
@@ -27,11 +27,15 @@ class Life:
     def get_image_size(self) -> int:
         return len(self.get_image())
 
-    def is_in_image(next_grid: Grid) -> bool:
-        pass
+    def is_in_image(self, grid: Grid) -> bool:
+        return grid in self.get_image()
 
-    def get_fiber(next_grid: Grid) -> Set[Grid]:
-        pass
+    def get_prev_grids(self, grid: Grid) -> GridColl:
+        prev_grids = set()
+        for poss_grid in self.get_domain():
+            if self.get_next_grid(poss_grid) == grid:
+                prev_grids.add(poss_grid)
+        return prev_grids
 
     ########################################################
 
@@ -128,6 +132,9 @@ def get_depth(o: object) -> int:
     else:
         return 0
 
-l = Life()
-p = l.get_image_proportion()
+g = (
+(True, True),
+(True, True)
+)
+p = Life().get_prev_grids(g)
 printt(p)
