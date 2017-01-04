@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 
 from itertools import product
-from typing import List, Set, Tuple
+from typing import Set, Tuple
 
-GRID_EDGE = 2
-SEQ_TYPES = {list, tuple} # itertools
+GRID_EDGE = 3 # 4: [Finished in 22.084s]
+ITER_TYPES = {set, tuple}
 
-Cell = Tuple[int] # pair
+Cell = Tuple[int] # length: 2
 CellColl = Set[Cell]
 CellState = bool
-Row = List[CellState]
-Grid = List[Row]
+Row = Tuple[CellState] # length: grid_edge
+Grid = Tuple[Row] # length: grid_edge
 GridColl = Set[Grid]
 
 class Life:
@@ -19,11 +19,13 @@ class Life:
     lower_birth = 3
     upper_birth = 3
 
-    def __init__(self, grid_edge=GRID_EDGE):
+    def __init__(self, grid_edge=GRID_EDGE) -> None:
         self.grid_edge = grid_edge
 
-    def get_image_size() -> int:
-        pass
+    ########################################################
+
+    def get_image_size(self) -> int:
+        return len(self.get_image())
 
     def is_in_image(next_grid: Grid) -> bool:
         pass
@@ -31,26 +33,35 @@ class Life:
     def get_fiber(next_grid: Grid) -> Set[Grid]:
         pass
 
+    ########################################################
+
+    def get_image_proportion(self) -> float:
+        return self.get_image_size() / self.get_domain_size()
+
     def get_image(self) -> GridColl:
-        for grid in self.get_all_poss_grids():
+        image = set()
+        for grid in self.get_domain():
+            next_grid = self.get_next_grid(grid)
+            image.add(self.get_next_grid(grid))
+        return image
 
+    def get_domain_size(self) -> int:
+        return 2 ** self.grid_edge**2
 
-    def get_all_poss_grids(self) -> GridColl:
+    def get_domain(self) -> GridColl:
         cell_states_sets = [{True, False}] * self.grid_edge
         all_poss_rows = set(product(*cell_states_sets))
         rows_sets = [all_poss_rows] * self.grid_edge
         return set(product(*rows_sets))
 
     def get_next_grid(self, grid: Grid) -> Grid:
-        next_grid = []
+        next_grid = ()
         for i in range(self.grid_edge):
-            row = []
+            row = ()
             for j in range(self.grid_edge):
                 cell = i, j
-                row.append(self.get_next_cell_state(
-                    grid, cell
-                ))
-            next_grid.append(row)
+                row += self.get_next_cell_state(grid, cell),
+            next_grid += row,
         return next_grid
 
     def get_next_cell_state(
@@ -72,33 +83,31 @@ class Life:
                 self.lower_birth, self.upper_birth
             )
 
-    def get_cell_state(
-        self, grid: Grid, cell: Cell
-    ) -> CellState:
+    def get_cell_state(self, grid: Grid, cell: Cell) -> CellState:
         return grid[cell[0]][cell[1]]
 
     def get_neighbors(self, cell: Cell) -> CellColl:
         D = {-1, 0, 1}
-        row_inds = {self.wrap(cell[0] + d) for d in D}
-        col_inds = {self.wrap(cell[1] + d) for d in D}
+        row_inds = {self.get_wrapped_val(cell[0] + d) for d in D}
+        col_inds = {self.get_wrapped_val(cell[1] + d) for d in D}
         cells = {(row, col) for row in row_inds for col in col_inds}
         cells.remove(cell)
         return cells
 
-    def wrap(self, val: int) -> int:
+    def get_wrapped_val(self, val: int) -> int:
         return val % self.grid_edge
 
-def is_within(m: int, l: int, r: int):
+def is_within(m: int, l: int, r: int) -> bool:
     return l <= m and m <= r
 
-def printt(o: object) -> None: # pretty-print
-    if type(o) in SEQ_TYPES and o and type(o[0]) in SEQ_TYPES:
-    # isinstance(o, Grid)
+def printt(o: object) -> None: # prettyprint
+    depth = get_depth(o)
+    if depth == 2: # Grid
         print('Grid: [')
         for row in o:
             print(row)
         print(']')
-    elif isinstance(o, GridColl):
+    elif depth == 3: # GridColl
         print('GridColl: {')
         for grid in o:
             printt(grid)
@@ -106,6 +115,19 @@ def printt(o: object) -> None: # pretty-print
     else:
         print(o)
 
+def get_depth(o: object) -> int:
+    if type(o) in ITER_TYPES:
+        depth = 1
+        if o:
+            if isinstance(o, set):
+                el = o.pop()
+            else:
+                el = o[0]
+            depth += get_depth(el)
+        return depth
+    else:
+        return 0
+
 l = Life()
-p = l.get_all_poss_grids()
+p = l.get_image_proportion()
 printt(p)
