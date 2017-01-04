@@ -31,35 +31,37 @@ class Life:
     def get_fiber(next_grid: Grid) -> Set[Grid]:
         pass
 
+    def get_image(self) -> GridColl:
+        for grid in self.get_all_poss_grids():
+
+
     def get_all_poss_grids(self) -> GridColl:
         cell_states_sets = [{True, False}] * self.grid_edge
         all_poss_rows = set(product(*cell_states_sets))
         rows_sets = [all_poss_rows] * self.grid_edge
         return set(product(*rows_sets))
 
-    def get_next_grid(self, cur_grid: Grid) -> Grid:
+    def get_next_grid(self, grid: Grid) -> Grid:
         next_grid = []
         for i in range(self.grid_edge):
             row = []
             for j in range(self.grid_edge):
                 cell = i, j
                 row.append(self.get_next_cell_state(
-                    cur_grid, cell
+                    grid, cell
                 ))
             next_grid.append(row)
         return next_grid
 
     def get_next_cell_state(
-        self, cur_grid: Grid, cell: Cell
+        self, grid: Grid, cell: Cell
     ) -> CellState:
         num_alive_neighbors = 0
         for neighbor in self.get_neighbors(cell):
-            if self.get_cur_cell_state(cur_grid, neighbor):
+            if self.get_cell_state(grid, neighbor):
                 num_alive_neighbors +=1
-        cur_cell_state = self.get_cur_cell_state(
-            cur_grid, cell
-        )
-        if cur_cell_state:
+        cell_state = self.get_cell_state(grid, cell)
+        if cell_state:
             return is_within(
                 num_alive_neighbors,
                 self.lower_survival, self.upper_survival
@@ -70,10 +72,10 @@ class Life:
                 self.lower_birth, self.upper_birth
             )
 
-    def get_cur_cell_state(
-        self, cur_grid: Grid, cell: Cell
+    def get_cell_state(
+        self, grid: Grid, cell: Cell
     ) -> CellState:
-        return cur_grid[cell[0]][cell[1]]
+        return grid[cell[0]][cell[1]]
 
     def get_neighbors(self, cell: Cell) -> CellColl:
         D = {-1, 0, 1}
