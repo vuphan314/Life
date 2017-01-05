@@ -14,7 +14,6 @@ Grid = Tuple[Row] # length: grid_edge
 GridColl = Set[Grid]
 
 class Game:
-
     def __init__(self, grid_edge=GRID_EDGE) -> None:
         self.grid_edge = grid_edge
         self.lower_survival = 2
@@ -39,7 +38,7 @@ class Game:
 
     ########################################################
 
-    def get_image_proportion(self) -> float:
+    def get_image_prop(self) -> float:
         return self.get_image_size() / self.get_domain_size()
 
     def get_image(self) -> GridColl:
@@ -104,7 +103,7 @@ class Game:
 def is_within(m: int, l: int, r: int) -> bool:
     return l <= m and m <= r
 
-def printp(o: object) -> None: # prettily
+def print_game(o: object) -> None:
     depth = get_depth(o)
     if depth == 2: # Grid
         print('Grid: [')
@@ -114,7 +113,7 @@ def printp(o: object) -> None: # prettily
     elif depth == 3: # GridColl
         print('GridColl: {')
         for grid in o:
-            printp(grid)
+            print_game(grid)
         print('}')
     else:
         print(o)
@@ -131,10 +130,3 @@ def get_depth(o: object) -> int:
         return depth
     else:
         return 0
-
-g = (
-(True, True),
-(True, True)
-)
-p = Game().get_prev_grids(g)
-printp(p)
