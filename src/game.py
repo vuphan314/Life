@@ -13,14 +13,14 @@ Row = Tuple[CellState] # length: grid_edge
 Grid = Tuple[Row] # length: grid_edge
 GridColl = Set[Grid]
 
-class Life:
-    lower_survival = 2
-    upper_survival = 3
-    lower_birth = 3
-    upper_birth = 3
+class Game:
 
     def __init__(self, grid_edge=GRID_EDGE) -> None:
         self.grid_edge = grid_edge
+        self.lower_survival = 2
+        self.upper_survival = 3
+        self.lower_birth = 3
+        self.upper_birth = 3
 
     ########################################################
 
@@ -104,7 +104,7 @@ class Life:
 def is_within(m: int, l: int, r: int) -> bool:
     return l <= m and m <= r
 
-def printt(o: object) -> None: # prettyprint
+def printp(o: object) -> None: # prettily
     depth = get_depth(o)
     if depth == 2: # Grid
         print('Grid: [')
@@ -114,7 +114,7 @@ def printt(o: object) -> None: # prettyprint
     elif depth == 3: # GridColl
         print('GridColl: {')
         for grid in o:
-            printt(grid)
+            printp(grid)
         print('}')
     else:
         print(o)
@@ -136,5 +136,5 @@ g = (
 (True, True),
 (True, True)
 )
-p = Life().get_prev_grids(g)
-printt(p)
+p = Game().get_prev_grids(g)
+printp(p)
