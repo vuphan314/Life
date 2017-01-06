@@ -24,12 +24,15 @@ class Game:
     ########################################################
 
     def get_image_size(self) -> int:
+        """Research question 1 of 3."""
         return len(self.get_image())
 
     def is_in_image(self, grid: Grid) -> bool:
+        """Research question 2 of 3."""
         return grid in self.get_image()
 
     def get_prev_grids(self, grid: Grid) -> GridColl:
+        """Research question 3 of 3."""
         prev_grids = set()
         for poss_grid in self.get_domain():
             if self.get_next_grid(poss_grid) == grid:

@@ -4,32 +4,35 @@ import time
 
 from game import Game
 
+# inclusive:
 GRID_EDGE_MIN = 0
-GRID_EDGE_MAX = 4
+GRID_EDGE_MAX = 4 # 5 crashed Vu's PC :(
 
-def main():
-    print_align('n', 'alpha', 'time (secs)')
+def get_log_str() -> str:
+    strs = [get_joined_str('n', 'alpha', 'time (secs)')]
     for grid_edge in range(GRID_EDGE_MIN, GRID_EDGE_MAX + 1):
         time_start = time.time()
-
         g = Game(grid_edge)
         prop = g.get_image_prop()
-
         time_taken = time.time() - time_start
-        print_align(grid_edge, prop, time_taken)
+        strs.append(get_joined_str(grid_edge, prop, time_taken))
+    return '\n'.join(strs)
 
-def print_align(*args) -> None:
+def get_joined_str(*args) -> str:
     field_width = 8
-    aligned_args = []
+    strs = []
     for arg in args:
-        if isinstance(arg, str):
-            arg = arg.ljust(field_width)
-        elif isinstance(arg, int):
-            arg = str(arg).rjust(field_width)
-        elif isinstance(arg, float):
+        if isinstance(arg, float):
             arg = '{:8.4f}'.format(arg)
-        aligned_args.append(arg)
-    print(*aligned_args, sep='|')
+        else:
+            arg = str(arg)
+            if isinstance(arg, int):
+                arg = arg.rjust(field_width)
+            else:
+                arg = arg.ljust(field_width)
+        strs.append(arg)
+    return '|'.join(strs)
 
 if __name__ == '__main__':
-    main()
+    str = get_log_str()
+    print(str)

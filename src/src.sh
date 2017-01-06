@@ -1,3 +1,4 @@
+main_file=main.py
 log_file=log.txt
 
-python3 main.py > $log_file
+python3 $main_file >> $log_file
