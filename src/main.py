@@ -9,18 +9,18 @@ GRID_EDGE_MIN = 0
 GRID_EDGE_MAX = 4 # 5 crashed Vu's PC :(
 
 def get_log_str() -> str:
-    strs = [get_joined_str('n', 'alpha', 'time (secs)')]
+    sts = [get_aligned_str('n', 'alpha', 'time (secs)')]
     for grid_edge in range(GRID_EDGE_MIN, GRID_EDGE_MAX + 1):
         time_start = time.time()
         g = Game(grid_edge)
         prop = g.get_image_prop()
         time_taken = time.time() - time_start
-        strs.append(get_joined_str(grid_edge, prop, time_taken))
-    return '\n'.join(strs)
+        sts.append(get_aligned_str(grid_edge, prop, time_taken))
+    return '\n'.join(sts)
 
-def get_joined_str(*args) -> str:
+def get_aligned_str(*args) -> str:
     field_width = 8
-    strs = []
+    sts = []
     for arg in args:
         if isinstance(arg, float):
             arg = '{:8.4f}'.format(arg)
@@ -30,9 +30,11 @@ def get_joined_str(*args) -> str:
                 arg = arg.rjust(field_width)
             else:
                 arg = arg.ljust(field_width)
-        strs.append(arg)
-    return '|'.join(strs)
+        sts.append(arg)
+    return '|'.join(sts)
 
 if __name__ == '__main__':
-    str = get_log_str()
-    print(str)
+    log_path = 'log.txt'
+    with open(log_path, 'a') as log_file:
+        log_file.write(get_log_str() + '\n\n')
+    print('Appended to `{}`.'.format(log_path))
