@@ -6,11 +6,11 @@ from typing import Set, Tuple
 GRID_EDGE = 2 # 4: [Finished in 22.084s]
 ITER_TYPES = {set, tuple}
 
-Cell = Tuple[int] # length: 2
+Cell = Tuple[int] # len: 2
 CellColl = Set[Cell]
 CellState = bool
-Row = Tuple[CellState] # length: grid_edge
-Grid = Tuple[Row] # length: grid_edge
+Row = Tuple[CellState] # len: grid_edge
+Grid = Tuple[Row] # len: grid_edge
 GridColl = Set[Grid]
 
 class Game:
@@ -31,6 +31,7 @@ class Game:
         """Research question 2 of 3."""
         return grid in self.get_image()
 
+    # \Theta{(2 ^{n^2} * n^2)}
     def get_prev_grids(self, grid: Grid) -> GridColl:
         """Research question 3 of 3."""
         prev_grids = set()
@@ -60,6 +61,7 @@ class Game:
         rows_sets = [all_poss_rows] * self.grid_edge
         return set(product(*rows_sets))
 
+    # \Theta{(n^2)}
     def get_next_grid(self, grid: Grid) -> Grid:
         next_grid = ()
         for i in range(self.grid_edge):
@@ -109,10 +111,10 @@ def is_within(m: int, l: int, r: int) -> bool:
 def print_game(o: object) -> None:
     depth = get_depth(o)
     if depth == 2: # Grid
-        print('Grid: [')
+        print('Grid: (')
         for row in o:
             print(row)
-        print(']')
+        print(')')
     elif depth == 3: # GridColl
         print('GridColl: {')
         for grid in o:
