@@ -3,7 +3,8 @@
 from itertools import product
 from typing import Set, Tuple
 
-GRID_EDGE = 2
+GRID_EDGE_MIN = 1
+
 ITER_TYPES = {set, tuple}
 
 Cell = Tuple[int] # len: 2
@@ -13,25 +14,28 @@ Row = Tuple[CellState] # len: grid_edge
 Grid = Tuple[Row] # len: grid_edge
 GridColl = Set[Grid]
 
+def get_trapdoor_speedup(grid_edge: int) -> float:
+    return (
+        get_time_no_trapdoor(grid_edge) /
+        get_time_trapdoor(grid_edge)
+    )
+
+def get_time_no_trapdoor(grid_edge: int) -> int:
+    time = 0
+    for poss_grid_edge in range(GRID_EDGE_MIN, grid_edge + 1):
+        time +=get_time_trapdoor(poss_grid_edge)
+    return time
+
+def get_time_trapdoor(grid_edge: int) -> int:
+    return grid_edge**2 * 2**(grid_edge**2)
+
 class Game:
-    def __init__(self, grid_edge=GRID_EDGE) -> None:
+    def __init__(self, grid_edge: int) -> None:
         self.grid_edge = grid_edge
         self.lower_survival = 2
         self.upper_survival = 3
         self.lower_birth = 3
         self.upper_birth = 3
-
-    def get_trapdoor_speedup(self) -> float:
-        return self.get_time_no_trapdoor() / self.get_time_trapdoor()
-
-    def get_time_no_trapdoor(self) -> int:
-        time = 0
-        for i in range(1, self.grid_edge + 1):
-            sum += get_time_trapdoor(i)
-        return time
-
-    def get_time_trapdoor(self) -> int:
-        return self.grid_edge**2 * 2**(self.grid_edge**2)
 
     ########################################################
 

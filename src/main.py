@@ -2,28 +2,34 @@
 
 import time
 
-from game import Game
+import game
 
-# inclusive:
-GRID_EDGE_MIN = 1
-GRID_EDGE_MAX = 4 # 5 crashed Evgenii's pc
+GRID_EDGE_MAX_PROP = 3 # 5 crashed Evgenii's pc
+GRID_EDGE_MAX_SPEEDUP = 200
 
-def get_log_str() -> str:
-    sts = [get_aligned_str('n', 'alpha', 'time (secs)')]
-    for grid_edge in range(GRID_EDGE_MIN, GRID_EDGE_MAX + 1):
+def get_speedup_str() -> str:
+    sts = [get_aligned_str('grid edge', 'speedup')]
+    for grid_edge in range(game.GRID_EDGE_MIN, GRID_EDGE_MAX_SPEEDUP + 1):
+        speedup = game.get_trapdoor_speedup(grid_edge)
+        sts.append(get_aligned_str(grid_edge, speedup))
+    return '\n'.join(sts)
+
+def get_prop_str() -> str:
+    sts = [get_aligned_str('grid edge', 'proportion', 'time (secs)')]
+    for grid_edge in range(game.GRID_EDGE_MIN, GRID_EDGE_MAX_PROP + 1):
         time_start = time.time()
-        g = Game(grid_edge)
+        g = game.Game(grid_edge)
         prop = g.get_image_prop()
         time_taken = time.time() - time_start
         sts.append(get_aligned_str(grid_edge, prop, time_taken))
     return '\n'.join(sts)
 
 def get_aligned_str(*args) -> str:
-    field_width = 8
+    field_width = 15
     sts = []
     for arg in args:
         if isinstance(arg, float):
-            arg = '{:8.4f}'.format(arg)
+            arg = '{:15.10f}'.format(arg)
         else:
             arg = str(arg)
             if isinstance(arg, int):
@@ -35,11 +41,13 @@ def get_aligned_str(*args) -> str:
 
 ############################################################
 
-def main() -> None:
+def main(st: str) -> None:
     log_path = 'log.txt'
     with open(log_path, 'a') as log_file:
-        log_file.write(get_log_str() + '\n\n')
+        log_file.write(st + '\n\n')
     print('Appended to `{}`.'.format(log_path))
 
 if __name__ == '__main__':
-    main()
+    st = get_speedup_str()
+    # st = get_prop_str()
+    main(st)
