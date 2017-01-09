@@ -27,23 +27,32 @@ class Game:
         """Research question 1 of 3."""
         return len(self.get_image())
 
+    def get_image_prop(self) -> float:
+        return self.get_image_size() / self.get_domain_size()
+
     def is_in_image(self, grid: Grid) -> bool:
         """Research question 2 of 3."""
         return grid in self.get_image()
 
+    def get_a_prev_grid(self, grid: Grid) -> Grid:
+        """Research question 3 of 3.
+
+            May return None.
+        """
+        for poss_prev_grid in self.get_domain():
+            if self.get_next_grid(poss_prev_grid) == grid:
+                return poss_prev_grid
+
     # \Theta{(2 ^{n^2} * n^2)}
-    def get_prev_grids(self, grid: Grid) -> GridColl:
+    def get_all_prev_grids(self, grid: Grid) -> GridColl:
         """Research question 3 of 3."""
         prev_grids = set()
-        for poss_grid in self.get_domain():
-            if self.get_next_grid(poss_grid) == grid:
-                prev_grids.add(poss_grid)
+        for poss_prev_grid in self.get_domain():
+            if self.get_next_grid(poss_prev_grid) == grid:
+                prev_grids.add(poss_prev_grid)
         return prev_grids
 
     ########################################################
-
-    def get_image_prop(self) -> float:
-        return self.get_image_size() / self.get_domain_size()
 
     def get_image(self) -> GridColl:
         image = set()
