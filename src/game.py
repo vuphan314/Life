@@ -3,7 +3,7 @@
 from itertools import product
 from typing import Set, Tuple
 
-GRID_EDGE = 2 # 4: [Finished in 22.084s]
+GRID_EDGE = 2
 ITER_TYPES = {set, tuple}
 
 Cell = Tuple[int] # len: 2

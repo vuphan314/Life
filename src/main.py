@@ -5,8 +5,8 @@ import time
 from game import Game
 
 # inclusive:
-GRID_EDGE_MIN = 0
-GRID_EDGE_MAX = 4 # 5 crashed Vu's PC :(
+GRID_EDGE_MIN = 1
+GRID_EDGE_MAX = 4 # 5 crashed Evgenii's pc
 
 def get_log_str() -> str:
     sts = [get_aligned_str('n', 'alpha', 'time (secs)')]
