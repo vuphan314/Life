@@ -21,6 +21,18 @@ class Game:
         self.lower_birth = 3
         self.upper_birth = 3
 
+    def get_trapdoor_speedup(self) -> float:
+        return self.get_time_no_trapdoor() / self.get_time_trapdoor()
+
+    def get_time_no_trapdoor(self) -> int:
+        time = 0
+        for i in range(1, self.grid_edge + 1):
+            sum += get_time_trapdoor(i)
+        return time
+
+    def get_time_trapdoor(self) -> int:
+        return self.grid_edge**2 * 2**(self.grid_edge**2)
+
     ########################################################
 
     def get_image_size(self) -> int:
@@ -43,7 +55,7 @@ class Game:
             if self.get_next_grid(poss_prev_grid) == grid:
                 return poss_prev_grid
 
-    # \Theta{(2 ^{n^2} * n^2)}
+    # \Theta{(n^2 * 2 ^{n^2})}
     def get_all_prev_grids(self, grid: Grid) -> GridColl:
         """Research question 3 of 3."""
         prev_grids = set()
