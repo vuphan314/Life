@@ -33,8 +33,13 @@ def get_aligned_str(*args) -> str:
         sts.append(arg)
     return '|'.join(sts)
 
-if __name__ == '__main__':
+############################################################
+
+def main() -> None:
     log_path = 'log.txt'
     with open(log_path, 'a') as log_file:
         log_file.write(get_log_str() + '\n\n')
     print('Appended to `{}`.'.format(log_path))
+
+if __name__ == '__main__':
+    main()
