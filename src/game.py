@@ -59,7 +59,7 @@ class Game:
             if self.get_next_grid(poss_prev_grid) == grid:
                 return poss_prev_grid
 
-    # \Theta{(n^2 * 2 ^{n^2})}
+    # \Theta(n^2 * 2^{n^2})
     def get_all_prev_grids(self, grid: Grid) -> GridColl:
         """Research question 3 of 3."""
         prev_grids = set()
@@ -86,7 +86,7 @@ class Game:
         rows_sets = [all_poss_rows] * self.grid_edge
         return set(product(*rows_sets))
 
-    # \Theta{(n^2)}
+    # \Theta(n^2)
     def get_next_grid(self, grid: Grid) -> Grid:
         next_grid = ()
         for i in range(self.grid_edge):
