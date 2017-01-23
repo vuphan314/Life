@@ -3,14 +3,15 @@
 import time
 
 import game
+import trapdoor
 
-GRID_EDGE_MAX_PROP = 3 # 5 crashed Evgenii's pc
 GRID_EDGE_MAX_SPEEDUP = 200
+GRID_EDGE_MAX_PROP = 5 # 5 crashes Vu-PC
 
 def get_speedup_str() -> str:
     sts = [get_aligned_str('grid edge', 'speedup')]
     for grid_edge in range(game.GRID_EDGE_MIN, GRID_EDGE_MAX_SPEEDUP + 1):
-        speedup = game.get_trapdoor_speedup(grid_edge)
+        speedup = trapdoor.get_trapdoor_speedup(grid_edge)
         sts.append(get_aligned_str(grid_edge, speedup))
     return '\n'.join(sts)
 
@@ -48,6 +49,6 @@ def main(st: str) -> None:
     print('Appended to `{}`.'.format(log_path))
 
 if __name__ == '__main__':
-    st = get_speedup_str()
-    # st = get_prop_str()
+    # st = get_speedup_str()
+    st = get_prop_str()
     main(st)
