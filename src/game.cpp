@@ -1,5 +1,6 @@
 #include <set>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -101,11 +102,15 @@ public:
             rowIndicies.insert(cell.rowIndex + diff);
             columnIndicies.insert(cell.columnIndex + diff);
         }
+        // set<vector<vector<int>>> cells;
         set<Cell> cells;
         for (int rowIndex : rowIndicies) {
             for (int columnIndex : columnIndicies) {
                 Cell cell(rowIndex, columnIndex);
                 cells.insert(cell);
+                vector<int> v = {0};
+                vector<vector<int>> v2 = {v};
+                // cells.insert(v2);
             }
         }
         // cells.erase(cell);
@@ -119,5 +124,5 @@ public:
 ////////////////////////////////////////////////////////////
 
 int main() {
-    cout << "hi";
+    cout << "hi" << endl;
 }

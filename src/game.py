@@ -102,18 +102,21 @@ class Game:
             )
 
     def get_cell_state(self, grid: Grid, cell: Cell) -> CellState:
+        for ind in cell:
+            if ind < 0 or ind >= self.grid_edge:
+                return False
         return grid[cell[0]][cell[1]]
 
     def get_neighbors(self, cell: Cell) -> CellColl:
         D = {-1, 0, 1}
-        row_inds = {self.get_wrapped_val(cell[0] + d) for d in D}
-        col_inds = {self.get_wrapped_val(cell[1] + d) for d in D}
+        row_inds = {cell[0] + d for d in D}
+        col_inds = {cell[1] + d for d in D}
         cells = {(row, col) for row in row_inds for col in col_inds}
         cells.remove(cell)
         return cells
 
-    def get_wrapped_val(self, val: int) -> int:
-        return val % self.grid_edge
+    # def get_wrapped_val(self, val: int) -> int:
+    #     return val % self.grid_edge
 
 def is_within(m: int, l: int, r: int) -> bool:
     return l <= m and m <= r
