@@ -6,7 +6,7 @@ import game
 import trapdoor
 
 GRID_EDGE_MAX_SPEEDUP = 200
-GRID_EDGE_MAX_PROP = 2 # auto +2 if superly; 5 crashes Vu-PC
+GRID_EDGE_MAX_PROP = 3 # auto +2 if superly; 5 crashes Vu-PC
 
 def get_speedup_str() -> str:
     sts = [get_aligned_str('grid edge', 'speedup')]
