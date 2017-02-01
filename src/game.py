@@ -24,12 +24,19 @@ class Game:
 
     ########################################################
 
-    def get_image_size(self) -> int:
+    def get_image_size(self, superly: bool) -> int:
         """Research question 1 of 3."""
-        return len(self.get_image())
+        image = (
+            self.get_image_superly() if superly else
+            self.get_image()
+        )
+        return len(image)
 
-    def get_image_prop(self) -> float:
-        return self.get_image_size() / self.get_domain_size()
+    def get_image_prop(self, superly: bool) -> float:
+        return (
+            self.get_image_size(superly) /
+            self.get_domain_size()
+        )
 
     def is_in_image(self, grid: Grid) -> bool:
         """Research question 2 of 3."""
@@ -52,6 +59,24 @@ class Game:
             if self.get_next_grid(poss_prev_grid) == grid:
                 prev_grids.add(poss_prev_grid)
         return prev_grids
+
+    ########################################################
+
+    def get_image_superly(self) -> GridColl:
+        image = set()
+        superself = Game(self.grid_edge + 2)
+        for supergrid in superself.get_domain():
+            next_supergrid = superself.get_next_grid(supergrid)
+            next_grid = superself.get_subgrid(next_supergrid)
+            image.add(next_grid)
+        return image
+
+    def get_subgrid(self, grid: Grid) -> Grid:
+        subgrid = ()
+        for row in grid[1:-1]:
+            subrow = row[1:-1]
+            subgrid += subrow,
+        return subgrid
 
     ########################################################
 
