@@ -1,0 +1,3 @@
+cls
+
+cl game.cpp
