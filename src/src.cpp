@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../cplusplus/src/cartesian_product.cpp"
+#include "../cplusplus/src/vectors.cpp"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
 
 using Order = unsigned short;
 using Index = Order;
-using Count = unsigned int;
+using Count = unsigned long;
 
 using CellState = bool;
 using Row = vector<CellState>;
@@ -50,12 +51,15 @@ CellState isAlive(const Grid &grid,
 void setImage(Order order, GridCollection &image) {
   GridCollection domainV{{{}}}, &domain = domainV;
   setDomain(order + 2, domain);
-  Grid nextGridV{{}}, &nextGrid = nextGridV;
+  Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
   for (Grid &grid : domain) {
-    setNextGrid(grid, nextGrid);
-    if (find(begin(image), end(image), nextGrid) != end(image)) {
-      image.push_back(nextGrid);
-    }
+    // Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
+    printVector2d(grid);
+    printVector2d(nextGrid);
+    // setNextGrid(grid, nextGrid);
+    // if (find(begin(image), end(image), nextGrid) != end(image)) {
+    //   image.push_back(nextGrid);
+    // }
   }
 }
 
@@ -113,12 +117,28 @@ CellState isAlive(const Grid &grid,
 ////////////////////////////////////////////////////////////
 
 int main() {
+  Order order = 1;
+
   // GridCollection imageV{{{}}}, &image = imageV;
-  // setImage(1, image);
+  // setImage(order, image);
+
   GridCollection domainV{{{}}}, &domain = domainV;
-  Order order = 2;
-  setDomain(order, domain);
-  printVectors(domain);
-  // Grid gridV{{1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 0, 0}}, &grid = gridV,
-  //   nextGridV(order, Row(order, -1)), &nextGrid = nextGridV;
+  setDomain(order + 2, domain);
+  // printVector3d(domain);
+
+  Grid gridV{{1, 0, 0}, {1, 0, 0}, {0, 0, 0}}, &grid = gridV;
+  // Grid gridV(domain[1]), &grid = gridV;
+  printVector2d(grid);
+  Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
+  printVector2d(nextGrid);
+  setNextGrid(grid, nextGrid);
+
+  // for (size_t i = 0; i < domain.size(); i++) {
+  //   cout << domain.size();
+  //   Grid grid = domain[i];
+  //   Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
+  //   printVector2d(grid);
+  //   printVector2d(nextGrid);
+  //   setNextGrid(grid, nextGrid);
+  // }
 }
