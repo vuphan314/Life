@@ -115,6 +115,10 @@ CellState isAlive(const Grid &grid,
 int main() {
   // GridCollection imageV{{{}}}, &image = imageV;
   // setImage(1, image);
-  Grid gridV{{1, 0, 1}, {0, 1, 0}, {0, 0, 0}}, &grid = gridV;
-  cout << endl << getNextCellState(grid, 1, 1);
+  GridCollection domainV{{{}}}, &domain = domainV;
+  Order order = 2;
+  setDomain(order, domain);
+  printVectors(domain);
+  // Grid gridV{{1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 0, 0}}, &grid = gridV,
+  //   nextGridV(order, Row(order, -1)), &nextGrid = nextGridV;
 }
