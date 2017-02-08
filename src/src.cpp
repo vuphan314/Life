@@ -92,12 +92,14 @@ Count getAliveNeighborCount(const Grid &grid,
     Index rowIndex, Index columnIndex) {
   Count count = 0;
   char deltas[] = {-1, 0, 1};
-  for (char delta : deltas) {
-    Index ri = rowIndex + delta;
-    Index ci = columnIndex + delta;
-    if (!(ri == rowIndex && ci == columnIndex) &&
-        isAlive(grid, ri, ci)) {
-      count++;
+  for (char rowDelta : deltas) {
+    Index ri = rowIndex + rowDelta;
+    for (char columnDelta : deltas) {
+      Index ci = columnIndex + columnDelta;
+      if (!(ri == rowIndex && ci == columnIndex) &&
+          isAlive(grid, ri, ci)) {
+        count++;
+      }
     }
   }
   return count;
@@ -111,7 +113,8 @@ CellState isAlive(const Grid &grid,
 ////////////////////////////////////////////////////////////
 
 int main() {
-  GridCollection imageV{{{}}}, &image = imageV;
-  setImage(1, image);
-  cout << "hi" << endl;
+  // GridCollection imageV{{{}}}, &image = imageV;
+  // setImage(1, image);
+  Grid gridV{{1, 0, 1}, {0, 1, 0}, {0, 0, 0}}, &grid = gridV;
+  cout << endl << getNextCellState(grid, 1, 1);
 }
