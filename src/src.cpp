@@ -117,7 +117,7 @@ CellState isAlive(const Grid &grid,
 ////////////////////////////////////////////////////////////
 
 int main() {
-  Order order = 1;
+  Order order = 3;
 
   // GridCollection imageV{{{}}}, &image = imageV;
   // setImage(order, image);
@@ -126,12 +126,12 @@ int main() {
   setDomain(order + 2, domain);
   // printVector3d(domain);
 
-  Grid gridV{{1, 0, 0}, {1, 0, 0}, {0, 0, 0}}, &grid = gridV;
+  // Grid gridV{{1, 0, 0}, {1, 0, 0}, {0, 0, 0}}, &grid = gridV;
   // Grid gridV(domain[1]), &grid = gridV;
-  printVector2d(grid);
-  Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
-  printVector2d(nextGrid);
-  setNextGrid(grid, nextGrid);
+  // printVector2d(grid);
+  // Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
+  // printVector2d(nextGrid);
+  // setNextGrid(grid, nextGrid);
 
   // for (size_t i = 0; i < domain.size(); i++) {
   //   cout << domain.size();
