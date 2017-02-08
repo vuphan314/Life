@@ -1,5 +1,10 @@
+#include <algorithm>
+#include <iostream>
+#include <set>
 #include <unordered_set>
 #include <vector>
+
+#include "../cplusplus/src/cartesian_product.cpp"
 
 using namespace std;
 
@@ -10,8 +15,11 @@ using Index = Order;
 using Count = unsigned int;
 
 using CellState = bool;
-using Grid = vector<vector<CellState>>;
-using GridCollection = unordered_set<Grid>;
+using Row = vector<CellState>;
+using Grid = vector<Row>;
+// using GridCollection = unordered_set<Grid>;
+// using GridCollection = set<Grid>;
+using GridCollection = vector<Grid>;
 
 ////////////////////////////////////////////////////////////
 
@@ -23,6 +31,8 @@ const Count UPPER_BIRTH = 3;
 ////////////////////////////////////////////////////////////
 
 void setImage(Order order, GridCollection &image);
+
+void setDomain(Order order, GridCollection &domain);
 
 void setNextGrid(const Grid &grid, Grid &nextGrid);
 
@@ -36,6 +46,25 @@ CellState isAlive(const Grid &grid,
   Index rowIndex, Index columnIndex);
 
 ////////////////////////////////////////////////////////////
+
+void setImage(Order order, GridCollection &image) {
+  GridCollection domainV{{{}}}, &domain = domainV;
+  setDomain(order + 2, domain);
+  Grid nextGridV{{}}, &nextGrid = nextGridV;
+  for (Grid &grid : domain) {
+    setNextGrid(grid, nextGrid);
+    if (find(begin(image), end(image), nextGrid) != end(image)) {
+      image.push_back(nextGrid);
+    }
+  }
+}
+
+void setDomain(Order order, GridCollection &domain) {
+  vector<CellState> statesV{false, true}, &states = statesV;
+  vector<Row> rowsV{{}}, &rows = rowsV;
+  setCartesianPower(states, order, rows);
+  setCartesianPower(rows, order, domain);
+}
 
 void setNextGrid(const Grid &grid, Grid &nextGrid) {
   Order order = grid.size();
@@ -82,5 +111,7 @@ CellState isAlive(const Grid &grid,
 ////////////////////////////////////////////////////////////
 
 int main() {
+  GridCollection imageV{{{}}}, &image = imageV;
+  setImage(1, image);
   cout << "hi" << endl;
 }
