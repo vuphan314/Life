@@ -75,7 +75,12 @@ void setNextGrid(const Grid &grid, Grid &nextGrid) {
   for (Index ri = 1; ri < order - 1; ri++) {
     for (Index ci = 1; ci < order - 1; ci++) {
       CellState nextState = getNextCellState(grid, ri, ci);
+      cout << order << " " << ri-1 <<" "<<" "<< ci-1 <<  " " << nextGrid.size() <<endl;
+      cout.flush();
+
       nextGrid[ri - 1][ci - 1] = nextState;
+      cout <<"program crashed??" << endl;
+      cout.flush();
     }
   }
 }
@@ -119,19 +124,21 @@ CellState isAlive(const Grid &grid,
 int main() {
   Order order = 1;
 
-  // GridCollection imageV{{{}}}, &image = imageV;
-  // setImage(order, image);
+  GridCollection image{{{}}};
+  setImage(order, image);
+  cout << image.size() ;
 
-  GridCollection domainV{{{}}}, &domain = domainV;
-  setDomain(order + 2, domain);
+  // GridCollection domain{{}};
+  // setDomain(order + 2, domain);
   // printVector3d(domain);
 
   // Grid gridV{{1, 0, 0}, {1, 0, 0}, {0, 0, 0}}, &grid = gridV;
-  Grid gridV = domain[0], &grid = gridV;
+  // Grid grid = domain[0];
+  // cout << grid.size();
   // printVector2d(grid);
-  Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
+  // Grid nextGrid(order, Row(order, false));
   // printVector2d(nextGrid);
-  setNextGrid(grid, nextGrid);
+  // setNextGrid(grid, nextGrid);
 
   // for (size_t i = 0; i < domain.size(); i++) {
   //   cout << domain.size();
