@@ -1,0 +1,18 @@
+#ifndef GAME_H
+#define GAME_H
+
+////////////////////////////////////////////////////////////
+
+using Byte = unsigned char;
+using CellStateByte = Byte;
+using Grid = vector<CellStateByte>;
+using GridStateByte = Byte;
+using GridStateCollection = vector<GridStateByte>;
+
+////////////////////////////////////////////////////////////
+
+const Byte BYTE = 8;
+
+////////////////////////////////////////////////////////////
+
+#endif // GAME_H
