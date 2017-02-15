@@ -1,6 +1,7 @@
-cpp_file=src.cpp
-out_file=/tmp/cpp.out
+cc_file=src.cc
+out_file=/tmp/cc.out
 
-reset
-g++ $cpp_file -o $out_file
+# reset
+clear
+g++ $cc_file -o $out_file
 $out_file
