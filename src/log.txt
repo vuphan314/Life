@@ -1,5 +1,1 @@
-[Command: bash -c 'g++ -std=c++14 -Wall -include stdio.h -include iostream '/home/vu/repos/life/src/src.cpp' -o /tmp/cpp.out && /tmp/cpp.out']
-terminate called after throwing an instance of 'std::bad_alloc'
-  what():  std::bad_alloc
-bash: line 1:  3502 Aborted                 /tmp/cpp.out
-[Finished in 845.813s]
+getImageProportion(5) == 1.0 // 4 minutes
