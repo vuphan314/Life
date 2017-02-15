@@ -27,6 +27,8 @@ void setImage(Image &image, Char order) {
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
+    Float percent = 100.0 * (gridStateIndex + 1) / gridStateCount;
+    cout << "Grid state:\t" << (gridStateIndex + 1) << " of\t" << gridStateCount << "\t" << percent << "\t%\n";
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
     Long nextGridStateIndex = getGridStateIndex(nextGrid);
