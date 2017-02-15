@@ -106,5 +106,3 @@ CellState isAlive(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
-
-////////////////////////////////////////////////////////////
