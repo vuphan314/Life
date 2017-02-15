@@ -2,6 +2,11 @@
 
 ////////////////////////////////////////////////////////////
 
+Float getImageProportion(Char order) {
+  Float codomainSize = getGridStateCount(order - 2);
+  return getImageSize(order) / codomainSize;
+}
+
 Long getImageSize(Char order) {
   Char imageOrder = order - 2;
   Image image(getGridStateCount(imageOrder), false);
@@ -30,15 +35,17 @@ void setImage(Image &image, Char order) {
 }
 
 Long getGridStateCount(Char order) {
-  return pow(2, pow(order, 2));
+  Long gridStateCount = pow(2, pow(order, 2));
+  return gridStateCount;
 }
 
 void setGrid(Grid &grid, Long gridStateIndex) {
   Char order = grid.size();
   for (Char ri = 0; ri < order; ri++) {
     for (Char ci = 0; ci < order; ci++) {
-      grid[ri][ci] = gridStateIndex & 1;
-      gridStateIndex >> 1;
+      Char leastBit = gridStateIndex & 1;
+      grid[ri][ci] = leastBit;
+      gridStateIndex >>= 1;
     }
   }
 }
@@ -53,6 +60,7 @@ Long getGridStateIndex(const Grid &grid) {
       cellStateIndex++;
     }
   }
+  return gridStateIndex;
 }
 
 void setNextGrid(Grid &nextGrid, const Grid &grid) {

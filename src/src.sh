@@ -2,6 +2,6 @@ cc_file="src.cc game.cc"
 out_file=/tmp/cc.out
 
 # reset
-# clear
+clear
 g++ $cc_file -o $out_file
 $out_file

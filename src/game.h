@@ -9,11 +9,14 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
+#include "../cplusplus/src/vectors.h"
+
 ////////////////////////////////////////////////////////////
 
 using Char = unsigned char; // n
 using Int = unsigned int; // n^2
 using Long = unsigned long long; // 2^n^2
+using Float = long double;
 
 using CellState = bool;
 using Row = vector<CellState>;
@@ -23,6 +26,8 @@ using GridState = bool;
 using Image = vector<GridState>;
 
 ////////////////////////////////////////////////////////////
+
+Float getImageProportion(Char order);
 
 Long getImageSize(Char order);
 

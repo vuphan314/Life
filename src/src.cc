@@ -3,8 +3,13 @@
 #include "game.h"
 
 int main() {
-  Long imageSize = getImageSize(3);
-  cout << "\n";
+  // Char order = 1;
+  // Grid grid{{1, 1}, {1, 1}};
+  // setGrid(grid, 15);
+  // getGridStateCount(2);
+  cout
+    << getImageProportion(4)
+    << "\n";
 }
 
 
