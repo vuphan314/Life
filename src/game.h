@@ -3,6 +3,14 @@
 
 ////////////////////////////////////////////////////////////
 
+using namespace std;
+
+#include <cmath>
+#include <iostream>
+#include <vector>
+
+////////////////////////////////////////////////////////////
+
 using Char = unsigned char; // n
 using Int = unsigned int; // n^2
 using Long = unsigned long long; // 2^n^2
@@ -16,25 +24,33 @@ using Image = vector<GridState>;
 
 ////////////////////////////////////////////////////////////
 
-const Char LOWER_SURVIVAL = 2;
-const Char UPPER_SURVIVAL = 3;
-const Char LOWER_BIRTH = 3;
-const Char UPPER_BIRTH = 3;
+Long getImageSize(Char order);
 
-////////////////////////////////////////////////////////////
+void setImage(Image &image, Char order);
 
-void setImage(Image &image, const Char &order);
+Long getGridStateCount(Char order);
+
+void setGrid(Grid &grid, Long gridStateIndex);
+
+Long getGridStateIndex(const Grid &grid);
 
 void setNextGrid(Grid &nextGrid, const Grid &grid);
 
 CellState getNextCellState(const Grid &grid,
-  const Char rowIndex, const Char columnIndex);
+  Char rowIndex, Char columnIndex);
 
 Char getAliveNeighborCount(const Grid &grid,
-  const Char rowIndex, const Char columnIndex);
+  Char rowIndex, Char columnIndex);
 
 CellState isAlive(const Grid &grid,
-  const Char rowIndex, const Char columnIndex);
+  Char rowIndex, Char columnIndex);
+
+////////////////////////////////////////////////////////////
+
+const Char LOWER_SURVIVAL = 2;
+const Char UPPER_SURVIVAL = 3;
+const Char LOWER_BIRTH = 3;
+const Char UPPER_BIRTH = 3;
 
 ////////////////////////////////////////////////////////////
 

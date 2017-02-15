@@ -2,17 +2,55 @@
 
 ////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////
+Long getImageSize(Char order) {
+  Char imageOrder = order - 2;
+  Image image(getGridStateCount(imageOrder), false);
+  setImage(image, order);
+  Long imageSize = 0;
+  for (bool gridState : image) {
+    if (gridState) {
+      imageSize++;
+    }
+  }
+  return imageSize;
+}
 
-void setImage(Char order, GridCollection &image) {
-  GridCollection domainV{{{}}}, &domain = domainV;
-  setDomain(order + 2, domain);
-  Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
-  for (Grid &grid : domain) {
-    Grid nextGridV(order, Row(order, false)), &nextGrid = nextGridV;
-    setNextGrid(grid, nextGrid);
-    if (find(begin(image), end(image), nextGrid) != end(image)) {
-      image.push_back(nextGrid);
+void setImage(Image &image, Char order) {
+  Char imageOrder = order - 2;
+  Grid grid(order, Row(order, false)),
+    nextGrid(imageOrder, Row(imageOrder, false));
+  Long gridStateCount = getGridStateCount(order);
+  for (Long gridStateIndex = 0;
+      gridStateIndex < gridStateCount; gridStateIndex++) {
+    setGrid(grid, gridStateIndex);
+    setNextGrid(nextGrid, grid);
+    Long nextGridStateIndex = getGridStateIndex(nextGrid);
+    image[nextGridStateIndex] = true;
+  }
+}
+
+Long getGridStateCount(Char order) {
+  return pow(2, pow(order, 2));
+}
+
+void setGrid(Grid &grid, Long gridStateIndex) {
+  Char order = grid.size();
+  for (Char ri = 0; ri < order; ri++) {
+    for (Char ci = 0; ci < order; ci++) {
+      grid[ri][ci] = gridStateIndex & 1;
+      gridStateIndex >> 1;
+    }
+  }
+}
+
+Long getGridStateIndex(const Grid &grid) {
+  Long gridStateIndex = 0;
+  Int cellStateIndex = 0;
+  Char order = grid.size();
+  for (Char ri = 0; ri < order; ri++) {
+    for (Char ci = 0; ci < order; ci++) {
+      gridStateIndex += grid[ri][ci] << cellStateIndex;
+      cellStateIndex++;
     }
   }
 }
@@ -28,7 +66,7 @@ void setNextGrid(Grid &nextGrid, const Grid &grid) {
 }
 
 CellState getNextCellState(const Grid &grid,
-    const Char rowIndex, const Char columnIndex) {
+    Char rowIndex, Char columnIndex) {
   Char count = getAliveNeighborCount(grid,
     rowIndex, columnIndex);
   if (isAlive(grid, rowIndex, columnIndex)) {
@@ -40,7 +78,7 @@ CellState getNextCellState(const Grid &grid,
 }
 
 Char getAliveNeighborCount(const Grid &grid,
-    const Char rowIndex, const Char columnIndex) {
+    Char rowIndex, Char columnIndex) {
   Char count = 0;
   char deltas[] = {-1, 0, 1};
   for (char rowDelta : deltas) {
@@ -57,7 +95,7 @@ Char getAliveNeighborCount(const Grid &grid,
 }
 
 CellState isAlive(const Grid &grid,
-    const Char rowIndex, const Char columnIndex) {
+    Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
 
