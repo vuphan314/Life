@@ -20,6 +20,8 @@ Long getImageSize(Char order) {
   return imageSize;
 }
 
+const int FREQUENCY = pow(10, 9);
+
 void setImage(Image &image, Char order) {
   Char imageOrder = order - 2;
   Grid grid(order, Row(order, false)),
@@ -27,8 +29,11 @@ void setImage(Image &image, Char order) {
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
-    Float percent = 100.0 * (gridStateIndex + 1) / gridStateCount;
-    cout << "Grid state:\t" << (gridStateIndex + 1) << " of\t" << gridStateCount << "\t" << percent << "\t%\n";
+    if (gridStateIndex % FREQUENCY == 0) {
+      Float percent = 100.0 * (gridStateIndex + 1) / gridStateCount;
+      cout << "Grid state:\t" << (gridStateIndex + 1) <<
+        " of\t" << gridStateCount << "\t" << percent << "\t%\n";
+    }
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
     Long nextGridStateIndex = getGridStateIndex(nextGrid);
