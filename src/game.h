@@ -6,6 +6,7 @@
 using namespace std;
 
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -49,6 +50,9 @@ CellState isAlive(const Grid &grid,
   Char rowIndex, Char columnIndex);
 
 ////////////////////////////////////////////////////////////
+
+const Long COUT_PERIOD = pow(10, 4);
+const auto COUT_WIDTH = setw(15);
 
 const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;

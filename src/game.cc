@@ -9,36 +9,45 @@ Float getImageProportion(Char order) {
 
 Long getImageSize(Char order) {
   Char imageOrder = order - 2;
-  Image image(getGridStateCount(imageOrder), false);
+  Long codomainSize = getGridStateCount(order - 2);
+  Image image(codomainSize, false);
   setImage(image, order);
   Long imageSize = 0;
-  for (bool gridState : image) {
-    if (gridState) {
+  for (Long gridStateIndex = 0;
+      gridStateIndex < codomainSize; gridStateIndex++) {
+    if (image[gridStateIndex]) {
       imageSize++;
+    } else {
+      cout << "Not in image: grid state index " <<
+        gridStateIndex << ".\n";
     }
   }
+  cout << "Codomain size: " << codomainSize << ".\n";
+  cout << "Image size: " << imageSize << ".\n";
   return imageSize;
 }
 
-const int FREQUENCY = pow(10, 9);
-
 void setImage(Image &image, Char order) {
+  cout << "Start setting image.\n";
   Char imageOrder = order - 2;
   Grid grid(order, Row(order, false)),
     nextGrid(imageOrder, Row(imageOrder, false));
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
-    if (gridStateIndex % FREQUENCY == 0) {
-      Float percent = 100.0 * (gridStateIndex + 1) / gridStateCount;
-      cout << "Grid state:\t" << (gridStateIndex + 1) <<
-        " of\t" << gridStateCount << "\t" << percent << "\t%\n";
+    if (gridStateIndex % COUT_PERIOD == 0) {
+      Int percent = 100 * gridStateIndex / gridStateCount;
+      cout << "Grid state index" <<
+        COUT_WIDTH << gridStateIndex <<
+        " of" << COUT_WIDTH << gridStateCount <<
+        COUT_WIDTH << percent << "%\n";
     }
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
     Long nextGridStateIndex = getGridStateIndex(nextGrid);
     image[nextGridStateIndex] = true;
   }
+  cout << "End setting image.\n";
 }
 
 Long getGridStateCount(Char order) {
