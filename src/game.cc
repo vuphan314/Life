@@ -47,8 +47,10 @@ void setImage(Image &image, Char order) {
         (100.0 / percent - 1) / 3600;
       cout << "Processed grid state index" <<
         COUT_WIDTH << gridStateIndex <<
-        COUT_WIDTH << percent << "%" <<
-        COUT_WIDTH << remainingTime << " hours left.\n";
+        COUT_WIDTH << COUT_PRECISION << fixed <<
+          percent << "%" <<
+        COUT_WIDTH << COUT_PRECISION << fixed <<
+          remainingTime << " hours left.\n";
     }
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
