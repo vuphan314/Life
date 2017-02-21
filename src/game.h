@@ -47,7 +47,7 @@ CellState getNextCellState(const Grid &grid,
 Char getAliveNeighborCount(const Grid &grid,
   Char rowIndex, Char columnIndex);
 
-CellState isAlive(const Grid &grid,
+CellState getCellState(const Grid &grid,
   Char rowIndex, Char columnIndex);
 
 ////////////////////////////////////////////////////////////

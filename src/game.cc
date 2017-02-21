@@ -2,6 +2,19 @@
 
 ////////////////////////////////////////////////////////////
 
+vector<vector<CellState>> NEXT_CELL_STATES(2, vector<CellState>(9, false));
+
+void setNEXT_CELL_STATES() {
+  for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
+    NEXT_CELL_STATES[0][j] = true;
+  }
+  for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
+    NEXT_CELL_STATES[1][j] = true;
+  }
+}
+
+////////////////////////////////////////////////////////////
+
 Float getImageProportion(Char order) {
   Int codomainSize = getGridStateCount(order - 2);
   Float imageProportion = 1.0 * getImageSize(order) / codomainSize;
@@ -30,6 +43,7 @@ Long getImageSize(Char order) {
 }
 
 void setImage(Image &image, Char order) {
+  setNEXT_CELL_STATES();
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   Char imageOrder = order - 2;
@@ -47,10 +61,8 @@ void setImage(Image &image, Char order) {
         (100.0 / percent - 1) / 3600;
       cout << "Processed grid state index" <<
         COUT_WIDTH << gridStateIndex <<
-        COUT_WIDTH << COUT_PRECISION << fixed <<
-          percent << "%" <<
-        COUT_WIDTH << COUT_PRECISION << fixed <<
-          remainingTime << " hours left.\n";
+        COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+        COUT_WIDTH << remainingTime << " hours left.\n";
     }
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
@@ -60,8 +72,8 @@ void setImage(Image &image, Char order) {
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
     <chrono::seconds>(endTime - startTime).count();
-  cout << "Ended setting image after " << totalElapsedTime
-    << " seconds.\n";
+  cout << "Ended setting image after "
+    << totalElapsedTime << " seconds.\n";
 }
 
 Long getGridStateCount(Char order) {
@@ -105,14 +117,10 @@ void setNextGrid(Grid &nextGrid, const Grid &grid) {
 
 CellState getNextCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
-  Char count = getAliveNeighborCount(grid,
+  Char i = getCellState(grid, rowIndex, columnIndex);
+  Char j = getAliveNeighborCount(grid,
     rowIndex, columnIndex);
-  if (isAlive(grid, rowIndex, columnIndex)) {
-    return LOWER_SURVIVAL <= count &&
-      count <= UPPER_SURVIVAL;
-  } else {
-    return LOWER_BIRTH <= count && count <= UPPER_BIRTH;
-  }
+  return NEXT_CELL_STATES[i][j];
 }
 
 Char getAliveNeighborCount(const Grid &grid,
@@ -124,7 +132,7 @@ Char getAliveNeighborCount(const Grid &grid,
     for (char columnDelta : deltas) {
       Char ci = columnIndex + columnDelta;
       if (!(ri == rowIndex && ci == columnIndex) &&
-          isAlive(grid, ri, ci)) {
+          getCellState(grid, ri, ci)) {
         count++;
       }
     }
@@ -132,7 +140,7 @@ Char getAliveNeighborCount(const Grid &grid,
   return count;
 }
 
-CellState isAlive(const Grid &grid,
+CellState getCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
