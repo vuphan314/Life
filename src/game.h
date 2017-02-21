@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#include <chrono>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -51,7 +52,7 @@ CellState isAlive(const Grid &grid,
 
 ////////////////////////////////////////////////////////////
 
-const Long COUT_PERIOD = pow(10, 4);
+const Long COUT_PERIOD = pow(10, 7);
 const auto COUT_WIDTH = setw(15);
 
 const Char LOWER_SURVIVAL = 2;

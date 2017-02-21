@@ -1,2 +1,2 @@
-getImageProportion(5) == 1.0 // 4 minutes
+getImageProportion(5) == 1.0 // 9 seconds
 getImageProportion(6) == 1.0 // 8 hours

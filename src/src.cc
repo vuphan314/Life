@@ -1,5 +1,5 @@
 #include "game.h"
 
 int main() {
-  cout << "Image proportion: " << getImageProportion(4) << "\n";
+  cout << "Image proportion: " << getImageProportion(6) << "\n";
 }

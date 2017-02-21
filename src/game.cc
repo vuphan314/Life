@@ -28,7 +28,8 @@ Long getImageSize(Char order) {
 }
 
 void setImage(Image &image, Char order) {
-  cout << "Start setting image.\n";
+  cout << "Started setting image.\n";
+  auto startTime = chrono::system_clock::now();
   Char imageOrder = order - 2;
   Grid grid(order, Row(order, false)),
     nextGrid(imageOrder, Row(imageOrder, false));
@@ -36,18 +37,27 @@ void setImage(Image &image, Char order) {
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
     if (gridStateIndex % COUT_PERIOD == 0) {
-      Int percent = 100 * gridStateIndex / gridStateCount;
-      cout << "Grid state index" <<
+      Float percent = 100.0 * gridStateIndex / gridStateCount;
+      auto currentTime = chrono::system_clock::now();
+      auto currentElapsedTime = chrono::duration_cast
+        <chrono::seconds>(currentTime - startTime).count();
+      Float remainingTime = currentElapsedTime *
+        (100.0 / percent - 1) / 3600;
+      cout << "Processed grid state index" <<
         COUT_WIDTH << gridStateIndex <<
-        " of" << COUT_WIDTH << gridStateCount <<
-        COUT_WIDTH << percent << "%\n";
+        COUT_WIDTH << percent << "%" <<
+        COUT_WIDTH << remainingTime << " hours left.\n";
     }
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
     Long nextGridStateIndex = getGridStateIndex(nextGrid);
     image[nextGridStateIndex] = true;
   }
-  cout << "End setting image.\n";
+  auto endTime = chrono::system_clock::now();
+  auto totalElapsedTime = chrono::duration_cast
+    <chrono::seconds>(endTime - startTime).count();
+  cout << "Ended setting image after " << totalElapsedTime
+    << " seconds.\n";
 }
 
 Long getGridStateCount(Char order) {
