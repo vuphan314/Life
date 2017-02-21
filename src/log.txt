@@ -1,2 +1,11 @@
-getImageProportion(5) == 1.0 // 9 seconds
-getImageProportion(6) == 1.0 // 8 hours
+// order-3 image
+Ended setting image after 9 seconds.
+Codomain size: 512.
+Image size: 512.
+Image proportion: 1.
+
+// order-4 image
+Ended setting image after 29952 seconds. // 8 hours
+Codomain size: 65536.
+Image size: 65536.
+Image proportion: 1.

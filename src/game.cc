@@ -3,8 +3,10 @@
 ////////////////////////////////////////////////////////////
 
 Float getImageProportion(Char order) {
-  Float codomainSize = getGridStateCount(order - 2);
-  return getImageSize(order) / codomainSize;
+  Int codomainSize = getGridStateCount(order - 2);
+  Float imageProportion = 1.0 * getImageSize(order) / codomainSize;
+  cout << "Image proportion: " << imageProportion << ".\n";
+  return imageProportion;
 }
 
 Long getImageSize(Char order) {
