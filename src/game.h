@@ -52,7 +52,7 @@ CellState isAlive(const Grid &grid,
 
 ////////////////////////////////////////////////////////////
 
-const Long COUT_PERIOD = pow(10, 7);
+const Long COUT_PERIOD = pow(10, 9);
 const auto COUT_WIDTH = setw(15);
 
 const Char LOWER_SURVIVAL = 2;
