@@ -2,10 +2,17 @@
 Ended setting image after 9 seconds.
 Codomain size: 512.
 Image size: 512.
-Image proportion: 1.
+Image proportion: 1.0000.
 
 // order-4 image
 Ended setting image after 29952 seconds. // 8 hours
 Codomain size: 65536.
 Image size: 65536.
-Image proportion: 1.
+Image proportion:  1.0000.
+
+////////////////////////////////////////////////////////////
+
+// order-5 image
+Started setting image.
+Processed grid state index    10000000      0.0000%  93824.9906 hours left.
+  // 10 years
