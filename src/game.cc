@@ -131,12 +131,10 @@ Char getAliveNeighborCount(const Grid &grid,
     Char ri = rowIndex + rowDelta;
     for (char columnDelta : deltas) {
       Char ci = columnIndex + columnDelta;
-      if (!(ri == rowIndex && ci == columnIndex) &&
-          getCellState(grid, ri, ci)) {
-        count++;
-      }
+      count += getCellState(grid, ri, ci);
     }
   }
+  count -= getCellState(grid, rowIndex, columnIndex);
   return count;
 }
 
