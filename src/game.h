@@ -27,7 +27,7 @@ using Image = vector<GridState>;
 
 ////////////////////////////////////////////////////////////
 
-const Long COUT_PERIOD = pow(10, 7);
+const Long COUT_PERIOD = pow(2, 22) - 1;
 const auto COUT_WIDTH = setw(12);
 const auto COUT_PRECISION = setprecision(4);
 

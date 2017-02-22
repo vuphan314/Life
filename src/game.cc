@@ -52,7 +52,7 @@ void setImage(Image &image, Char order) {
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
-    if (gridStateIndex % COUT_PERIOD == 0) {
+    if (!(gridStateIndex & COUT_PERIOD)) {
       Float percent = 100.0 * gridStateIndex / gridStateCount;
       auto currentTime = chrono::system_clock::now();
       auto currentElapsedTime = chrono::duration_cast
