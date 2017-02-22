@@ -27,6 +27,17 @@ using Image = vector<GridState>;
 
 ////////////////////////////////////////////////////////////
 
+const Long COUT_PERIOD = pow(10, 6);
+const auto COUT_WIDTH = setw(12);
+const auto COUT_PRECISION = setprecision(4);
+
+const Char LOWER_SURVIVAL = 2;
+const Char UPPER_SURVIVAL = 3;
+const Char LOWER_BIRTH = 3;
+const Char UPPER_BIRTH = 3;
+
+////////////////////////////////////////////////////////////
+
 Float getImageProportion(Char order);
 
 Long getImageSize(Char order);
@@ -49,17 +60,6 @@ Char getAliveNeighborCount(const Grid &grid,
 
 CellState getCellState(const Grid &grid,
   Char rowIndex, Char columnIndex);
-
-////////////////////////////////////////////////////////////
-
-const Long COUT_PERIOD = pow(10, 6);
-const auto COUT_WIDTH = setw(12);
-const auto COUT_PRECISION = setprecision(2);
-
-const Char LOWER_SURVIVAL = 2;
-const Char UPPER_SURVIVAL = 3;
-const Char LOWER_BIRTH = 3;
-const Char UPPER_BIRTH = 3;
 
 ////////////////////////////////////////////////////////////
 
