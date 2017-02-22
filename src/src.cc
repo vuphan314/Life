@@ -1,5 +1,5 @@
 #include "game.h"
 
 int main() {
-  getImageProportion(6);
+  getImageProportion(5);
 }
