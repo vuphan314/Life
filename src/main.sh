@@ -1,4 +1,4 @@
-cc_files="src.cc game.cc"
+cc_files="main.cc game.cc"
 out_file=/tmp/life.out
 
 # reset
