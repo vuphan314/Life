@@ -13,17 +13,22 @@ Game::Game(Char order) {
   }
 
   ORDER = order;
-  NEXT_ORDER = ORDER - 2;
+  POST_ORDER = ORDER - 2;
+  PRE_ORDER = ORDER + 2;
 
   DOMAIN_SIZE = getGridStateCount(ORDER);
-  CODOMAIN_SIZE = getGridStateCount(NEXT_ORDER);
+  CODOMAIN_SIZE = getGridStateCount(POST_ORDER);
 
   image = Image(CODOMAIN_SIZE, FALSE);
 
   preimage = Preimage(DOMAIN_SIZE, Fiber());
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
-  nextGrid = Grid(NEXT_ORDER, Row(NEXT_ORDER, FALSE));
+  postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
+}
+
+void Game::setPreimage() {
+  
 }
 
 Float Game::getImageProportion() {
@@ -35,14 +40,14 @@ Float Game::getImageProportion() {
 Long Game::getImageSize() {
   setImage();
   Long imageSize = 0;
-  for (Long nextGridStateIndex = 0;
-      nextGridStateIndex < CODOMAIN_SIZE;
-      nextGridStateIndex++) {
-    if (image[nextGridStateIndex]) {
+  for (Long postGridStateIndex = 0;
+      postGridStateIndex < CODOMAIN_SIZE;
+      postGridStateIndex++) {
+    if (image[postGridStateIndex]) {
       imageSize++;
     } else {
-      cout << "Not in image: next grid state index " <<
-        nextGridStateIndex << ".\n";
+      cout << "Not in image: post grid state index " <<
+        postGridStateIndex << ".\n";
     }
   }
   cout << "Codomain size: " << CODOMAIN_SIZE << ".\n";
@@ -79,7 +84,7 @@ void Game::setImage() {
 Long Game::getNextGridStateIndex(Long gridStateIndex) {
   setGrid(gridStateIndex);
   setNextGrid();
-  return getGridStateIndex(nextGrid);
+  return getGridStateIndex(postGrid);
 }
 
 void Game::setGrid(Long gridStateIndex) {
@@ -95,7 +100,7 @@ void Game::setGrid(Long gridStateIndex) {
 void Game::setNextGrid() {
   for (Char ri = 1; ri < ORDER - 1; ri++) {
     for (Char ci = 1; ci < ORDER - 1; ci++) {
-      nextGrid[ri - 1][ci - 1] = getNextCellState(ri, ci);
+      postGrid[ri - 1][ci - 1] = getNextCellState(ri, ci);
     }
   }
 }
