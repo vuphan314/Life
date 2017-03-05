@@ -125,8 +125,7 @@ CellState Game::getCellState(Char rowIndex, Char columnIndex) {
 ////////////////////////////////////////////////////////////
 
 Long getGridStateCount(Char order) {
-  Long gridStateCount = pow(2, pow(order, 2));
-  return gridStateCount;
+  return pow(2, pow(order, 2));
 }
 
 Long getGridStateIndex(const Grid &grid) {
