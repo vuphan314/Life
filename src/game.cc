@@ -20,8 +20,11 @@ Game::Game(Char order) {
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
-  // preImage = PreImage(SPACE_SIZE, Fiber(0, 0));
-  // preImage = PreImage(SPACE_SIZE/2, Fiber());
+  if (ORDER > 5) {
+    cout << "Too big of a pre-image.\n";
+  } else {
+    preImage = PreImage(SPACE_SIZE, Fiber());
+  }
 
   // preGame = new Game(ORDER + 2);
 
