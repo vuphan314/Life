@@ -18,16 +18,18 @@ using Int = unsigned int; // n^2
 using Long = unsigned long long; // 2^n^2
 using Float = long double;
 
-using CellState = bool;
+using Bool = Char;
+using CellState = Bool;
+using GridState = Bool;
+
 using Row = vector<CellState>;
 using Grid = vector<Row>;
 
-using GridState = bool;
 using Image = vector<GridState>;
 
 ////////////////////////////////////////////////////////////
 
-const Long COUT_PERIOD = pow(2, 22) - 1;
+const Long COUT_PERIOD = pow(2, 24) - 1;
 const auto COUT_WIDTH = setw(12);
 const auto COUT_PRECISION = setprecision(4);
 
