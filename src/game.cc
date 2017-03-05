@@ -43,9 +43,9 @@ Long Game::getImageSize(Char order) {
 void Game::setImage(Image &image, Char order) {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
-  Char imageOrder = order - 2;
+  Char nextOrder = order - 2;
   Grid grid(order, Row(order, FALSE)),
-    nextGrid(imageOrder, Row(imageOrder, FALSE));
+    nextGrid(nextOrder, Row(nextOrder, FALSE));
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
@@ -61,16 +61,21 @@ void Game::setImage(Image &image, Char order) {
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingTime << " hours left.\n";
     }
-    setGrid(grid, gridStateIndex);
-    setNextGrid(nextGrid, grid);
-    Long nextGridStateIndex = getGridStateIndex(nextGrid);
-    image[nextGridStateIndex] = TRUE;
+    image[getNextGridStateIndex(gridStateIndex,
+      grid, nextGrid)] = TRUE;
   }
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
     <chrono::seconds>(endTime - startTime).count();
   cout << "Ended setting image after "
     << totalElapsedTime << " seconds.\n";
+}
+
+Long Game::getNextGridStateIndex(Long gridStateIndex,
+    Grid &grid, Grid &nextGrid) {
+  setGrid(grid, gridStateIndex);
+  setNextGrid(nextGrid, grid);
+  return getGridStateIndex(nextGrid);
 }
 
 Long Game::getGridStateCount(Char order) {
