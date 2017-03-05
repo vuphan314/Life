@@ -20,7 +20,7 @@ Game::Game(Char order) {
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
-  preImage = PreImage(SPACE_SIZE, Fiber());
+  // preImage = PreImage(SPACE_SIZE, Fiber());
 
   // preGame = new Game(ORDER + 2);
 
@@ -57,7 +57,7 @@ Long Game::getImageSize() {
         postGridStateIndex << ".\n";
     }
   }
-  cout << "Codomain size: " << POST_SPACE_SIZE << ".\n";
+  cout << "Post-space size: " << POST_SPACE_SIZE << ".\n";
   cout << "Image size: " << imageSize << ".\n";
   return imageSize;
 }
