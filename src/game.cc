@@ -2,7 +2,12 @@
 
 ////////////////////////////////////////////////////////////
 
-Game::Game() {
+Long getGridStateCount(Char order) {
+  Long gridStateCount = pow(2, pow(order, 2));
+  return gridStateCount;
+}
+
+Game::Game(Char order) {
   NEXT_CELL_STATES = vector<vector<CellState>>(2,
     vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
@@ -11,20 +16,26 @@ Game::Game() {
   for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
     NEXT_CELL_STATES[1][j] = TRUE;
   }
+
+  this->order = order;
+  nextOrder = order - 2;
+
+  grid = Grid(order, Row(order, FALSE));
+  nextGrid = Grid(nextOrder, Row(nextOrder, FALSE));
+
+  image = Image(codomainSize, FALSE);
 }
 
-Float Game::getImageProportion(Char order) {
-  Int codomainSize = getGridStateCount(order - 2);
-  Float imageProportion = 1.0 * getImageSize(order) / codomainSize;
+Float Game::getImageProportion() {
+  Int codomainSize = getGridStateCount(nextOrder);
+  Float imageProportion = 1.0 * getImageSize() / codomainSize;
   cout << "Image proportion: " << imageProportion << ".\n";
   return imageProportion;
 }
 
-Long Game::getImageSize(Char order) {
-  Char imageOrder = order - 2;
-  Long codomainSize = getGridStateCount(order - 2);
-  Image image(codomainSize, FALSE);
-  setImage(image, order);
+Long Game::getImageSize() {
+  Long codomainSize = getGridStateCount(nextOrder);
+  setImage(image);
   Long imageSize = 0;
   for (Long gridStateIndex = 0;
       gridStateIndex < codomainSize; gridStateIndex++) {
@@ -40,12 +51,9 @@ Long Game::getImageSize(Char order) {
   return imageSize;
 }
 
-void Game::setImage(Image &image, Char order) {
+void Game::setImage(Image &image) {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
-  Char nextOrder = order - 2;
-  Grid grid(order, Row(order, FALSE)),
-    nextGrid(nextOrder, Row(nextOrder, FALSE));
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
@@ -76,11 +84,6 @@ Long Game::getNextGridStateIndex(Long gridStateIndex,
   setGrid(grid, gridStateIndex);
   setNextGrid(nextGrid, grid);
   return getGridStateIndex(nextGrid);
-}
-
-Long Game::getGridStateCount(Char order) {
-  Long gridStateCount = pow(2, pow(order, 2));
-  return gridStateCount;
 }
 
 void Game::setGrid(Grid &grid, Long gridStateIndex) {

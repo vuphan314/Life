@@ -32,34 +32,37 @@ using Image = vector<GridState>;
 const Bool TRUE = true;
 const Bool FALSE = false;
 
-const Long COUT_PERIOD = pow(2, 23) - 1;
-const auto COUT_WIDTH = setw(12);
-const auto COUT_PRECISION = setprecision(4);
-
 const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 const Char LOWER_BIRTH = 3;
 const Char UPPER_BIRTH = 3;
 
+const Long COUT_PERIOD = pow(2, 23) - 1;
+const auto COUT_WIDTH = setw(12);
+const auto COUT_PRECISION = setprecision(4);
+
 ////////////////////////////////////////////////////////////
+
+Long getGridStateCount(Char order);
 
 class Game {
 private:
   vector<vector<CellState>> NEXT_CELL_STATES;
+  Char order, nextOrder;
+  Grid grid, nextGrid;
+  Image image;
 
 public:
-  Game();
+  Game(Char order);
 
-  Float getImageProportion(Char order);
+  Float getImageProportion();
 
-  Long getImageSize(Char order);
+  Long getImageSize();
 
-  void setImage(Image &image, Char order);
+  void setImage(Image &image);
 
   Long getNextGridStateIndex(Long gridStateIndex,
     Grid &grid, Grid &nextGrid);
-
-  Long getGridStateCount(Char order);
 
   void setGrid(Grid &grid, Long gridStateIndex);
 
