@@ -43,14 +43,13 @@ const auto COUT_PRECISION = setprecision(4);
 
 ////////////////////////////////////////////////////////////
 
-Long getGridStateCount(Char order);
-
 class Game {
 private:
   vector<vector<CellState>> NEXT_CELL_STATES;
-  Char order, nextOrder;
-  Grid grid, nextGrid;
+  Char ORDER, NEXT_ORDER;
+  Long DOMAIN_SIZE, CODOMAIN_SIZE;
   Image image;
+  Grid grid, nextGrid;
 
 public:
   Game(Char order);
@@ -59,26 +58,26 @@ public:
 
   Long getImageSize();
 
-  void setImage(Image &image);
+  void setImage();
 
-  Long getNextGridStateIndex(Long gridStateIndex,
-    Grid &grid, Grid &nextGrid);
+  Long getNextGridStateIndex(Long gridStateIndex);
 
-  void setGrid(Grid &grid, Long gridStateIndex);
+  void setGrid(Long gridStateIndex);
 
-  Long getGridStateIndex(const Grid &grid);
+  void setNextGrid();
 
-  void setNextGrid(Grid &nextGrid, const Grid &grid);
+  CellState getNextCellState(Char rowIndex, Char columnIndex);
 
-  CellState getNextCellState(const Grid &grid,
-    Char rowIndex, Char columnIndex);
+  Char getAliveNeighborCount(Char rowIndex, Char columnIndex);
 
-  Char getAliveNeighborCount(const Grid &grid,
-    Char rowIndex, Char columnIndex);
-
-  CellState getCellState(const Grid &grid,
-    Char rowIndex, Char columnIndex);
+  CellState getCellState(Char rowIndex, Char columnIndex);
 };
+
+////////////////////////////////////////////////////////////
+
+Long getGridStateCount(Char order);
+
+Long getGridStateIndex(const Grid &grid);
 
 ////////////////////////////////////////////////////////////
 
