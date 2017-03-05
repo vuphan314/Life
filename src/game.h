@@ -28,23 +28,24 @@ using Grid = vector<Row>;
 using Image = vector<GridState>;
 
 using Fiber = vector<Long>;
-using Preimage = vector<Fiber>;
+using PreImage = vector<Fiber>;
 
 ////////////////////////////////////////////////////////////
 
 class Game {
 private:
   vector<vector<CellState>> RULE_MATRIX;
-  Char ORDER, POST_ORDER, PRE_ORDER;
-  Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE;
+  Char ORDER, POST_ORDER;
+  Long SPACE_SIZE, POST_SPACE_SIZE;
   Image image;
-  Preimage preimage;
-  Grid grid, postGrid, preGrid;
+  PreImage preImage;
+  Game *preGame;
+  Grid grid, postGrid;
 
 public:
   Game(Char order);
 
-  void setPreimage();
+  // void setPreImage();
 
   Float getImageProportion();
 
@@ -52,13 +53,13 @@ public:
 
   void setImage();
 
-  Long getNextGridStateIndex(Long gridStateIndex);
+  Long getPostGridStateIndex(Long gridStateIndex);
 
   void setGrid(Long gridStateIndex);
 
-  void setNextGrid();
+  void setPostGrid();
 
-  CellState getNextCellState(Char rowIndex, Char columnIndex);
+  CellState getPostCellState(Char rowIndex, Char columnIndex);
 
   Char getAliveNeighborCount(Char rowIndex, Char columnIndex);
 

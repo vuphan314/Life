@@ -14,28 +14,29 @@ Game::Game(Char order) {
 
   ORDER = order;
   POST_ORDER = ORDER - 2;
-  PRE_ORDER = ORDER + 2;
 
   SPACE_SIZE = getGridStateCount(ORDER);
   POST_SPACE_SIZE = getGridStateCount(POST_ORDER);
-  PRE_SPACE_SIZE = getGridStateCount(PRE_ORDER);
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
-  preimage = Preimage(SPACE_SIZE, Fiber());
+  preImage = PreImage(SPACE_SIZE, Fiber());
+
+  // preGame = new Game(ORDER + 2);
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
-  preGrid = Grid(PRE_ORDER, Row(PRE_ORDER, FALSE));
 }
 
-void Game::setPreimage() {
-  for (Long preGridStateIndex = 0;
-      preGridStateIndex < PRE_SPACE_SIZE;
-      preGridStateIndex++) {
-    
-  }
-}
+// void Game::setPreImage() {
+//   for (Long preGridStateIndex = 0;
+//       preGridStateIndex < preGame->SPACE_SIZE;
+//       preGridStateIndex++) {
+//     Long gridStateIndex =
+//       preGame->getPostGridStateIndex(preGridStateIndex);
+//     preImage[gridStateIndex].push_back(preGridStateIndex);
+//   }
+// }
 
 Float Game::getImageProportion() {
   Float imageProportion = 1.0 * getImageSize() / POST_SPACE_SIZE;
@@ -78,7 +79,7 @@ void Game::setImage() {
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingTime << " hours left.\n";
     }
-    image[getNextGridStateIndex(gridStateIndex)] = TRUE;
+    image[getPostGridStateIndex(gridStateIndex)] = TRUE;
   }
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
@@ -87,9 +88,9 @@ void Game::setImage() {
     << totalElapsedTime << " seconds.\n";
 }
 
-Long Game::getNextGridStateIndex(Long gridStateIndex) {
+Long Game::getPostGridStateIndex(Long gridStateIndex) {
   setGrid(gridStateIndex);
-  setNextGrid();
+  setPostGrid();
   return getGridStateIndex(postGrid);
 }
 
@@ -103,15 +104,15 @@ void Game::setGrid(Long gridStateIndex) {
   }
 }
 
-void Game::setNextGrid() {
+void Game::setPostGrid() {
   for (Char ri = 1; ri < ORDER - 1; ri++) {
     for (Char ci = 1; ci < ORDER - 1; ci++) {
-      postGrid[ri - 1][ci - 1] = getNextCellState(ri, ci);
+      postGrid[ri - 1][ci - 1] = getPostCellState(ri, ci);
     }
   }
 }
 
-CellState Game::getNextCellState(Char rowIndex, Char columnIndex) {
+CellState Game::getPostCellState(Char rowIndex, Char columnIndex) {
   Char i = getCellState(rowIndex, columnIndex);
   Char j = getAliveNeighborCount(rowIndex, columnIndex);
   return RULE_MATRIX[i][j];
