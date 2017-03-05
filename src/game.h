@@ -44,6 +44,8 @@ private:
 public:
   Game(Char order);
 
+  void setPreimage();
+
   Float getImageProportion();
 
   Long getImageSize();

@@ -1,5 +1,0 @@
-#include "game.h"
-
-////////////////////////////////////////////////////////////
-
-void setPreimage(Preimage &preimage, Char order);
