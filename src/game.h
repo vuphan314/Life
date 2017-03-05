@@ -39,13 +39,12 @@ private:
   Long SPACE_SIZE, POST_SPACE_SIZE;
   Image image;
   PreImage preImage;
-  // Game *preGame;
   Grid grid, postGrid;
 
 public:
   Game(Char order);
 
-  // void setPreImage();
+  void setPreImage();
 
   Float getImageProportion();
 

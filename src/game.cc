@@ -20,27 +20,33 @@ Game::Game(Char order) {
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
-  if (ORDER > 5) {
-    cout << "Too big of a pre-image.\n";
-  } else {
-    preImage = PreImage(SPACE_SIZE, Fiber());
-  }
-
-  // preGame = new Game(ORDER + 2);
-
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
-// void Game::setPreImage() {
-//   for (Long preGridStateIndex = 0;
-//       preGridStateIndex < preGame->SPACE_SIZE;
-//       preGridStateIndex++) {
-//     Long gridStateIndex =
-//       preGame->getPostGridStateIndex(preGridStateIndex);
-//     preImage[gridStateIndex].push_back(preGridStateIndex);
-//   }
-// }
+void Game::setPreImage() {
+  if (ORDER > 5) {
+    cout << "Order-" << static_cast<Int>(ORDER) <<
+      " pre-image is too big for std::vector.\n";
+  }
+  preImage = PreImage(SPACE_SIZE, Fiber());
+
+  if (ORDER > 3) {
+    cout << "Would need " <<
+      getGridStateCount(ORDER + 2) / pow(2, 30) <<
+      " GB of RAM.\n";
+  }
+  cout << "Started setting pre-image.\n";
+  Game preGame(ORDER + 2);
+  for (Long preGridStateIndex = 0;
+      preGridStateIndex < preGame.SPACE_SIZE;
+      preGridStateIndex++) {
+    Long gridStateIndex =
+      preGame.getPostGridStateIndex(preGridStateIndex);
+    preImage[gridStateIndex].push_back(preGridStateIndex);
+  }
+  cout << "Ended setting pre-image.\n";
+}
 
 Float Game::getImageProportion() {
   Float imageProportion = 1.0 * getImageSize() / POST_SPACE_SIZE;
