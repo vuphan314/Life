@@ -20,7 +20,8 @@ Game::Game(Char order) {
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
-  // preImage = PreImage(SPACE_SIZE, Fiber());
+  // preImage = PreImage(SPACE_SIZE, Fiber(0, 0));
+  // preImage = PreImage(SPACE_SIZE/2, Fiber());
 
   // preGame = new Game(ORDER + 2);
 

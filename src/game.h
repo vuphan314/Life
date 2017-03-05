@@ -38,7 +38,7 @@ private:
   Char ORDER, POST_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE;
   Image image;
-  PreImage preImage;
+  // PreImage preImage;
   // Game *preGame;
   Grid grid, postGrid;
 
