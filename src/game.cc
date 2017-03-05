@@ -4,12 +4,12 @@
 
 Game::Game() {
   NEXT_CELL_STATES = vector<vector<CellState>>(2,
-    vector<CellState>(9, false));
+    vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
-    NEXT_CELL_STATES[0][j] = true;
+    NEXT_CELL_STATES[0][j] = TRUE;
   }
   for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
-    NEXT_CELL_STATES[1][j] = true;
+    NEXT_CELL_STATES[1][j] = TRUE;
   }
 }
 
@@ -23,7 +23,7 @@ Float Game::getImageProportion(Char order) {
 Long Game::getImageSize(Char order) {
   Char imageOrder = order - 2;
   Long codomainSize = getGridStateCount(order - 2);
-  Image image(codomainSize, false);
+  Image image(codomainSize, FALSE);
   setImage(image, order);
   Long imageSize = 0;
   for (Long gridStateIndex = 0;
@@ -44,8 +44,8 @@ void Game::setImage(Image &image, Char order) {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   Char imageOrder = order - 2;
-  Grid grid(order, Row(order, false)),
-    nextGrid(imageOrder, Row(imageOrder, false));
+  Grid grid(order, Row(order, FALSE)),
+    nextGrid(imageOrder, Row(imageOrder, FALSE));
   Long gridStateCount = getGridStateCount(order);
   for (Long gridStateIndex = 0;
       gridStateIndex < gridStateCount; gridStateIndex++) {
@@ -64,7 +64,7 @@ void Game::setImage(Image &image, Char order) {
     setGrid(grid, gridStateIndex);
     setNextGrid(nextGrid, grid);
     Long nextGridStateIndex = getGridStateIndex(nextGrid);
-    image[nextGridStateIndex] = true;
+    image[nextGridStateIndex] = TRUE;
   }
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
