@@ -40,28 +40,36 @@ const Char UPPER_BIRTH = 3;
 
 ////////////////////////////////////////////////////////////
 
-Float getImageProportion(Char order);
+class Game {
+private:
+  vector<vector<CellState>> NEXT_CELL_STATES;
 
-Long getImageSize(Char order);
+public:
+  Game();
 
-void setImage(Image &image, Char order);
+  Float getImageProportion(Char order);
 
-Long getGridStateCount(Char order);
+  Long getImageSize(Char order);
 
-void setGrid(Grid &grid, Long gridStateIndex);
+  void setImage(Image &image, Char order);
 
-Long getGridStateIndex(const Grid &grid);
+  Long getGridStateCount(Char order);
 
-void setNextGrid(Grid &nextGrid, const Grid &grid);
+  void setGrid(Grid &grid, Long gridStateIndex);
 
-CellState getNextCellState(const Grid &grid,
-  Char rowIndex, Char columnIndex);
+  Long getGridStateIndex(const Grid &grid);
 
-Char getAliveNeighborCount(const Grid &grid,
-  Char rowIndex, Char columnIndex);
+  void setNextGrid(Grid &nextGrid, const Grid &grid);
 
-CellState getCellState(const Grid &grid,
-  Char rowIndex, Char columnIndex);
+  CellState getNextCellState(const Grid &grid,
+    Char rowIndex, Char columnIndex);
+
+  Char getAliveNeighborCount(const Grid &grid,
+    Char rowIndex, Char columnIndex);
+
+  CellState getCellState(const Grid &grid,
+    Char rowIndex, Char columnIndex);
+};
 
 ////////////////////////////////////////////////////////////
 

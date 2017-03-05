@@ -2,9 +2,9 @@
 
 ////////////////////////////////////////////////////////////
 
-vector<vector<CellState>> NEXT_CELL_STATES(2, vector<CellState>(9, false));
-
-void setNEXT_CELL_STATES() {
+Game::Game() {
+  NEXT_CELL_STATES = vector<vector<CellState>>(2,
+    vector<CellState>(9, false));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
     NEXT_CELL_STATES[0][j] = true;
   }
@@ -13,16 +13,14 @@ void setNEXT_CELL_STATES() {
   }
 }
 
-////////////////////////////////////////////////////////////
-
-Float getImageProportion(Char order) {
+Float Game::getImageProportion(Char order) {
   Int codomainSize = getGridStateCount(order - 2);
   Float imageProportion = 1.0 * getImageSize(order) / codomainSize;
   cout << "Image proportion: " << imageProportion << ".\n";
   return imageProportion;
 }
 
-Long getImageSize(Char order) {
+Long Game::getImageSize(Char order) {
   Char imageOrder = order - 2;
   Long codomainSize = getGridStateCount(order - 2);
   Image image(codomainSize, false);
@@ -42,8 +40,7 @@ Long getImageSize(Char order) {
   return imageSize;
 }
 
-void setImage(Image &image, Char order) {
-  setNEXT_CELL_STATES();
+void Game::setImage(Image &image, Char order) {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   Char imageOrder = order - 2;
@@ -76,12 +73,12 @@ void setImage(Image &image, Char order) {
     << totalElapsedTime << " seconds.\n";
 }
 
-Long getGridStateCount(Char order) {
+Long Game::getGridStateCount(Char order) {
   Long gridStateCount = pow(2, pow(order, 2));
   return gridStateCount;
 }
 
-void setGrid(Grid &grid, Long gridStateIndex) {
+void Game::setGrid(Grid &grid, Long gridStateIndex) {
   Char order = grid.size();
   for (Char ri = 0; ri < order; ri++) {
     for (Char ci = 0; ci < order; ci++) {
@@ -92,7 +89,7 @@ void setGrid(Grid &grid, Long gridStateIndex) {
   }
 }
 
-Long getGridStateIndex(const Grid &grid) {
+Long Game::getGridStateIndex(const Grid &grid) {
   Long gridStateIndex = 0;
   Int cellStateIndex = 0;
   Char order = grid.size();
@@ -105,7 +102,7 @@ Long getGridStateIndex(const Grid &grid) {
   return gridStateIndex;
 }
 
-void setNextGrid(Grid &nextGrid, const Grid &grid) {
+void Game::setNextGrid(Grid &nextGrid, const Grid &grid) {
   Char order = grid.size();
   for (Char ri = 1; ri < order - 1; ri++) {
     for (Char ci = 1; ci < order - 1; ci++) {
@@ -115,7 +112,7 @@ void setNextGrid(Grid &nextGrid, const Grid &grid) {
   }
 }
 
-CellState getNextCellState(const Grid &grid,
+CellState Game::getNextCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   Char i = getCellState(grid, rowIndex, columnIndex);
   Char j = getAliveNeighborCount(grid,
@@ -123,7 +120,7 @@ CellState getNextCellState(const Grid &grid,
   return NEXT_CELL_STATES[i][j];
 }
 
-Char getAliveNeighborCount(const Grid &grid,
+Char Game::getAliveNeighborCount(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   Char count = 0;
   char deltas[] = {-1, 0, 1};
@@ -138,7 +135,7 @@ Char getAliveNeighborCount(const Grid &grid,
   return count;
 }
 
-CellState getCellState(const Grid &grid,
+CellState Game::getCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }

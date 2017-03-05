@@ -1,6 +1,7 @@
 #include "game.h"
 
 int main(int argc, const char *argv[]) {
-  Char domainOrder = atoi(argv[1]);
-  getImageProportion(domainOrder);
+  Game game;
+  Char order = atoi(argv[1]);
+  game.getImageProportion(order);
 }
