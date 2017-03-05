@@ -27,28 +27,18 @@ using Grid = vector<Row>;
 
 using Image = vector<GridState>;
 
-////////////////////////////////////////////////////////////
-
-const Bool TRUE = true;
-const Bool FALSE = false;
-
-const Char LOWER_SURVIVAL = 2;
-const Char UPPER_SURVIVAL = 3;
-const Char LOWER_BIRTH = 3;
-const Char UPPER_BIRTH = 3;
-
-const Long COUT_PERIOD = pow(2, 23) - 1;
-const auto COUT_WIDTH = setw(12);
-const auto COUT_PRECISION = setprecision(4);
+using Fiber = vector<Long>;
+using Preimage = vector<Fiber>;
 
 ////////////////////////////////////////////////////////////
 
 class Game {
 private:
-  vector<vector<CellState>> NEXT_CELL_STATES;
+  vector<vector<CellState>> RULE_MATRIX;
   Char ORDER, NEXT_ORDER;
   Long DOMAIN_SIZE, CODOMAIN_SIZE;
   Image image;
+  Preimage preimage;
   Grid grid, nextGrid;
 
 public:
@@ -78,6 +68,20 @@ public:
 Long getGridStateCount(Char order);
 
 Long getGridStateIndex(const Grid &grid);
+
+////////////////////////////////////////////////////////////
+
+const Bool TRUE = true;
+const Bool FALSE = false;
+
+const Char LOWER_SURVIVAL = 2;
+const Char UPPER_SURVIVAL = 3;
+const Char LOWER_BIRTH = 3;
+const Char UPPER_BIRTH = 3;
+
+const Long COUT_PERIOD = pow(2, 23) - 1;
+const auto COUT_WIDTH = setw(12);
+const auto COUT_PRECISION = setprecision(4);
 
 ////////////////////////////////////////////////////////////
 

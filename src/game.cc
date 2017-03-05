@@ -3,13 +3,13 @@
 ////////////////////////////////////////////////////////////
 
 Game::Game(Char order) {
-  NEXT_CELL_STATES = vector<vector<CellState>>(2,
+  RULE_MATRIX = vector<vector<CellState>>(2,
     vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
-    NEXT_CELL_STATES[0][j] = TRUE;
+    RULE_MATRIX[0][j] = TRUE;
   }
   for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
-    NEXT_CELL_STATES[1][j] = TRUE;
+    RULE_MATRIX[1][j] = TRUE;
   }
 
   ORDER = order;
@@ -19,6 +19,8 @@ Game::Game(Char order) {
   CODOMAIN_SIZE = getGridStateCount(NEXT_ORDER);
 
   image = Image(CODOMAIN_SIZE, FALSE);
+
+  preimage = Preimage(DOMAIN_SIZE, Fiber());
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
   nextGrid = Grid(NEXT_ORDER, Row(NEXT_ORDER, FALSE));
@@ -101,7 +103,7 @@ void Game::setNextGrid() {
 CellState Game::getNextCellState(Char rowIndex, Char columnIndex) {
   Char i = getCellState(rowIndex, columnIndex);
   Char j = getAliveNeighborCount(rowIndex, columnIndex);
-  return NEXT_CELL_STATES[i][j];
+  return RULE_MATRIX[i][j];
 }
 
 Char Game::getAliveNeighborCount(Char rowIndex, Char columnIndex) {
