@@ -36,10 +36,10 @@ class Game {
 private:
   vector<vector<CellState>> RULE_MATRIX;
   Char ORDER, POST_ORDER, PRE_ORDER;
-  Long DOMAIN_SIZE, CODOMAIN_SIZE;
+  Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE;
   Image image;
   Preimage preimage;
-  Grid grid, postGrid;
+  Grid grid, postGrid, preGrid;
 
 public:
   Game(Char order);

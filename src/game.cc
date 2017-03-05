@@ -16,23 +16,29 @@ Game::Game(Char order) {
   POST_ORDER = ORDER - 2;
   PRE_ORDER = ORDER + 2;
 
-  DOMAIN_SIZE = getGridStateCount(ORDER);
-  CODOMAIN_SIZE = getGridStateCount(POST_ORDER);
+  SPACE_SIZE = getGridStateCount(ORDER);
+  POST_SPACE_SIZE = getGridStateCount(POST_ORDER);
+  PRE_SPACE_SIZE = getGridStateCount(PRE_ORDER);
 
-  image = Image(CODOMAIN_SIZE, FALSE);
+  image = Image(POST_SPACE_SIZE, FALSE);
 
-  preimage = Preimage(DOMAIN_SIZE, Fiber());
+  preimage = Preimage(SPACE_SIZE, Fiber());
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
+  preGrid = Grid(PRE_ORDER, Row(PRE_ORDER, FALSE));
 }
 
 void Game::setPreimage() {
-  
+  for (Long preGridStateIndex = 0;
+      preGridStateIndex < PRE_SPACE_SIZE;
+      preGridStateIndex++) {
+    
+  }
 }
 
 Float Game::getImageProportion() {
-  Float imageProportion = 1.0 * getImageSize() / CODOMAIN_SIZE;
+  Float imageProportion = 1.0 * getImageSize() / POST_SPACE_SIZE;
   cout << "Image proportion: " << imageProportion << ".\n";
   return imageProportion;
 }
@@ -41,7 +47,7 @@ Long Game::getImageSize() {
   setImage();
   Long imageSize = 0;
   for (Long postGridStateIndex = 0;
-      postGridStateIndex < CODOMAIN_SIZE;
+      postGridStateIndex < POST_SPACE_SIZE;
       postGridStateIndex++) {
     if (image[postGridStateIndex]) {
       imageSize++;
@@ -50,7 +56,7 @@ Long Game::getImageSize() {
         postGridStateIndex << ".\n";
     }
   }
-  cout << "Codomain size: " << CODOMAIN_SIZE << ".\n";
+  cout << "Codomain size: " << POST_SPACE_SIZE << ".\n";
   cout << "Image size: " << imageSize << ".\n";
   return imageSize;
 }
@@ -59,9 +65,9 @@ void Game::setImage() {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   for (Long gridStateIndex = 0;
-      gridStateIndex < DOMAIN_SIZE; gridStateIndex++) {
+      gridStateIndex < SPACE_SIZE; gridStateIndex++) {
     if (!(gridStateIndex & COUT_PERIOD)) {
-      Float percent = 100.0 * gridStateIndex / DOMAIN_SIZE;
+      Float percent = 100.0 * gridStateIndex / SPACE_SIZE;
       auto currentTime = chrono::system_clock::now();
       auto currentElapsedTime = chrono::duration_cast
         <chrono::seconds>(currentTime - startTime).count();
