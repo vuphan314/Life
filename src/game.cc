@@ -14,6 +14,7 @@ Game::Game(Char order) {
 
   ORDER = order;
   POST_ORDER = ORDER - 2;
+  PRE_ORDER = ORDER + 2;
 
   SPACE_SIZE = getGridStateCount(ORDER);
   POST_SPACE_SIZE = getGridStateCount(POST_ORDER);
@@ -32,11 +33,11 @@ void Game::setPreImage() {
   preImage = PreImage(SPACE_SIZE, Fiber());
 
   cout << "Will use " <<
-    getGridStateCount(ORDER + 2) / pow(2, 30) <<
-    " GB of RAM.\n";
+    getGridStateCount(PRE_ORDER) / pow(2, 30) <<
+    "GB of RAM.\n";
 
   cout << "Started setting pre-image.\n";
-  Game preGame(ORDER + 2);
+  Game preGame(PRE_ORDER);
   for (Long preGridStateIndex = 0;
       preGridStateIndex < preGame.SPACE_SIZE;
       preGridStateIndex++) {

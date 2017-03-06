@@ -35,7 +35,7 @@ using PreImage = vector<Fiber>;
 class Game {
 private:
   vector<vector<CellState>> RULE_MATRIX;
-  Char ORDER, POST_ORDER;
+  Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE;
   Image image;
   PreImage preImage;
