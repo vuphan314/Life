@@ -11,6 +11,8 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
+#include "../cplusplus/src/vectors.h"
+
 ////////////////////////////////////////////////////////////
 
 using Char = unsigned char; // n

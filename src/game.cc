@@ -50,6 +50,8 @@ void Game::setPreImage() {
     preImage[gridStateIndex].push_back(preGridStateIndex);
   }
   cout << "Ended setting pre-image.\n";
+  printVector2d(vector<vector<unsigned int>>{{0}, {1}});
+  // printVector2d(preImage);
 }
 
 Float Game::getImageProportion() {
