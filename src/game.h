@@ -46,6 +46,8 @@ private:
 public:
   Game(Char order);
 
+  void inspectPreImage();
+
   void setPreImage();
 
   Float getImageProportion();
