@@ -31,11 +31,10 @@ void Game::setPreImage() {
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
 
-  if (ORDER > 3) {
-    cout << "Would need " <<
-      getGridStateCount(ORDER + 2) / pow(2, 30) <<
-      " GB of RAM.\n";
-  }
+  cout << "Will use " <<
+    getGridStateCount(ORDER + 2) / pow(2, 30) <<
+    " GB of RAM.\n";
+
   cout << "Started setting pre-image.\n";
   Game preGame(ORDER + 2);
   for (Long preGridStateIndex = 0;
