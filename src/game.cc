@@ -25,6 +25,14 @@ Game::Game(Char order) {
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
+void Game::inspectPreImage() {
+  setPreImage();
+  cout << "Inspecting pre-image.\n";
+  for (auto fiber : preImage) {
+    cout << fiber.size() << "\n";
+  }
+}
+
 void Game::setPreImage() {
   cout << "Pre-image is order-"
     << static_cast<Int>(PRE_ORDER) << ".\n";
