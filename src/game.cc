@@ -26,15 +26,19 @@ Game::Game(Char order) {
 }
 
 void Game::setPreImage() {
-  if (ORDER > 5) {
-    cout << "Order-" << static_cast<Int>(ORDER) <<
-      " pre-image is too big for std::vector.\n";
+  cout << "Pre-image is order-"
+    << static_cast<Int>(PRE_ORDER) << ".\n";
+  if (PRE_ORDER > 7) {
+     cout << "\tToo big for std::vector.\n";
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
 
-  cout << "Will use " <<
-    getGridStateCount(PRE_ORDER) / pow(2, 30) <<
-    "GB of RAM.\n";
+  cout << getGridStateCount(PRE_ORDER) / pow(2, 30) <<
+    "GB of RAM needed.\n";
+  if (PRE_ORDER > 5) {
+    cout << "\tTerminated.\n";
+    return;
+  }
 
   cout << "Started setting pre-image.\n";
   Game preGame(PRE_ORDER);
