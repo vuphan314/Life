@@ -26,15 +26,17 @@ Game::Game(Char order) {
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
-void Game::inspectPreImage() {
-  setPreImage();
-  cout << "Inspecting pre-image.\n";
-  for (Long gridIndex = 0; gridIndex < ORDER; gridIndex++) {
-    if (preImage[gridIndex].size() < EDGE_PRE_SPACE_SIZE) {
-      cout << gridIndex << " ";
-    }
-  }
-}
+
+
+// void Game::inspectPreImage() {
+//   setPreImage();
+//   cout << "Inspecting pre-image.\n";
+//   for (Long gridIndex = 0; gridIndex < ORDER; gridIndex++) {
+//     if (preImage[gridIndex].size() < EDGE_PRE_SPACE_SIZE) {
+//       cout << gridIndex << " ";
+//     }
+//   }
+// }
 
 void Game::setPreImage() {
   cout << "Pre-image is order-"
@@ -173,7 +175,7 @@ Long getSpaceSize(Char order) {
 
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, 0, order, order - 2, order);  
+  return getSubGridIndex(grid, 0, order, order - 2, order);
 }
 
 Long getGridIndex(const Grid &grid) {

@@ -33,6 +33,7 @@ using Fiber = vector<Long>;
 using PreImage = vector<Fiber>;
 
 using EdgeFiber = unordered_set<Long>;
+using EdgePreImage = vector<EdgeFiber>;
 
 ////////////////////////////////////////////////////////////
 
@@ -42,13 +43,16 @@ private:
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, EDGE_PRE_SPACE_SIZE;
   Image image;
-  PreImage preImage;
-  Grid grid, postGrid;
+  PreImage preImage; // initialized only if needed
+  EdgePreImage rightEdgePreImage; // initialized only if needed
+  Grid grid, postGrid; // temporary
 
 public:
   Game(Char order);
 
-  void inspectPreImage();
+  void setRightEdgePreImage();
+
+  // void inspectPreImage();
 
   void setPreImage();
 
