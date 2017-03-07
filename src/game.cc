@@ -29,9 +29,9 @@ Game::Game(Char order) {
 void Game::inspectPreImage() {
   setPreImage();
   cout << "Inspecting pre-image.\n";
-  for (Long gridStateIndex = 0; gridStateIndex < ORDER; gridStateIndex++) {
-    if (preImage[gridStateIndex].size() < EDGE_PRE_SPACE_SIZE) {
-      cout << gridStateIndex << " ";
+  for (Long gridIndex = 0; gridIndex < ORDER; gridIndex++) {
+    if (preImage[gridIndex].size() < EDGE_PRE_SPACE_SIZE) {
+      cout << gridIndex << " ";
     }
   }
 }
@@ -53,12 +53,12 @@ void Game::setPreImage() {
 
   cout << "Started setting pre-image.\n";
   Game preGame(PRE_ORDER);
-  for (Long preGridStateIndex = 0;
-      preGridStateIndex < preGame.SPACE_SIZE;
-      preGridStateIndex++) {
-    Long gridStateIndex =
-      preGame.getPostGridStateIndex(preGridStateIndex);
-    preImage[gridStateIndex].push_back(preGridStateIndex);
+  for (Long preGridIndex = 0;
+      preGridIndex < preGame.SPACE_SIZE;
+      preGridIndex++) {
+    Long gridIndex =
+      preGame.getPostGridIndex(preGridIndex);
+    preImage[gridIndex].push_back(preGridIndex);
   }
   cout << "Ended setting pre-image.\n";
 }
@@ -72,14 +72,14 @@ Float Game::getImageProportion() {
 Long Game::getImageSize() {
   setImage();
   Long imageSize = 0;
-  for (Long postGridStateIndex = 0;
-      postGridStateIndex < POST_SPACE_SIZE;
-      postGridStateIndex++) {
-    if (image[postGridStateIndex]) {
+  for (Long postGridIndex = 0;
+      postGridIndex < POST_SPACE_SIZE;
+      postGridIndex++) {
+    if (image[postGridIndex]) {
       imageSize++;
     } else {
       cout << "Not in image: post grid state index " <<
-        postGridStateIndex << ".\n";
+        postGridIndex << ".\n";
     }
   }
   cout << "Post-space size: " << POST_SPACE_SIZE << ".\n";
@@ -90,21 +90,21 @@ Long Game::getImageSize() {
 void Game::setImage() {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
-  for (Long gridStateIndex = 0;
-      gridStateIndex < SPACE_SIZE; gridStateIndex++) {
-    if (!(gridStateIndex & COUT_PERIOD)) {
-      Float percent = 100.0 * gridStateIndex / SPACE_SIZE;
+  for (Long gridIndex = 0;
+      gridIndex < SPACE_SIZE; gridIndex++) {
+    if (!(gridIndex & COUT_PERIOD)) {
+      Float percent = 100.0 * gridIndex / SPACE_SIZE;
       auto currentTime = chrono::system_clock::now();
       auto currentElapsedTime = chrono::duration_cast
         <chrono::seconds>(currentTime - startTime).count();
       Float remainingTime = currentElapsedTime *
         (100.0 / percent - 1) / 3600;
       cout << "Processed grid state index" <<
-        COUT_WIDTH << gridStateIndex <<
+        COUT_WIDTH << gridIndex <<
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingTime << " hours left.\n";
     }
-    image[getPostGridStateIndex(gridStateIndex)] = TRUE;
+    image[getPostGridIndex(gridIndex)] = TRUE;
   }
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
@@ -113,18 +113,18 @@ void Game::setImage() {
     << totalElapsedTime << " seconds.\n";
 }
 
-Long Game::getPostGridStateIndex(Long gridStateIndex) {
-  setGrid(gridStateIndex);
+Long Game::getPostGridIndex(Long gridIndex) {
+  setGrid(gridIndex);
   setPostGrid();
-  return getGridStateIndex(postGrid);
+  return getGridIndex(postGrid);
 }
 
-void Game::setGrid(Long gridStateIndex) {
+void Game::setGrid(Long gridIndex) {
   for (Char ri = 0; ri < ORDER; ri++) {
     for (Char ci = 0; ci < ORDER; ci++) {
-      Char leastBit = gridStateIndex & 1;
+      Char leastBit = gridIndex & 1;
       grid[ri][ci] = leastBit;
-      gridStateIndex >>= 1;
+      gridIndex >>= 1;
     }
   }
 }
@@ -171,15 +171,15 @@ Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
-Long getGridStateIndex(const Grid &grid) {
+Long getGridIndex(const Grid &grid) {
   Char order = grid.size();
-  Long gridStateIndex = 0;
+  Long gridIndex = 0;
   Int cellStateIndex = 0;
   for (Char ri = 0; ri < order; ri++) {
     for (Char ci = 0; ci < order; ci++) {
-      gridStateIndex += grid[ri][ci] << cellStateIndex;
+      gridIndex += grid[ri][ci] << cellStateIndex;
       cellStateIndex++;
     }
   }
-  return gridStateIndex;
+  return gridIndex;
 }

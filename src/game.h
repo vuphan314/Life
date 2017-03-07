@@ -56,9 +56,9 @@ public:
 
   void setImage();
 
-  Long getPostGridStateIndex(Long gridStateIndex);
+  Long getPostGridIndex(Long gridIndex);
 
-  void setGrid(Long gridStateIndex);
+  void setGrid(Long gridIndex);
 
   void setPostGrid();
 
@@ -75,7 +75,7 @@ Long getEdgeSpaceSize(Char order);
 
 Long getSpaceSize(Char order);
 
-Long getGridStateIndex(const Grid &grid);
+Long getGridIndex(const Grid &grid);
 
 ////////////////////////////////////////////////////////////
 
