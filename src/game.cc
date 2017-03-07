@@ -44,8 +44,8 @@ Bool Space::isEachGridPairHorizontallyJoinable() {
     for (Long rightGridIndex = 0;
         rightGridIndex < SPACE_SIZE; rightGridIndex++) {
       if (!(areHorizontallyJoinable(leftGridIndex, rightGridIndex))) {
-        cout << "Horizontally unjoinable grid pair: left " << leftGridIndex
-          << ", right " << rightGridIndex << ".\n";
+        cout << "Horizontally unjoinable grid pair: left " <<
+        leftGridIndex << ", right " << rightGridIndex << ".\n";
         return FALSE;
       }
     }
