@@ -71,7 +71,7 @@ public:
 
 ////////////////////////////////////////////////////////////
 
-Long getGridStateCount(Char order);
+Long getSpaceSize(Char order);
 
 Long getGridStateIndex(const Grid &grid);
 

@@ -16,8 +16,8 @@ Game::Game(Char order) {
   POST_ORDER = ORDER - 2;
   PRE_ORDER = ORDER + 2;
 
-  SPACE_SIZE = getGridStateCount(ORDER);
-  POST_SPACE_SIZE = getGridStateCount(POST_ORDER);
+  SPACE_SIZE = getSpaceSize(ORDER);
+  POST_SPACE_SIZE = getSpaceSize(POST_ORDER);
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
@@ -41,7 +41,7 @@ void Game::setPreImage() {
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
 
-  cout << getGridStateCount(PRE_ORDER) / pow(2, 30) <<
+  cout << getSpaceSize(PRE_ORDER) / pow(2, 30) <<
     "GB of RAM needed.\n";
   if (PRE_ORDER > 5) {
     cout << "\tTerminated.\n";
@@ -160,7 +160,7 @@ CellState Game::getCellState(Char rowIndex, Char columnIndex) {
 
 ////////////////////////////////////////////////////////////
 
-Long getGridStateCount(Char order) {
+Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
