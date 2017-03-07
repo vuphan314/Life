@@ -38,6 +38,31 @@ void Space::inspectSpace() {
   }
 }
 
+void Space::showHorizontallyUnjoinableGridPair() {
+  setEdgePreImages();
+  for (Long leftGridIndex = 0; leftGridIndex < SPACE_SIZE; leftGridIndex++) {
+    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE; rightGridIndex++) {
+      if (!(areHorizontallyJoinable(leftGridIndex, rightGridIndex))) {
+        cout << "Horizontally unjoinable grid pair: left " << leftGridIndex
+          << ", right " << rightGridIndex << ".\n";
+        return;
+      }
+    }
+  }
+  cout << "Every grid pair is horizontally joinable.\n";
+}
+
+Bool Space::areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex) {
+    for (Long rightPreEdgeIndex : rightEdgePreImage[leftGridIndex]) {
+      for (Long leftPreEdgeIndex : leftEdgePreImage[rightGridIndex]) {
+        if (rightPreEdgeIndex == leftPreEdgeIndex) {
+          return TRUE;
+        }
+      }
+    }
+    return FALSE;
+  }
+
 void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
@@ -46,25 +71,24 @@ void Space::setEdgePreImages() {
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       preSpace.setGrid(preGridIndex);
-      Long rightEdgeIndex = getRightEdgeIndex(preSpace.grid),
-        leftEdgeIndex = getLeftEdgeIndex(preSpace.grid);
-      rightEdgePreImage[gridIndex].insert(rightEdgeIndex);
-      leftEdgePreImage[gridIndex].insert(leftEdgeIndex);
+      Long rightPreEdgeIndex = getRightEdgeIndex(preSpace.grid),
+        leftPreEdgeIndex = getLeftEdgeIndex(preSpace.grid);
+      rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
+      leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);
     }
   }
 }
 
 void Space::setPreImage() {
   if (PRE_ORDER > 7) {
-     cout << "\tToo big for std::vector.\n";
+     cout << "Too big for std::vector.\n";
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
 
   cout << getSpaceSize(PRE_ORDER) / pow(2, 30) <<
     "GB of RAM needed.\n";
   if (PRE_ORDER > 5) {
-    cout << "\tTerminated.\n";
-    return;
+    throw exception();
   }
 
   cout << "Started setting pre-image.\n";

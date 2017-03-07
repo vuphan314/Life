@@ -1,18 +1,31 @@
-// order-3 image
+// order-5 space
 Ended setting image after 9 seconds.
 Codomain size: 512.
 Image size: 512.
 Image proportion: 1.0000.
 
-// order-4 image
+// order-6 space
 Ended setting image after 29952 seconds. // 8 hours
 Codomain size: 65536.
 Image size: 65536.
 Image proportion:  1.0000.
 
-////////////////////////////////////////////////////////////
-
-// order-5 image
+// order-7 space
 Started setting image.
 Processed grid state index    10000000      0.0000%  93824.9906 hours left.
   // 10 years
+
+////////////////////////////////////////////////////////////
+
+// order-3 space
+make: 'life.out' is up to date.
+0.03125GB of RAM needed.
+Started setting pre-image.
+Ended setting pre-image.
+Every grid pair is horizontally joinable.
+
+// order-4 space
+make: 'life.out' is up to date.
+64GB of RAM needed.
+	Terminated.
+Horizontally unjoinable grid pair: left 0, right 0.

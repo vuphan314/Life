@@ -54,6 +54,10 @@ public:
 
   void inspectSpace();
 
+  void showHorizontallyUnjoinableGridPair();
+
+  Bool areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex);
+
   void setEdgePreImages();
 
   void setPreImage();
