@@ -173,13 +173,19 @@ Long getSpaceSize(Char order) {
 
 Long getGridIndex(const Grid &grid) {
   Char order = grid.size();
-  Long gridIndex = 0;
-  Int cellStateIndex = 0;
-  for (Char ri = 0; ri < order; ri++) {
-    for (Char ci = 0; ci < order; ci++) {
-      gridIndex += grid[ri][ci] << cellStateIndex;
-      cellStateIndex++;
+  return getSubGridIndex(grid, 0, order, 0, order);
+}
+
+Long getSubGridIndex(const Grid &grid,
+    Char startRow, Char endRow,
+    Char startColumn, Char endColumn) {
+  Long subGridIndex = 0;
+  Int cellIndex = 0;
+  for (Char ri = startRow; ri < endRow; ri++) {
+    for (Char ci = startColumn; ci < endColumn; ci++) {
+      subGridIndex += grid[ri][ci] << cellIndex;
+      cellIndex++;
     }
   }
-  return gridIndex;
+  return subGridIndex;
 }

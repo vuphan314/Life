@@ -74,7 +74,13 @@ Long getEdgeSpaceSize(Char order);
 
 Long getSpaceSize(Char order);
 
+// Long getEdgeIndex(const Grid &grid);
+
 Long getGridIndex(const Grid &grid);
+
+Long getSubGridIndex(const Grid &grid,
+  Char startRow, Char endRow,
+  Char startColumn, Char endColumn);
 
 ////////////////////////////////////////////////////////////
 
