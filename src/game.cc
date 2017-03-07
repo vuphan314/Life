@@ -28,7 +28,7 @@ Space::Space(Char order) {
 }
 
 void Space::inspectSpace() {
-  setRightEdgePreImage();
+  setEdgePreImages();
   cout << "Edge pre-space size: " << EDGE_PRE_SPACE_SIZE << ".\n";
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     Long rightEdgeFiberSize = rightEdgePreImage[gridIndex].size();
@@ -38,15 +38,18 @@ void Space::inspectSpace() {
   }
 }
 
-void Space::setRightEdgePreImage() {
+void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+  leftEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
   Space preSpace(PRE_ORDER);
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       preSpace.setGrid(preGridIndex);
-      Long rightEdgeIndex = getRightEdgeIndex(preSpace.grid);
+      Long rightEdgeIndex = getRightEdgeIndex(preSpace.grid),
+        leftEdgeIndex = getLeftEdgeIndex(preSpace.grid);
       rightEdgePreImage[gridIndex].insert(rightEdgeIndex);
+      leftEdgePreImage[gridIndex].insert(leftEdgeIndex);
     }
   }
 }
@@ -187,6 +190,11 @@ Long getSpaceSize(Char order) {
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getSubGridIndex(grid, 0, order, order - 2, order);
+}
+
+Long getLeftEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, 0, order, 0, 2);
 }
 
 Long getGridIndex(const Grid &grid) {

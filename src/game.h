@@ -45,7 +45,8 @@ private:
     EDGE_PRE_SPACE_SIZE;
   Image image;
   PreImage preImage; // initialized only if needed
-  EdgePreImage rightEdgePreImage; // initialized only if needed
+  EdgePreImage rightEdgePreImage, leftEdgePreImage;
+    // initialized only if needed
   Grid grid, postGrid; // temporary
 
 public:
@@ -53,7 +54,7 @@ public:
 
   void inspectSpace();
 
-  void setRightEdgePreImage();
+  void setEdgePreImages();
 
   void setPreImage();
 
@@ -84,6 +85,8 @@ Long getSpaceSize(Char order);
 
 Long getRightEdgeIndex(const Grid &grid);
 
+Long getLeftEdgeIndex(const Grid &grid);
+
 Long getGridIndex(const Grid &grid);
 
 Long getSubGridIndex(const Grid &grid,
@@ -92,13 +95,13 @@ Long getSubGridIndex(const Grid &grid,
 
 ////////////////////////////////////////////////////////////
 
-const Bool TRUE = true;
 const Bool FALSE = false;
+const Bool TRUE = true;
 
-const Char LOWER_SURVIVAL = 2;
-const Char UPPER_SURVIVAL = 3;
 const Char LOWER_BIRTH = 3;
 const Char UPPER_BIRTH = 3;
+const Char LOWER_SURVIVAL = 2;
+const Char UPPER_SURVIVAL = 3;
 
 const Long COUT_PERIOD = pow(2, 23) - 1;
 const auto COUT_WIDTH = setw(12);
