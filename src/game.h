@@ -21,13 +21,12 @@ using Long = unsigned long long; // 2^n^2
 using Float = long double;
 
 using Bool = Char;
-using CellState = Bool;
-using GridState = Bool;
 
+using CellState = Bool;
 using Row = vector<CellState>;
 using Grid = vector<Row>;
 
-using Image = vector<GridState>;
+using Image = vector<Bool>;
 
 using Fiber = vector<Long>;
 using PreImage = vector<Fiber>;
