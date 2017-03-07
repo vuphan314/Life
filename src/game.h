@@ -44,9 +44,9 @@ private:
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
   Image image;
-  PreImage preImage; // initialized only if needed
+  PreImage preImage; // 2^(n+2)^2, on demand
   EdgePreImage rightEdgePreImage, leftEdgePreImage;
-    // initialized only if needed
+    // 2^(2*(n+2)), on demand
   Grid grid, postGrid; // temporary
 
 public:
