@@ -27,5 +27,3 @@ Every grid pair is horizontally joinable.
 // order-4 space
 make: 'life.out' is up to date.
 64GB of RAM needed.
-	Terminated.
-Horizontally unjoinable grid pair: left 0, right 0.
