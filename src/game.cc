@@ -85,8 +85,7 @@ void Space::setPreImage() {
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
 
-  cout << getSpaceSize(PRE_ORDER) / pow(2, 30) <<
-    "GB of RAM needed.\n";
+  cout << "RAM needed: " << getSpaceSize(PRE_ORDER) / pow(2, 30) << "GB.\n";
   if (PRE_ORDER > 5) {
     throw exception();
   }
