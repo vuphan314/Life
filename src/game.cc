@@ -171,6 +171,11 @@ Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
+Long getRightEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, 0, order, order - 2, order);  
+}
+
 Long getGridIndex(const Grid &grid) {
   Char order = grid.size();
   return getSubGridIndex(grid, 0, order, 0, order);

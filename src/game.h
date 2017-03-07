@@ -9,6 +9,7 @@ using namespace std;
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <unordered_set>
 #include <vector>
 
 #include "../cplusplus/src/vectors.h"
@@ -30,6 +31,8 @@ using Image = vector<Bool>;
 
 using Fiber = vector<Long>;
 using PreImage = vector<Fiber>;
+
+using EdgeFiber = unordered_set<Long>;
 
 ////////////////////////////////////////////////////////////
 
@@ -74,7 +77,7 @@ Long getEdgeSpaceSize(Char order);
 
 Long getSpaceSize(Char order);
 
-// Long getEdgeIndex(const Grid &grid);
+Long getRightEdgeIndex(const Grid &grid);
 
 Long getGridIndex(const Grid &grid);
 
