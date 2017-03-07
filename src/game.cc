@@ -26,7 +26,10 @@ Game::Game(Char order) {
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
-
+void Game::setRightEdgePreImage() {
+  setPreImage();
+  rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+}
 
 // void Game::inspectPreImage() {
 //   setPreImage();
