@@ -37,7 +37,7 @@ using EdgePreImage = vector<EdgeFiber>;
 
 ////////////////////////////////////////////////////////////
 
-class Game {
+class Space {
 private:
   vector<vector<CellState>> RULE_MATRIX;
   Char ORDER, POST_ORDER, PRE_ORDER;
@@ -49,9 +49,9 @@ private:
   Grid grid, postGrid; // temporary
 
 public:
-  Game(Char order);
+  Space(Char order);
 
-  void inspectGame();
+  void inspectSpace();
 
   void setRightEdgePreImage();
 

@@ -5,7 +5,7 @@ int main(int argc, const char *argv[]) {
     cout << "Provide order in $1.\n";
   } else {
     Char order = atoi(argv[1]);
-    Game game(order);
-    game.inspectGame();
+    Space game(order);
+    game.inspectSpace();
   }
 }

@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////
 
-Game::Game(Char order) {
+Space::Space(Char order) {
   RULE_MATRIX = vector<vector<CellState>>(2,
     vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
@@ -27,7 +27,7 @@ Game::Game(Char order) {
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
-void Game::inspectGame() {
+void Space::inspectSpace() {
   setRightEdgePreImage();
   cout << "Edge pre-space size: " << EDGE_PRE_SPACE_SIZE << ".\n";
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
@@ -35,20 +35,20 @@ void Game::inspectGame() {
   }
 }
 
-void Game::setRightEdgePreImage() {
+void Space::setRightEdgePreImage() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  Game preGame(PRE_ORDER);
+  Space preSpace(PRE_ORDER);
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
-      preGame.setGrid(preGridIndex);
-      Long rightEdgeIndex = getRightEdgeIndex(preGame.grid);
+      preSpace.setGrid(preGridIndex);
+      Long rightEdgeIndex = getRightEdgeIndex(preSpace.grid);
       rightEdgePreImage[gridIndex].insert(rightEdgeIndex);
     }
   }
 }
 
-void Game::setPreImage() {
+void Space::setPreImage() {
   if (PRE_ORDER > 7) {
      cout << "\tToo big for std::vector.\n";
   }
@@ -62,24 +62,24 @@ void Game::setPreImage() {
   }
 
   cout << "Started setting pre-image.\n";
-  Game preGame(PRE_ORDER);
+  Space preSpace(PRE_ORDER);
   for (Long preGridIndex = 0;
       preGridIndex < PRE_SPACE_SIZE;
       preGridIndex++) {
     Long gridIndex =
-      preGame.getPostGridIndex(preGridIndex);
+      preSpace.getPostGridIndex(preGridIndex);
     preImage[gridIndex].push_back(preGridIndex);
   }
   cout << "Ended setting pre-image.\n";
 }
 
-Float Game::getImageProportion() {
+Float Space::getImageProportion() {
   Float imageProportion = 1.0 * getImageSize() / POST_SPACE_SIZE;
   cout << "Image proportion: " << imageProportion << ".\n";
   return imageProportion;
 }
 
-Long Game::getImageSize() {
+Long Space::getImageSize() {
   setImage();
   Long imageSize = 0;
   for (Long postGridIndex = 0;
@@ -97,7 +97,7 @@ Long Game::getImageSize() {
   return imageSize;
 }
 
-void Game::setImage() {
+void Space::setImage() {
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   for (Long gridIndex = 0;
@@ -123,13 +123,13 @@ void Game::setImage() {
     << totalElapsedTime << " seconds.\n";
 }
 
-Long Game::getPostGridIndex(Long gridIndex) {
+Long Space::getPostGridIndex(Long gridIndex) {
   setGrid(gridIndex);
   setPostGrid();
   return getGridIndex(postGrid);
 }
 
-void Game::setGrid(Long gridIndex) {
+void Space::setGrid(Long gridIndex) {
   for (Char ri = 0; ri < ORDER; ri++) {
     for (Char ci = 0; ci < ORDER; ci++) {
       Char leastBit = gridIndex & 1;
@@ -139,7 +139,7 @@ void Game::setGrid(Long gridIndex) {
   }
 }
 
-void Game::setPostGrid() {
+void Space::setPostGrid() {
   for (Char ri = 1; ri < ORDER - 1; ri++) {
     for (Char ci = 1; ci < ORDER - 1; ci++) {
       postGrid[ri - 1][ci - 1] = getPostCellState(ri, ci);
@@ -147,13 +147,13 @@ void Game::setPostGrid() {
   }
 }
 
-CellState Game::getPostCellState(Char rowIndex, Char columnIndex) {
+CellState Space::getPostCellState(Char rowIndex, Char columnIndex) {
   Char i = getCellState(rowIndex, columnIndex);
   Char j = getAliveNeighborCount(rowIndex, columnIndex);
   return RULE_MATRIX[i][j];
 }
 
-Char Game::getAliveNeighborCount(Char rowIndex, Char columnIndex) {
+Char Space::getAliveNeighborCount(Char rowIndex, Char columnIndex) {
   Char count = 0;
   char deltas[] = {-1, 0, 1};
   for (char rowDelta : deltas) {
@@ -167,7 +167,7 @@ Char Game::getAliveNeighborCount(Char rowIndex, Char columnIndex) {
   return count;
 }
 
-CellState Game::getCellState(Char rowIndex, Char columnIndex) {
+CellState Space::getCellState(Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
 
