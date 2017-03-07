@@ -38,18 +38,20 @@ void Space::inspectSpace() {
   }
 }
 
-void Space::showHorizontallyUnjoinableGridPair() {
+Bool Space::isEachGridPairHorizontallyJoinable() {
   setEdgePreImages();
   for (Long leftGridIndex = 0; leftGridIndex < SPACE_SIZE; leftGridIndex++) {
-    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE; rightGridIndex++) {
+    for (Long rightGridIndex = 0;
+        rightGridIndex < SPACE_SIZE; rightGridIndex++) {
       if (!(areHorizontallyJoinable(leftGridIndex, rightGridIndex))) {
         cout << "Horizontally unjoinable grid pair: left " << leftGridIndex
           << ", right " << rightGridIndex << ".\n";
-        return;
+        return FALSE;
       }
     }
   }
-  cout << "Every grid pair is horizontally joinable.\n";
+  cout << "Each grid pair is horizontally joinable.\n";
+  return TRUE;
 }
 
 Bool Space::areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex) {

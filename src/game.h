@@ -54,7 +54,7 @@ public:
 
   void inspectSpace();
 
-  void showHorizontallyUnjoinableGridPair();
+  Bool isEachGridPairHorizontallyJoinable();
 
   Bool areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex);
 
