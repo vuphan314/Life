@@ -18,6 +18,7 @@ Game::Game(Char order) {
 
   SPACE_SIZE = getSpaceSize(ORDER);
   POST_SPACE_SIZE = getSpaceSize(POST_ORDER);
+  PRE_SPACE_SIZE = getSpaceSize(PRE_ORDER);
   EDGE_PRE_SPACE_SIZE = getEdgeSpaceSize(PRE_ORDER);
 
   image = Image(POST_SPACE_SIZE, FALSE);
@@ -26,24 +27,28 @@ Game::Game(Char order) {
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
 }
 
+void Game::inspectGame() {
+  setRightEdgePreImage();
+  cout << "Edge pre-space size: " << EDGE_PRE_SPACE_SIZE << ".\n";
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
+    cout << "Grid index" << COUT_WIDTH << gridIndex << COUT_WIDTH << rightEdgePreImage[gridIndex].size() << "\n";
+  }
+}
+
 void Game::setRightEdgePreImage() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+  Game preGame(PRE_ORDER);
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
+    for (Long preGridIndex : preImage[gridIndex]) {
+      preGame.setGrid(preGridIndex);
+      Long rightEdgeIndex = getRightEdgeIndex(preGame.grid);
+      rightEdgePreImage[gridIndex].insert(rightEdgeIndex);
+    }
+  }
 }
 
-// void Game::inspectPreImage() {
-//   setPreImage();
-//   cout << "Inspecting pre-image.\n";
-//   for (Long gridIndex = 0; gridIndex < ORDER; gridIndex++) {
-//     if (preImage[gridIndex].size() < EDGE_PRE_SPACE_SIZE) {
-//       cout << gridIndex << " ";
-//     }
-//   }
-// }
-
 void Game::setPreImage() {
-  cout << "Pre-image is order-"
-    << static_cast<Int>(PRE_ORDER) << ".\n";
   if (PRE_ORDER > 7) {
      cout << "\tToo big for std::vector.\n";
   }
@@ -59,7 +64,7 @@ void Game::setPreImage() {
   cout << "Started setting pre-image.\n";
   Game preGame(PRE_ORDER);
   for (Long preGridIndex = 0;
-      preGridIndex < preGame.SPACE_SIZE;
+      preGridIndex < PRE_SPACE_SIZE;
       preGridIndex++) {
     Long gridIndex =
       preGame.getPostGridIndex(preGridIndex);

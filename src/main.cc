@@ -6,6 +6,6 @@ int main(int argc, const char *argv[]) {
   } else {
     Char order = atoi(argv[1]);
     Game game(order);
-    game.setRightEdgePreImage();
+    game.inspectGame();
   }
 }
