@@ -38,7 +38,7 @@ class Game {
 private:
   vector<vector<CellState>> RULE_MATRIX;
   Char ORDER, POST_ORDER, PRE_ORDER;
-  Long SPACE_SIZE, POST_SPACE_SIZE, PRE_EDGE_SPACE_SIZE;
+  Long SPACE_SIZE, POST_SPACE_SIZE, EDGE_PRE_SPACE_SIZE;
   Image image;
   PreImage preImage;
   Grid grid, postGrid;

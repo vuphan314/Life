@@ -18,7 +18,7 @@ Game::Game(Char order) {
 
   SPACE_SIZE = getSpaceSize(ORDER);
   POST_SPACE_SIZE = getSpaceSize(POST_ORDER);
-  PRE_EDGE_SPACE_SIZE = getEdgeSpaceSize(PRE_ORDER);
+  EDGE_PRE_SPACE_SIZE = getEdgeSpaceSize(PRE_ORDER);
 
   image = Image(POST_SPACE_SIZE, FALSE);
 
@@ -30,7 +30,7 @@ void Game::inspectPreImage() {
   setPreImage();
   cout << "Inspecting pre-image.\n";
   for (Long gridStateIndex = 0; gridStateIndex < ORDER; gridStateIndex++) {
-    if (preImage[gridStateIndex].size() < PRE_EDGE_SPACE_SIZE) {
+    if (preImage[gridStateIndex].size() < EDGE_PRE_SPACE_SIZE) {
       cout << gridStateIndex << " ";
     }
   }
