@@ -1,18 +1,23 @@
-OBJS = main.o game.o ../cplusplus/src/vectors.o
-CC = g++
-CFLAGS = -c -Ofast
+COMPILER = g++
+EXECUTABLE = life.out
+FLAGS = -c -Ofast
+OBJECTS = main.o game.o ../cplusplus/src/vectors.o
 
-life.out: $(OBJS)
-	$(CC) $(OBJS) -o life.out
+############################################################
 
-main.o: main.cc game.h ../cplusplus/src/vectors.h
-	$(CC) $(CFLAGS) main.cc
+$(EXECUTABLE): $(OBJECTS)
+	$(COMPILER) -o $(EXECUTABLE) $(OBJECTS)
+
+main.o: main.cc game.h
+	$(COMPILER) $(FLAGS) main.cc
 
 game.o: game.h game.cc ../cplusplus/src/vectors.h
-	$(CC) $(CFLAGS) game.cc
+	$(COMPILER) $(FLAGS) game.cc
+
+############################################################
 
 clean:
-	rm *.out *.o
+	rm -f $(OBJECTS) $(EXECUTABLE)
 
 subsystem:
 	$(MAKE) -C ../cplusplus/src/
