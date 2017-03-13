@@ -17,7 +17,7 @@ game.o: game.h game.cc ../cplusplus/src/vectors.h
 ############################################################
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -f *.o $(EXECUTABLE)
 
 subsystem:
 	$(MAKE) -C ../cplusplus/src/
