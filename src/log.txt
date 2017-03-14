@@ -7,7 +7,7 @@ Ended setting pre-image.
 Each grid 3-tuple is joinable.
 
 ////////////////////////////////////////////////////////////
-isEachGridPairJoinable
+isEachGrid2tupleJoinable
 
 // order-3 space
 0.03125GB of RAM needed.

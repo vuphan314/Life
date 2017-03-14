@@ -9,7 +9,7 @@ int main(int argc, const char *argv[]) {
     setRULE_MATRIX();
     // game.inspectSpace();
     game.isEachGrid3tupleJoinable();
-    // game.isEachGridPairJoinable();
+    // game.isEachGrid2tupleJoinable();
     // game.getImageProportion();
   }
 }

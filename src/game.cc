@@ -87,12 +87,12 @@ Bool Space::are3wayJoinable(Long gridIndex,
   return FALSE;
 }
 
-Bool Space::isEachGridPairJoinable() {
+Bool Space::isEachGrid2tupleJoinable() {
   setEdgePreImages();
   for (Long leftGridIndex = 0; leftGridIndex < SPACE_SIZE; leftGridIndex++) {
     for (Long rightGridIndex = 0;
         rightGridIndex < SPACE_SIZE; rightGridIndex++) {
-      if (!(areJoinable(leftGridIndex, rightGridIndex))) {
+      if (!(are2wayJoinable(leftGridIndex, rightGridIndex))) {
         cout << "Unjoinable grid pair: left " <<
         leftGridIndex << ", right " << rightGridIndex << ".\n";
         return FALSE;
@@ -103,7 +103,7 @@ Bool Space::isEachGridPairJoinable() {
   return TRUE;
 }
 
-Bool Space::areJoinable(Long leftGridIndex, Long rightGridIndex) {
+Bool Space::are2wayJoinable(Long leftGridIndex, Long rightGridIndex) {
   for (Long rightPreEdgeIndex : rightEdgePreImage[leftGridIndex]) {
     for (Long leftPreEdgeIndex : leftEdgePreImage[rightGridIndex]) {
       if (rightPreEdgeIndex == leftPreEdgeIndex) {

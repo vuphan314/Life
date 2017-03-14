@@ -64,9 +64,9 @@ public:
   Bool are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex);
 
-  Bool isEachGridPairJoinable();
+  Bool isEachGrid2tupleJoinable();
 
-  Bool areJoinable(Long leftGridIndex, Long rightGridIndex);
+  Bool are2wayJoinable(Long leftGridIndex, Long rightGridIndex);
 
   void setEdgePreImages();
 
