@@ -45,13 +45,20 @@ void Space::inspectSpace() {
 
 Bool Space::isEachGrid3tupleJoinable() {
   setPreImage();
-  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
-    for (Long rightGridIndex = 0;
-        rightGridIndex < SPACE_SIZE; rightGridIndex++) {
-      for (Long bottomGridIndex = 0;
-          bottomGridIndex < SPACE_SIZE; bottomGridIndex++) {
-        if (!(are3wayJoinable(gridIndex,
-            rightGridIndex, bottomGridIndex))) {
+  // auto startTime = chrono::system_clock::now();
+  Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
+      gridIndex++, currentCount++) {
+    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE;
+        rightGridIndex++, currentCount++) {
+      for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE;
+          bottomGridIndex++, currentCount++) {
+        // if (!(currentCount & COUT_PERIOD)) {
+        if (TRUE) {
+          Float percent = 100.0 * currentCount / totalCount;
+          cout << currentCount << "\t" << percent << "%\n";
+        }
+        if (!(are3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
           cout << "Unjoinable grid 3-tuple: " << gridIndex <<
             ", right " << rightGridIndex <<
             ", bottom " << bottomGridIndex << ".\n";
