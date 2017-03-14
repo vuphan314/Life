@@ -45,7 +45,6 @@ void Space::inspectSpace() {
 
 Bool Space::isEachGrid3tupleJoinable() {
   setPreImage();
-  // auto startTime = chrono::system_clock::now();
   Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++, currentCount++) {
@@ -53,8 +52,7 @@ Bool Space::isEachGrid3tupleJoinable() {
         rightGridIndex++, currentCount++) {
       for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE;
           bottomGridIndex++, currentCount++) {
-        // if (!(currentCount & COUT_PERIOD)) {
-        if (TRUE) {
+        if (!(currentCount & COUT_PERIOD)) {
           Float percent = 100.0 * currentCount / totalCount;
           cout << currentCount << "\t" << percent << "%\n";
         }
@@ -73,21 +71,44 @@ Bool Space::isEachGrid3tupleJoinable() {
 
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex) {
+  auto startTime = chrono::system_clock::now();
+  Long fiberSize = preImage[gridIndex].size(),
+    rightFiberSize = preImage[rightGridIndex].size(),
+    bottomFiberSize = preImage[bottomGridIndex].size(),
+    totalCount = fiberSize * rightFiberSize * bottomFiberSize,
+    currentCount = 0;
+  cout << fiberSize << "\t" << rightFiberSize << "\t" <<
+    bottomFiberSize << "\n" << totalCount << "\n";
   for (Long preGridIndex : preImage[gridIndex]) {
+    currentCount++;
     setGrid(preGrid, preGridIndex);
     Long right = getRightEdgeIndex(preGrid),
       bottom = getBottomEdgeIndex(preGrid);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
+      currentCount++;
       setGrid(preGrid, rightPreGridIndex);
       Long left = getLeftEdgeIndex(preGrid);
       if (right == left) {
         for (Long bottomPreGridIndex : preImage[bottomGridIndex]) {
+          currentCount++;
           setGrid(preGrid, bottomPreGridIndex);
           Long top = getTopEdgeIndex(preGrid);
           if (bottom == top) {
             return TRUE;
           }
         }
+      } else {
+        currentCount += bottomFiberSize;
+      }
+      if (!(currentCount & COUT_PERIOD)) {
+        Float percent = 100.0 * currentCount / totalCount;
+        auto currentTime = chrono::system_clock::now();
+        auto currentDuration = chrono::duration_cast
+          <chrono::seconds>(currentTime - startTime).count();
+        Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+        cout << "Current count" << COUT_WIDTH << currentCount <<
+          COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+          COUT_WIDTH << remainingDuration << "h left.\n";
       }
     }
   }
