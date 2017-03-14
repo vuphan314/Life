@@ -7,6 +7,7 @@ int main(int argc, const char *argv[]) {
     Char order = atoi(argv[1]);
     Space game(order);
     // game.inspectSpace();
-    game.isEachGridPairHorizontallyJoinable();
+    // game.isEachGridPairHorizontallyJoinable();
+    game.getImageProportion();
   }
 }
