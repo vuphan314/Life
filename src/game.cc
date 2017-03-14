@@ -140,10 +140,10 @@ void Space::setImage() {
         <chrono::seconds>(currentTime - startTime).count();
       Float remainingTime = currentElapsedTime *
         (100.0 / percent - 1) / 3600;
-      cout << "Processed grid state index" <<
+      cout << "Grid state index" <<
         COUT_WIDTH << gridIndex <<
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
-        COUT_WIDTH << remainingTime << " hours left.\n";
+        COUT_WIDTH << remainingTime << "h left.\n";
     }
     image[getPostGridIndex(gridIndex)] = TRUE;
   }

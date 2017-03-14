@@ -12,7 +12,7 @@ Image proportion:  1.0000.
 
 // order-7 space
 Started setting image.
-Processed grid state index     8388608      0.0000%  37282.7017 hours left. // 4 years
+Grid state index     8388608      0.0000%  37282.7017h left. // 4 years
 
 ////////////////////////////////////////////////////////////
 
