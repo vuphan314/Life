@@ -49,10 +49,10 @@ private:
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
   Grid grid, postGrid, preGrid; // (n -|+ 1)^2, temporary
-  Image image; // 2^(n-2)^2, on demand
-  PreImage preImage; // 2^(n+2)^2, on demand
-  EdgePreImage rightEdgePreImage, leftEdgePreImage;
-    // 2^(2*(n+2)), on demand
+// on demand:
+  Image image; // 2^(n-2)^2
+  PreImage preImage; // 2^(n+2)^2
+  EdgePreImage rightEdgePreImage, leftEdgePreImage; // 2^(2*(n+2))
 
 public:
   Space(Char order);
@@ -81,43 +81,41 @@ public:
 
 ////////////////////////////////////////////////////////////
 
-Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid);
-
-void setPostGrid(Grid &postGrid, const Grid &grid);
-
-CellState getPostCellState(const Grid &grid, Char rowIndex, Char columnIndex);
-
-Char getAliveNeighborCount(const Grid &grid, Char rowIndex, Char columnIndex);
-
-CellState getCellState(const Grid &grid, Char rowIndex, Char columnIndex);
-
-////////////////////////////////////////////////////////////
-
 Long getEdgeSpaceSize(Char order);
-
 Long getSpaceSize(Char order);
 
+Long getRightEdgeIndex(const Grid &grid);
+Long getLeftEdgeIndex(const Grid &grid);
 Long getBottomEdgeIndex(const Grid &grid);
-
 Long getTopEdgeIndex(const Grid &grid);
 
-Long getRightEdgeIndex(const Grid &grid);
-
-Long getLeftEdgeIndex(const Grid &grid);
+Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid);
 
 Long getGridIndex(const Grid &grid);
 
 Long getSubGridIndex(const Grid &grid,
-  Char startRow, Char endRow,
+  Char startRow, Char endRow, // [startRow, endRow)
   Char startColumn, Char endColumn);
 
 void setGrid(Grid &grid, Long gridIndex);
+
+void setPostGrid(Grid &postGrid, const Grid &grid);
+
+CellState getPostCellState(const Grid &grid,
+  Char rowIndex, Char columnIndex);
+
+Char getAliveNeighborCount(const Grid &grid,
+  Char rowIndex, Char columnIndex);
+
+CellState getCellState(const Grid &grid,
+  Char rowIndex, Char columnIndex);
 
 ////////////////////////////////////////////////////////////
 
 const Bool FALSE = false;
 const Bool TRUE = true;
 
+// inclusive
 const Char LOWER_BIRTH = 3;
 const Char UPPER_BIRTH = 3;
 const Char LOWER_SURVIVAL = 2;

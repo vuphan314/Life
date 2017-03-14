@@ -166,7 +166,7 @@ Long Space::getImageSize() {
     if (image[postGridIndex]) {
       imageSize++;
     } else {
-      cout << "Not in image: post grid state index " <<
+      cout << "Not in image: post-grid state index " <<
         postGridIndex << ".\n";
     }
   }
@@ -204,73 +204,34 @@ void Space::setImage() {
 
 ////////////////////////////////////////////////////////////
 
-Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid) {
-  setGrid(grid, gridIndex);
-  setPostGrid(postGrid, grid);
-  return getGridIndex(postGrid);
-}
-
-void setPostGrid(Grid &postGrid, const Grid &grid) {
-  Char order = grid.size();
-  for (Char ri = 1; ri < order - 1; ri++) {
-    for (Char ci = 1; ci < order - 1; ci++) {
-      postGrid[ri - 1][ci - 1] = getPostCellState(grid, ri, ci);
-    }
-  }
-}
-
-CellState getPostCellState(const Grid &grid, Char rowIndex, Char columnIndex) {
-  Char i = getCellState(grid, rowIndex, columnIndex);
-  Char j = getAliveNeighborCount(grid, rowIndex, columnIndex);
-  return RULE_MATRIX[i][j];
-}
-
-Char getAliveNeighborCount(const Grid &grid, Char rowIndex, Char columnIndex) {
-  Char count = 0;
-  char deltas[] = {-1, 0, 1};
-  for (char rowDelta : deltas) {
-    Char ri = rowIndex + rowDelta;
-    for (char columnDelta : deltas) {
-      Char ci = columnIndex + columnDelta;
-      count += getCellState(grid, ri, ci);
-    }
-  }
-  count -= getCellState(grid, rowIndex, columnIndex);
-  return count;
-}
-
-CellState getCellState(const Grid &grid, Char rowIndex, Char columnIndex) {
-  return grid[rowIndex][columnIndex];
-}
-
-////////////////////////////////////////////////////////////
-
 Long getEdgeSpaceSize(Char order) {
   return pow(2, 2 * order);
 }
-
 Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
-}
-
-Long getBottomEdgeIndex(const Grid &grid) {
-  Char order = grid.size();
-  return getSubGridIndex(grid, order - 2, order, 0, order);
-}
-
-Long getTopEdgeIndex(const Grid &grid) {
-  Char order = grid.size();
-  return getSubGridIndex(grid, 0, 2, 0, order);
 }
 
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getSubGridIndex(grid, 0, order, order - 2, order);
 }
-
 Long getLeftEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getSubGridIndex(grid, 0, order, 0, 2);
+}
+Long getBottomEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, order - 2, order, 0, order);
+}
+Long getTopEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, 0, 2, 0, order);
+}
+
+Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid) {
+  setGrid(grid, gridIndex);
+  setPostGrid(postGrid, grid);
+  return getGridIndex(postGrid);
 }
 
 Long getGridIndex(const Grid &grid) {
@@ -301,6 +262,42 @@ void setGrid(Grid &grid, Long gridIndex) {
       gridIndex >>= 1;
     }
   }
+}
+
+void setPostGrid(Grid &postGrid, const Grid &grid) {
+  Char order = grid.size();
+  for (Char ri = 1; ri < order - 1; ri++) {
+    for (Char ci = 1; ci < order - 1; ci++) {
+      postGrid[ri - 1][ci - 1] = getPostCellState(grid, ri, ci);
+    }
+  }
+}
+
+CellState getPostCellState(const Grid &grid,
+    Char rowIndex, Char columnIndex) {
+  Char i = getCellState(grid, rowIndex, columnIndex);
+  Char j = getAliveNeighborCount(grid, rowIndex, columnIndex);
+  return RULE_MATRIX[i][j];
+}
+
+Char getAliveNeighborCount(const Grid &grid,
+    Char rowIndex, Char columnIndex) {
+  Char count = 0;
+  char deltas[] = {-1, 0, 1};
+  for (char rowDelta : deltas) {
+    Char ri = rowIndex + rowDelta;
+    for (char columnDelta : deltas) {
+      Char ci = columnIndex + columnDelta;
+      count += getCellState(grid, ri, ci);
+    }
+  }
+  count -= getCellState(grid, rowIndex, columnIndex);
+  return count;
+}
+
+CellState getCellState(const Grid &grid,
+    Char rowIndex, Char columnIndex) {
+  return grid[rowIndex][columnIndex];
 }
 
 ////////////////////////////////////////////////////////////
