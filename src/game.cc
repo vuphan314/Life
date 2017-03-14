@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////
 
-vector<vector<CellState>> RULE_MATRIX; // const after init
+vector<vector<CellState>> RULE_MATRIX; // const after being set
 
 void setRULE_MATRIX() {
   RULE_MATRIX = vector<vector<CellState>>(2,
@@ -26,8 +26,6 @@ Space::Space(Char order) {
   POST_SPACE_SIZE = getSpaceSize(POST_ORDER);
   PRE_SPACE_SIZE = getSpaceSize(PRE_ORDER);
   EDGE_PRE_SPACE_SIZE = getEdgeSpaceSize(PRE_ORDER);
-
-  image = Image(POST_SPACE_SIZE, FALSE);
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
@@ -178,6 +176,7 @@ Long Space::getImageSize() {
 }
 
 void Space::setImage() {
+  image = Image(POST_SPACE_SIZE, FALSE);
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
   for (Long gridIndex = 0;

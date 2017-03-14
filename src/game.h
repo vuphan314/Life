@@ -48,11 +48,11 @@ private:
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
-  Image image; // 2^(n-2)^2
+  Grid grid, postGrid, preGrid; // (n -|+ 1)^2, temporary
+  Image image; // 2^(n-2)^2, on demand
   PreImage preImage; // 2^(n+2)^2, on demand
   EdgePreImage rightEdgePreImage, leftEdgePreImage;
     // 2^(2*(n+2)), on demand
-  Grid grid, postGrid, preGrid; // temporary
 
 public:
   Space(Char order);
