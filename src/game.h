@@ -27,10 +27,10 @@ using CellState = Bool;
 using Row = vector<CellState>;
 using Grid = vector<Row>;
 
-using Image = vector<Bool>;
+using Image = vector<Bool>; // image[postGridIndex]
 
 using Fiber = vector<Long>;
-using PreImage = vector<Fiber>;
+using PreImage = vector<Fiber>; // preImage[gridIndex][preGridIndex]
 
 using EdgeFiber = unordered_set<Long>;
 using EdgePreImage = vector<EdgeFiber>;
