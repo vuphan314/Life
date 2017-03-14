@@ -2,7 +2,9 @@
 
 ////////////////////////////////////////////////////////////
 
-Space::Space(Char order) {
+vector<vector<CellState>> RULE_MATRIX; // const after init
+
+void initRULE_MATRIX() {
   RULE_MATRIX = vector<vector<CellState>>(2,
     vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
@@ -11,7 +13,11 @@ Space::Space(Char order) {
   for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
     RULE_MATRIX[1][j] = TRUE;
   }
+}
 
+////////////////////////////////////////////////////////////
+
+Space::Space(Char order) {
   ORDER = order;
   POST_ORDER = ORDER - 2;
   PRE_ORDER = ORDER + 2;
@@ -114,12 +120,12 @@ void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
   leftEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  Space preSpace(PRE_ORDER);
+  // Space preSpace(PRE_ORDER);
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
-      setGrid(preSpace.grid, preGridIndex);
-      Long rightPreEdgeIndex = getRightEdgeIndex(preSpace.grid),
-        leftPreEdgeIndex = getLeftEdgeIndex(preSpace.grid);
+      setGrid(preGrid, preGridIndex);
+      Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
+        leftPreEdgeIndex = getLeftEdgeIndex(preGrid);
       rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
       leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);
     }
@@ -138,12 +144,12 @@ void Space::setPreImage() {
   }
 
   cout << "Started setting pre-image.\n";
-  Space preSpace(PRE_ORDER);
+  // Space preSpace(PRE_ORDER);
   for (Long preGridIndex = 0;
       preGridIndex < PRE_SPACE_SIZE;
       preGridIndex++) {
     Long gridIndex =
-      preSpace.getPostGridIndex(preGridIndex);
+      getPostGridIndex(preGridIndex, preGrid, grid);
     preImage[gridIndex].push_back(preGridIndex);
   }
   cout << "Ended setting pre-image.\n";
@@ -190,7 +196,7 @@ void Space::setImage() {
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingTime << "h left.\n";
     }
-    image[getPostGridIndex(gridIndex)] = TRUE;
+    image[getPostGridIndex(gridIndex, grid, postGrid)] = TRUE;
   }
   auto endTime = chrono::system_clock::now();
   auto totalElapsedTime = chrono::duration_cast
@@ -199,41 +205,44 @@ void Space::setImage() {
     << totalElapsedTime << " seconds.\n";
 }
 
-Long Space::getPostGridIndex(Long gridIndex) {
+////////////////////////////////////////////////////////////
+
+Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid) {
   setGrid(grid, gridIndex);
-  setPostGrid();
+  setPostGrid(postGrid, grid);
   return getGridIndex(postGrid);
 }
 
-void Space::setPostGrid() {
-  for (Char ri = 1; ri < ORDER - 1; ri++) {
-    for (Char ci = 1; ci < ORDER - 1; ci++) {
-      postGrid[ri - 1][ci - 1] = getPostCellState(ri, ci);
+void setPostGrid(Grid &postGrid, const Grid &grid) {
+  Char order = grid.size();
+  for (Char ri = 1; ri < order - 1; ri++) {
+    for (Char ci = 1; ci < order - 1; ci++) {
+      postGrid[ri - 1][ci - 1] = getPostCellState(grid, ri, ci);
     }
   }
 }
 
-CellState Space::getPostCellState(Char rowIndex, Char columnIndex) {
-  Char i = getCellState(rowIndex, columnIndex);
-  Char j = getAliveNeighborCount(rowIndex, columnIndex);
+CellState getPostCellState(const Grid &grid, Char rowIndex, Char columnIndex) {
+  Char i = getCellState(grid, rowIndex, columnIndex);
+  Char j = getAliveNeighborCount(grid, rowIndex, columnIndex);
   return RULE_MATRIX[i][j];
 }
 
-Char Space::getAliveNeighborCount(Char rowIndex, Char columnIndex) {
+Char getAliveNeighborCount(const Grid &grid, Char rowIndex, Char columnIndex) {
   Char count = 0;
   char deltas[] = {-1, 0, 1};
   for (char rowDelta : deltas) {
     Char ri = rowIndex + rowDelta;
     for (char columnDelta : deltas) {
       Char ci = columnIndex + columnDelta;
-      count += getCellState(ri, ci);
+      count += getCellState(grid, ri, ci);
     }
   }
-  count -= getCellState(rowIndex, columnIndex);
+  count -= getCellState(grid, rowIndex, columnIndex);
   return count;
 }
 
-CellState Space::getCellState(Char rowIndex, Char columnIndex) {
+CellState getCellState(const Grid &grid, Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
 
@@ -296,3 +305,5 @@ void setGrid(Grid &grid, Long gridIndex) {
     }
   }
 }
+
+////////////////////////////////////////////////////////////

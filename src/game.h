@@ -39,7 +39,6 @@ using EdgePreImage = vector<EdgeFiber>;
 
 class Space {
 private:
-  vector<vector<CellState>> RULE_MATRIX;
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
@@ -72,17 +71,19 @@ public:
   Long getImageSize();
 
   void setImage();
-
-  Long getPostGridIndex(Long gridIndex);
-
-  void setPostGrid();
-
-  CellState getPostCellState(Char rowIndex, Char columnIndex);
-
-  Char getAliveNeighborCount(Char rowIndex, Char columnIndex);
-
-  CellState getCellState(Char rowIndex, Char columnIndex);
 };
+
+////////////////////////////////////////////////////////////
+
+Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid);
+
+void setPostGrid(Grid &postGrid, const Grid &grid);
+
+CellState getPostCellState(const Grid &grid, Char rowIndex, Char columnIndex);
+
+Char getAliveNeighborCount(const Grid &grid, Char rowIndex, Char columnIndex);
+
+CellState getCellState(const Grid &grid, Char rowIndex, Char columnIndex);
 
 ////////////////////////////////////////////////////////////
 
@@ -119,6 +120,10 @@ const Char UPPER_SURVIVAL = 3;
 const Long COUT_PERIOD = pow(2, 23) - 1;
 const auto COUT_WIDTH = setw(12);
 const auto COUT_PRECISION = setprecision(4);
+
+////////////////////////////////////////////////////////////
+
+void initRULE_MATRIX();
 
 ////////////////////////////////////////////////////////////
 

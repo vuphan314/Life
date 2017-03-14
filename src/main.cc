@@ -6,6 +6,7 @@ int main(int argc, const char *argv[]) {
   } else {
     Char order = atoi(argv[1]);
     Space game(order);
+    initRULE_MATRIX();
     // game.inspectSpace();
     game.isEachGrid3tupleJoinable();
     // game.isEachGridPairJoinable();
