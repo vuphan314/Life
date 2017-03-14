@@ -47,16 +47,21 @@ private:
   PreImage preImage; // 2^(n+2)^2, on demand
   EdgePreImage rightEdgePreImage, leftEdgePreImage;
     // 2^(2*(n+2)), on demand
-  Grid grid, postGrid; // temporary
+  Grid grid, postGrid, preGrid; // temporary
 
 public:
   Space(Char order);
 
   void inspectSpace();
 
-  Bool isEachGridPairHorizontallyJoinable();
+  Bool isEachGrid3tupleJoinable();
 
-  Bool areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex);
+  Bool are3wayJoinable(Long gridIndex,
+    Long rightGridIndex, Long bottomGridIndex);
+
+  Bool isEachGridPairJoinable();
+
+  Bool areJoinable(Long leftGridIndex, Long rightGridIndex);
 
   void setEdgePreImages();
 
@@ -69,8 +74,6 @@ public:
   void setImage();
 
   Long getPostGridIndex(Long gridIndex);
-
-  void setGrid(Long gridIndex);
 
   void setPostGrid();
 
@@ -87,6 +90,10 @@ Long getEdgeSpaceSize(Char order);
 
 Long getSpaceSize(Char order);
 
+Long getBottomEdgeIndex(const Grid &grid);
+
+Long getTopEdgeIndex(const Grid &grid);
+
 Long getRightEdgeIndex(const Grid &grid);
 
 Long getLeftEdgeIndex(const Grid &grid);
@@ -96,6 +103,8 @@ Long getGridIndex(const Grid &grid);
 Long getSubGridIndex(const Grid &grid,
   Char startRow, Char endRow,
   Char startColumn, Char endColumn);
+
+void setGrid(Grid &grid, Long gridIndex);
 
 ////////////////////////////////////////////////////////////
 

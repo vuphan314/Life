@@ -25,6 +25,7 @@ Space::Space(Char order) {
 
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
+  preGrid = Grid(PRE_ORDER, Row(PRE_ORDER, FALSE));
 }
 
 void Space::inspectSpace() {
@@ -38,32 +39,76 @@ void Space::inspectSpace() {
   }
 }
 
-Bool Space::isEachGridPairHorizontallyJoinable() {
+Bool Space::isEachGrid3tupleJoinable() {
+  setPreImage();
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
+    for (Long rightGridIndex = 0;
+        rightGridIndex < SPACE_SIZE; rightGridIndex++) {
+      for (Long bottomGridIndex = 0;
+          bottomGridIndex < SPACE_SIZE; bottomGridIndex++) {
+        if (!(are3wayJoinable(gridIndex,
+            rightGridIndex, bottomGridIndex))) {
+          cout << "Unjoinable grid 3-tuple: " << gridIndex <<
+            ", right " << rightGridIndex <<
+            ", bottom " << bottomGridIndex << ".\n";
+          return FALSE;
+        }
+      }
+    }
+  }
+  cout << "Each grid 3-tuple is joinable.\n";
+  return TRUE;
+}
+
+Bool Space::are3wayJoinable(Long gridIndex,
+    Long rightGridIndex, Long bottomGridIndex) {
+  for (Long preGridIndex : preImage[gridIndex]) {
+    setGrid(preGrid, preGridIndex);
+    Long right = getRightEdgeIndex(preGrid),
+      bottom = getBottomEdgeIndex(preGrid);
+    for (Long rightPreGridIndex : preImage[rightGridIndex]) {
+      setGrid(preGrid, rightPreGridIndex);
+      Long left = getLeftEdgeIndex(preGrid);
+      if (right == left) {
+        for (Long bottomPreGridIndex : preImage[bottomGridIndex]) {
+          setGrid(preGrid, bottomPreGridIndex);
+          Long top = getTopEdgeIndex(preGrid);
+          if (bottom == top) {
+            return TRUE;
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
+}
+
+Bool Space::isEachGridPairJoinable() {
   setEdgePreImages();
   for (Long leftGridIndex = 0; leftGridIndex < SPACE_SIZE; leftGridIndex++) {
     for (Long rightGridIndex = 0;
         rightGridIndex < SPACE_SIZE; rightGridIndex++) {
-      if (!(areHorizontallyJoinable(leftGridIndex, rightGridIndex))) {
-        cout << "Horizontally unjoinable grid pair: left " <<
+      if (!(areJoinable(leftGridIndex, rightGridIndex))) {
+        cout << "Unjoinable grid pair: left " <<
         leftGridIndex << ", right " << rightGridIndex << ".\n";
         return FALSE;
       }
     }
   }
-  cout << "Each grid pair is horizontally joinable.\n";
+  cout << "Each grid pair is joinable.\n";
   return TRUE;
 }
 
-Bool Space::areHorizontallyJoinable(Long leftGridIndex, Long rightGridIndex) {
-    for (Long rightPreEdgeIndex : rightEdgePreImage[leftGridIndex]) {
-      for (Long leftPreEdgeIndex : leftEdgePreImage[rightGridIndex]) {
-        if (rightPreEdgeIndex == leftPreEdgeIndex) {
-          return TRUE;
-        }
+Bool Space::areJoinable(Long leftGridIndex, Long rightGridIndex) {
+  for (Long rightPreEdgeIndex : rightEdgePreImage[leftGridIndex]) {
+    for (Long leftPreEdgeIndex : leftEdgePreImage[rightGridIndex]) {
+      if (rightPreEdgeIndex == leftPreEdgeIndex) {
+        return TRUE;
       }
     }
-    return FALSE;
   }
+  return FALSE;
+}
 
 void Space::setEdgePreImages() {
   setPreImage();
@@ -72,7 +117,7 @@ void Space::setEdgePreImages() {
   Space preSpace(PRE_ORDER);
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
-      preSpace.setGrid(preGridIndex);
+      setGrid(preSpace.grid, preGridIndex);
       Long rightPreEdgeIndex = getRightEdgeIndex(preSpace.grid),
         leftPreEdgeIndex = getLeftEdgeIndex(preSpace.grid);
       rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
@@ -155,19 +200,9 @@ void Space::setImage() {
 }
 
 Long Space::getPostGridIndex(Long gridIndex) {
-  setGrid(gridIndex);
+  setGrid(grid, gridIndex);
   setPostGrid();
   return getGridIndex(postGrid);
-}
-
-void Space::setGrid(Long gridIndex) {
-  for (Char ri = 0; ri < ORDER; ri++) {
-    for (Char ci = 0; ci < ORDER; ci++) {
-      Char leastBit = gridIndex & 1;
-      grid[ri][ci] = leastBit;
-      gridIndex >>= 1;
-    }
-  }
 }
 
 void Space::setPostGrid() {
@@ -212,6 +247,16 @@ Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
+Long getBottomEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, order - 2, order, 0, order);
+}
+
+Long getTopEdgeIndex(const Grid &grid) {
+  Char order = grid.size();
+  return getSubGridIndex(grid, 0, 2, 0, order);
+}
+
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getSubGridIndex(grid, 0, order, order - 2, order);
@@ -239,4 +284,15 @@ Long getSubGridIndex(const Grid &grid,
     }
   }
   return subGridIndex;
+}
+
+void setGrid(Grid &grid, Long gridIndex) {
+  Char order = grid.size();
+  for (Char ri = 0; ri < order; ri++) {
+    for (Char ci = 0; ci < order; ci++) {
+      Char leastBit = gridIndex & 1;
+      grid[ri][ci] = leastBit;
+      gridIndex >>= 1;
+    }
+  }
 }
