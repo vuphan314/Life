@@ -1,3 +1,26 @@
+isEachGrid3tupleJoinable
+
+// order-2 space
+RAM needed: 6.10352e-05GB.
+Started setting pre-image.
+Ended setting pre-image.
+Each grid 3-tuple is joinable.
+
+////////////////////////////////////////////////////////////
+isEachGridPairJoinable
+
+// order-3 space
+0.03125GB of RAM needed.
+Started setting pre-image.
+Ended setting pre-image.
+Every grid pair is horizontally joinable.
+
+// order-4 space
+64GB of RAM needed.
+
+////////////////////////////////////////////////////////////
+getImageProportion
+
 // order-5 space
 Ended setting image after 4 seconds.
 Post-space size: 512.
@@ -5,24 +28,11 @@ Image size: 512.
 Image proportion: 1.0000.
 
 // order-6 space
-Ended setting image after 29952 seconds. // 8 hours
-Codomain size: 65536.
+Ended setting image after 14858 seconds. // 4h
+Post-space size: 65536.
 Image size: 65536.
-Image proportion:  1.0000.
+Image proportion: 1.0000.
 
 // order-7 space
 Started setting image.
-Grid state index     8388608      0.0000%  37282.7017h left. // 4 years
-
-////////////////////////////////////////////////////////////
-
-// order-3 space
-make: 'life.out' is up to date.
-0.03125GB of RAM needed.
-Started setting pre-image.
-Ended setting pre-image.
-Every grid pair is horizontally joinable.
-
-// order-4 space
-make: 'life.out' is up to date.
-64GB of RAM needed.
+Grid state index     8388608      0.0000%  37282.7017h left. // 4y
