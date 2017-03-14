@@ -54,7 +54,7 @@ Bool Space::isEachGrid3tupleJoinable() {
           bottomGridIndex++, currentCount++) {
         if (!(currentCount & COUT_PERIOD)) {
           Float percent = 100.0 * currentCount / totalCount;
-          cout << currentCount << "\t" << percent << "%\n";
+          cout << "Grid 3-tuple: " << currentCount << "\t" << percent << "%.\n";
         }
         if (!(are3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
           cout << "Unjoinable grid 3-tuple: " << gridIndex <<
@@ -77,10 +77,10 @@ Bool Space::are3wayJoinable(Long gridIndex,
     bottomFiberSize = preImage[bottomGridIndex].size(),
     totalCount = fiberSize * rightFiberSize * bottomFiberSize,
     currentCount = 0;
-  cout << "Fiber size: " << fiberSize << ".\n" <<
-    "Right fiber size: " << rightFiberSize << ".\n" <<
-    "Bottom fiber size: " << bottomFiberSize << ".\n" <<
-    "Total count: " << totalCount << ".\n";
+  // cout << "Fiber size: " << fiberSize << ".\n" <<
+  //   "Right fiber size: " << rightFiberSize << ".\n" <<
+  //   "Bottom fiber size: " << bottomFiberSize << ".\n" <<
+  //   "Total count: " << totalCount << ".\n";
   for (Long preGridIndex : preImage[gridIndex]) {
     currentCount++;
     setGrid(preGrid, preGridIndex);
@@ -102,16 +102,23 @@ Bool Space::are3wayJoinable(Long gridIndex,
       } else {
         currentCount += bottomFiberSize;
       }
-      if (!(currentCount & COUT_PERIOD)) {
-        Float percent = 100.0 * currentCount / totalCount;
-        auto currentTime = chrono::system_clock::now();
-        auto currentDuration = chrono::duration_cast
-          <chrono::seconds>(currentTime - startTime).count();
-        Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
-        cout << "Current count" << COUT_WIDTH << currentCount <<
-          COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
-          COUT_WIDTH << remainingDuration << "h left.\n";
+      if (currentCount > COUNT_CUTOFF) {
+        cout << "Skipped: " << gridIndex <<
+          ", right " << rightGridIndex <<
+          ", bottom " << bottomGridIndex <<
+          " (total count: " << totalCount << ").\n";
+          return TRUE;
       }
+      // if (!(currentCount & COUT_PERIOD)) {
+      //   Float percent = 100.0 * currentCount / totalCount;
+      //   auto currentTime = chrono::system_clock::now();
+      //   auto currentDuration = chrono::duration_cast
+      //     <chrono::seconds>(currentTime - startTime).count();
+      //   Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+      //   cout << "Current count" << COUT_WIDTH << currentCount <<
+      //     COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+      //     COUT_WIDTH << remainingDuration << "h left.\n";
+      // }
     }
   }
   return FALSE;
@@ -160,17 +167,15 @@ void Space::setEdgePreImages() {
 }
 
 void Space::setPreImage() {
+  cout << "Started setting pre-image.\n";
   if (PRE_ORDER > 7) {
      cout << "Too big for std::vector.\n";
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
-
   cout << "RAM needed: " << getSpaceSize(PRE_ORDER) / pow(2, 30) << "GB.\n";
   if (PRE_ORDER > 5) {
     throw exception();
   }
-
-  cout << "Started setting pre-image.\n";
   for (Long preGridIndex = 0;
       preGridIndex < PRE_SPACE_SIZE;
       preGridIndex++) {
