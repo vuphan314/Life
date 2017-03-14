@@ -179,8 +179,7 @@ void Space::setImage() {
   image = Image(POST_SPACE_SIZE, FALSE);
   cout << "Started setting image.\n";
   auto startTime = chrono::system_clock::now();
-  for (Long gridIndex = 0;
-      gridIndex < SPACE_SIZE; gridIndex++) {
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     if (!(gridIndex & COUT_PERIOD)) {
       Float percent = 100.0 * gridIndex / SPACE_SIZE;
       auto currentTime = chrono::system_clock::now();
@@ -188,8 +187,7 @@ void Space::setImage() {
         <chrono::seconds>(currentTime - startTime).count();
       Float remainingTime = currentElapsedTime *
         (100.0 / percent - 1) / 3600;
-      cout << "Grid state index" <<
-        COUT_WIDTH << gridIndex <<
+      cout << "Grid state index" << COUT_WIDTH << gridIndex <<
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingTime << "h left.\n";
     }
