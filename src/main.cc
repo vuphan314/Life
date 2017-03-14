@@ -8,8 +8,8 @@ int main(int argc, const char *argv[]) {
     Space game(order);
     setRULE_MATRIX();
     // game.inspectSpace();
-    game.isEachGrid3tupleJoinable();
+    // game.isEachGrid3tupleJoinable();
     // game.isEachGrid2tupleJoinable();
-    // game.getImageProportion();
+    game.getImageProportion();
   }
 }
