@@ -66,7 +66,7 @@ public:
 
   Bool isEachGrid2tupleJoinable();
 
-  Bool are2wayJoinable(Long leftGridIndex, Long rightGridIndex);
+  Bool are2wayJoinable(Long gridIndex, Long rightGridIndex);
 
   void setEdgePreImages();
 
