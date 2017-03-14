@@ -33,11 +33,11 @@ Space::Space(Char order) {
 }
 
 void Space::inspectSpace() {
-  setEdgePreImages();
-  cout << "Edge pre-space size: " << EDGE_PRE_SPACE_SIZE << ".\n";
+  setPreImage();
+  cout << "Pre-space size: " << PRE_SPACE_SIZE << ".\n";
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
-    Long rightEdgeFiberSize = rightEdgePreImage[gridIndex].size();
-    Float percent = 100.0 * rightEdgeFiberSize / EDGE_PRE_SPACE_SIZE;
+    Long fiberSize = preImage[gridIndex].size();
+    Float percent = 100.0 * fiberSize / PRE_SPACE_SIZE;
     cout << "Grid index" << COUT_WIDTH << gridIndex <<
       COUT_WIDTH << COUT_PRECISION << fixed << percent << "%\n";
   }
