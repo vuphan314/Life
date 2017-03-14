@@ -37,12 +37,18 @@ using EdgePreImage = vector<EdgeFiber>;
 
 ////////////////////////////////////////////////////////////
 
+extern vector<vector<CellState>> RULE_MATRIX;
+
+void setRULE_MATRIX();
+
+////////////////////////////////////////////////////////////
+
 class Space {
 private:
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
-  Image image;
+  Image image; // 2^(n-2)^2
   PreImage preImage; // 2^(n+2)^2, on demand
   EdgePreImage rightEdgePreImage, leftEdgePreImage;
     // 2^(2*(n+2)), on demand
@@ -120,10 +126,6 @@ const Char UPPER_SURVIVAL = 3;
 const Long COUT_PERIOD = pow(2, 23) - 1;
 const auto COUT_WIDTH = setw(12);
 const auto COUT_PRECISION = setprecision(4);
-
-////////////////////////////////////////////////////////////
-
-void initRULE_MATRIX();
 
 ////////////////////////////////////////////////////////////
 

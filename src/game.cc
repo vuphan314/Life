@@ -4,7 +4,7 @@
 
 vector<vector<CellState>> RULE_MATRIX; // const after init
 
-void initRULE_MATRIX() {
+void setRULE_MATRIX() {
   RULE_MATRIX = vector<vector<CellState>>(2,
     vector<CellState>(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
@@ -120,7 +120,6 @@ void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
   leftEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  // Space preSpace(PRE_ORDER);
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       setGrid(preGrid, preGridIndex);
@@ -144,7 +143,6 @@ void Space::setPreImage() {
   }
 
   cout << "Started setting pre-image.\n";
-  // Space preSpace(PRE_ORDER);
   for (Long preGridIndex = 0;
       preGridIndex < PRE_SPACE_SIZE;
       preGridIndex++) {
