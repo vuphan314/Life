@@ -39,9 +39,9 @@ void Space::inspectSpace() {
   cout << "Pre-space size: " << PRE_SPACE_SIZE << ".\n";
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     Long fiberSize = preImage[gridIndex].size();
-    Float percent = 100.0 * fiberSize / PRE_SPACE_SIZE;
+    Float currentPercentage = 100.0 * fiberSize / PRE_SPACE_SIZE;
     cout << "Grid index" << COUT_WIDTH << gridIndex <<
-      COUT_WIDTH << COUT_PRECISION << fixed << percent << "%\n";
+      COUT_WIDTH << COUT_PRECISION << fixed << currentPercentage << "%\n";
   }
 }
 
@@ -55,9 +55,9 @@ Bool Space::isEachGrid3tupleJoinable() {
       for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE;
           bottomGridIndex++, currentCount++) {
         if (!(currentCount & COUT_PERIOD)) {
-          Float percent = 100.0 * currentCount / totalCount;
+          Float currentPercentage = 100.0 * currentCount / totalCount;
           cout << "Grid 3-tuple: " << currentCount <<
-            "\t" << percent << "%.\n";
+            "\t" << currentPercentage << "%.\n";
         }
         if (!(are3wayJoinable(gridIndex,
             rightGridIndex, bottomGridIndex))) {
@@ -75,7 +75,7 @@ Bool Space::isEachGrid3tupleJoinable() {
 
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex) {
-  auto startTime = chrono::system_clock::now();
+  auto startTime = getTime();
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
@@ -113,17 +113,15 @@ Bool Space::are3wayJoinable(Long gridIndex,
           " (total count: " << totalCount << ").\n";
           return TRUE;
       }
-      // if (!(currentCount & COUT_PERIOD)) {
-      //   Float percent = 100.0 * currentCount / totalCount;
-      //   auto currentTime = chrono::system_clock::now();
-      //   auto currentDuration = chrono::duration_cast
-      //     <chrono::seconds>(currentTime - startTime).count();
-      //   Float remainingDuration = currentDuration *
-      //     (100.0 / percent - 1) / 3600;
-      //   cout << "Current count" << COUT_WIDTH << currentCount <<
-      //     COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
-      //     COUT_WIDTH << remainingDuration << "h left.\n";
-      // }
+      if (!(currentCount & COUT_PERIOD)) {
+        Float currentPercentage = 100.0 * currentCount / totalCount;
+        Float remainingDuration =
+          getRemainingDuration(startTime, currentPercentage);
+        cout << "Current count" << COUT_WIDTH << currentCount <<
+          COUT_WIDTH << COUT_PRECISION << fixed <<
+          currentPercentage << "%" <<
+          COUT_WIDTH << remainingDuration << "h left.\n";
+      }
     }
   }
   return FALSE;
@@ -131,7 +129,7 @@ Bool Space::are3wayJoinable(Long gridIndex,
 
 Bool Space::isEachGrid3tuplePossiblyJoinable() {
   setEdgePreImages();
-  auto startTime = chrono::system_clock::now();
+  auto startTime = getTime();
   Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++, currentCount++) {
@@ -140,14 +138,11 @@ Bool Space::isEachGrid3tuplePossiblyJoinable() {
       for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE;
           bottomGridIndex++, currentCount++) {
         if (!(currentCount & COUT_PERIOD)) {
-          Float percent = 100.0 * currentCount / totalCount;
-          auto currentTime = chrono::system_clock::now();
-          auto currentDuration = chrono::duration_cast
-            <chrono::seconds>(currentTime - startTime).count();
-          Float remainingDuration = currentDuration *
-            (100.0 / percent - 1) / 3600;
+          Float currentPercentage = 100.0 * currentCount / totalCount;
+          Float remainingDuration =
+            getRemainingDuration(startTime, currentPercentage);
           cout << "Grid 3-tuple " << COUT_WIDTH << currentCount <<
-            COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+            COUT_WIDTH << COUT_PRECISION << fixed << currentPercentage << "%" <<
             COUT_WIDTH << remainingDuration << "h left.\n";
         }
         if (!(arePossibly3wayJoinable(gridIndex,
@@ -279,24 +274,20 @@ Long Space::getImageSize() {
 void Space::setImage() {
   image = Image(POST_SPACE_SIZE, FALSE);
   cout << "Started setting image.\n";
-  auto startTime = chrono::system_clock::now();
+  auto startTime = getTime();
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     if (!(gridIndex & COUT_PERIOD)) {
-      Float percent = 100.0 * gridIndex / SPACE_SIZE;
-      auto currentTime = chrono::system_clock::now();
-      auto currentDuration = chrono::duration_cast
-        <chrono::seconds>(currentTime - startTime).count();
-      Float remainingDuration = currentDuration *
-        (100.0 / percent - 1) / 3600;
+      Float currentPercentage = 100.0 * gridIndex / SPACE_SIZE;
+      Float remainingDuration =
+        getRemainingDuration(startTime, currentPercentage);
       cout << "Grid state index" << COUT_WIDTH << gridIndex <<
-        COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+        COUT_WIDTH << COUT_PRECISION << fixed <<
+        currentPercentage << "%" <<
         COUT_WIDTH << remainingDuration << "h left.\n";
     }
     image[getPostGridIndex(gridIndex, grid, postGrid)] = TRUE;
   }
-  auto endTime = chrono::system_clock::now();
-  auto totalDuration = chrono::duration_cast
-    <chrono::seconds>(endTime - startTime).count();
+  auto totalDuration = getDuration(startTime);
   cout << "Ended setting image after "
     << totalDuration << " seconds.\n";
 }
