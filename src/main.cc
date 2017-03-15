@@ -9,8 +9,8 @@ int main(int argc, const char *argv[]) {
     Space space(order);
     // space.inspectSpace();
     // space.isEachGrid3tupleJoinable();
-    space.isEachGrid3tuplePossiblyJoinable();
-    // space.isEachGrid2tupleJoinable();
+    // space.isEachGrid3tuplePossiblyJoinable();
+    space.isEachGrid2tupleJoinable();
     // space.getImageProportion();
   }
 }

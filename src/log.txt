@@ -1,8 +1,8 @@
 isEachGrid3tupleJoinable
 
 // order-2 space
-RAM needed: 6.10352e-05GB.
 Started setting pre-image.
+RAM needed: 6.10352e-05GB.
 Ended setting pre-image.
 Each grid 3-tuple is joinable.
 
@@ -10,13 +10,14 @@ Each grid 3-tuple is joinable.
 isEachGrid2tupleJoinable
 
 // order-3 space
-0.03125GB of RAM needed.
 Started setting pre-image.
+0.03125GB of RAM needed.
 Ended setting pre-image.
-Every grid pair is horizontally joinable.
+Each grid 2-tuple is joinable.
 
 // order-4 space
-64GB of RAM needed.
+Started setting pre-image.
+RAM needed: 64GB.
 
 ////////////////////////////////////////////////////////////
 getImageProportion
