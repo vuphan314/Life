@@ -33,7 +33,7 @@ using Fiber = vector<Long>;
 using PreImage = vector<Fiber>; // preImage[gridIndex][preGridIndex]
 
 using EdgeFiber = unordered_set<Long>;
-using EdgePreImage = vector<EdgeFiber>;
+using EdgePreImage = vector<EdgeFiber>; // edgePreImage[gridIndex][preEdgeIndex]
 
 ////////////////////////////////////////////////////////////
 

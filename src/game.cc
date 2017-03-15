@@ -176,11 +176,8 @@ void Space::setPreImage() {
   if (PRE_ORDER > 5) {
     throw exception();
   }
-  for (Long preGridIndex = 0;
-      preGridIndex < PRE_SPACE_SIZE;
-      preGridIndex++) {
-    Long gridIndex =
-      getPostGridIndex(preGridIndex, preGrid, grid);
+  for (Long preGridIndex = 0; preGridIndex < PRE_SPACE_SIZE; preGridIndex++) {
+    Long gridIndex = getPostGridIndex(preGridIndex, preGrid, grid);
     preImage[gridIndex].push_back(preGridIndex);
   }
   cout << "Ended setting pre-image.\n";
