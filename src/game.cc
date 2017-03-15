@@ -56,9 +56,11 @@ Bool Space::isEachGrid3tupleJoinable() {
           bottomGridIndex++, currentCount++) {
         if (!(currentCount & COUT_PERIOD)) {
           Float percent = 100.0 * currentCount / totalCount;
-          cout << "Grid 3-tuple: " << currentCount << "\t" << percent << "%.\n";
+          cout << "Grid 3-tuple: " << currentCount <<
+            "\t" << percent << "%.\n";
         }
-        if (!(are3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
+        if (!(are3wayJoinable(gridIndex,
+            rightGridIndex, bottomGridIndex))) {
           cout << "Unjoinable grid 3-tuple: " << gridIndex <<
             ", right " << rightGridIndex <<
             ", bottom " << bottomGridIndex << ".\n";
@@ -116,7 +118,8 @@ Bool Space::are3wayJoinable(Long gridIndex,
       //   auto currentTime = chrono::system_clock::now();
       //   auto currentDuration = chrono::duration_cast
       //     <chrono::seconds>(currentTime - startTime).count();
-      //   Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+      //   Float remainingDuration = currentDuration *
+      //     (100.0 / percent - 1) / 3600;
       //   cout << "Current count" << COUT_WIDTH << currentCount <<
       //     COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
       //     COUT_WIDTH << remainingDuration << "h left.\n";
@@ -141,12 +144,14 @@ Bool Space::isEachGrid3tuplePossiblyJoinable() {
           auto currentTime = chrono::system_clock::now();
           auto currentDuration = chrono::duration_cast
             <chrono::seconds>(currentTime - startTime).count();
-          Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+          Float remainingDuration = currentDuration *
+            (100.0 / percent - 1) / 3600;
           cout << "Grid 3-tuple " << COUT_WIDTH << currentCount <<
             COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
             COUT_WIDTH << remainingDuration << "h left.\n";
         }
-        if (!(arePossibly3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
+        if (!(arePossibly3wayJoinable(gridIndex,
+            rightGridIndex, bottomGridIndex))) {
           cout << "Not possibly joinable grid 3-tuple: " << gridIndex <<
             ", right " << rightGridIndex <<
             ", bottom " << bottomGridIndex << ".\n";
@@ -167,7 +172,8 @@ Bool Space::arePossibly3wayJoinable(Long gridIndex,
         for (Long bottom : bottomEdgePreImage[gridIndex]) {
           for (Long top : topEdgePreImage[bottomGridIndex]) {
             if (bottom == top) {
-              if (canOverlap(right, bottom, verticalPreEdge, horizontalPreEdge)) {
+              if (canOverlap(right, bottom,
+                  verticalPreEdge, horizontalPreEdge)) {
                 return TRUE;
               }
             }
@@ -233,11 +239,13 @@ void Space::setPreImage() {
      cout << "Too big for std::vector.\n";
   }
   preImage = PreImage(SPACE_SIZE, Fiber());
-  cout << "RAM needed: " << getSpaceSize(PRE_ORDER) / pow(2, 30) << "GB.\n";
+  cout << "RAM needed: " <<
+    getSpaceSize(PRE_ORDER) / pow(2, 30) << "GB.\n";
   if (PRE_ORDER > 5) {
     throw exception();
   }
-  for (Long preGridIndex = 0; preGridIndex < PRE_SPACE_SIZE; preGridIndex++) {
+  for (Long preGridIndex = 0;
+      preGridIndex < PRE_SPACE_SIZE; preGridIndex++) {
     Long gridIndex = getPostGridIndex(preGridIndex, preGrid, grid);
     preImage[gridIndex].push_back(preGridIndex);
   }
@@ -278,7 +286,8 @@ void Space::setImage() {
       auto currentTime = chrono::system_clock::now();
       auto currentDuration = chrono::duration_cast
         <chrono::seconds>(currentTime - startTime).count();
-      Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+      Float remainingDuration = currentDuration *
+        (100.0 / percent - 1) / 3600;
       cout << "Grid state index" << COUT_WIDTH << gridIndex <<
         COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
         COUT_WIDTH << remainingDuration << "h left.\n";

@@ -30,10 +30,12 @@ using Edge = Matrix;
 using Image = vector<Bool>; // image[postGridIndex]
 
 using Fiber = vector<Long>;
-using PreImage = vector<Fiber>; // preImage[gridIndex][preGridIndex]
+using PreImage = vector<Fiber>;
+  // preImage[gridIndex][preGridIndex]
 
 using EdgeFiber = unordered_set<Long>;
-using EdgePreImage = vector<EdgeFiber>; // edgePreImage[gridIndex][preEdgeIndex]
+using EdgePreImage = vector<EdgeFiber>;
+  // edgePreImage[gridIndex][preEdgeIndex]
 
 ////////////////////////////////////////////////////////////
 
@@ -51,11 +53,11 @@ private:
 // temporary:
   Grid grid, postGrid, preGrid; // (n+{0,-1,1})^2
   Edge verticalPreEdge, horizontalPreEdge; // 2*(n+2)
-// on demand:
+// set only if needed:
   Image image; // 2^(n-2)^2
   PreImage preImage; // 2^(n+2)^2
-  EdgePreImage rightEdgePreImage, leftEdgePreImage, // 2^(2*(n+2))
-    bottomEdgePreImage, topEdgePreImage;
+  EdgePreImage rightEdgePreImage, // 2^(2*(n+2))
+    leftEdgePreImage, bottomEdgePreImage, topEdgePreImage;
 
 public:
   Space(Char order);
