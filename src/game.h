@@ -25,7 +25,9 @@ using Bool = Char;
 
 using CellState = Bool;
 using Row = vector<CellState>;
-using Grid = vector<Row>;
+using Matrix = vector<Row>;
+using Grid = Matrix;
+using Edge = Matrix;
 
 using Image = vector<Bool>; // image[postGridIndex]
 
@@ -37,9 +39,9 @@ using EdgePreImage = vector<EdgeFiber>; // edgePreImage[gridIndex][preEdgeIndex]
 
 ////////////////////////////////////////////////////////////
 
-extern vector<vector<CellState>> RULE_MATRIX;
+extern Matrix RULES; // const after being set
 
-void setRULE_MATRIX();
+void setRULES();
 
 ////////////////////////////////////////////////////////////
 
@@ -48,11 +50,14 @@ private:
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
-  Grid grid, postGrid, preGrid; // (n -|+ 1)^2, temporary
+// temporary:
+  Grid grid, postGrid, preGrid; // (n+{0,-1,1})^2
+  Edge verticalPreEdge, horizontalPreEdge; // 2*(n+2)
 // on demand:
   Image image; // 2^(n-2)^2
   PreImage preImage; // 2^(n+2)^2
-  EdgePreImage rightEdgePreImage, leftEdgePreImage; // 2^(2*(n+2))
+  EdgePreImage rightEdgePreImage, leftEdgePreImage, // 2^(2*(n+2))
+    bottomEdgePreImage, topEdgePreImage;
 
 public:
   Space(Char order);
@@ -62,6 +67,11 @@ public:
   Bool isEachGrid3tupleJoinable();
 
   Bool are3wayJoinable(Long gridIndex,
+    Long rightGridIndex, Long bottomGridIndex);
+
+  Bool isEachGrid3tuplePossiblyJoinable();
+
+  Bool arePossibly3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex);
 
   Bool isEachGrid2tupleJoinable();
@@ -84,6 +94,9 @@ public:
 Long getEdgeSpaceSize(Char order);
 Long getSpaceSize(Char order);
 
+Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
+  Edge &rightEdge, Edge &bottomEdge);
+
 Long getRightEdgeIndex(const Grid &grid);
 Long getLeftEdgeIndex(const Grid &grid);
 Long getBottomEdgeIndex(const Grid &grid);
@@ -93,11 +106,13 @@ Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid);
 
 Long getGridIndex(const Grid &grid);
 
-Long getSubGridIndex(const Grid &grid,
+Long getMatrixIndex(const Matrix &matrix,
   Char startRow, Char endRow, // [startRow, endRow)
   Char startColumn, Char endColumn);
 
 void setGrid(Grid &grid, Long gridIndex);
+
+void setMatrix(Matrix &matrix, Long matrixIndex);
 
 void setPostGrid(Grid &postGrid, const Grid &grid);
 
@@ -115,7 +130,7 @@ CellState getCellState(const Grid &grid,
 const Bool FALSE = false;
 const Bool TRUE = true;
 
-// inclusive
+// inclusive:
 const Char LOWER_BIRTH = 3;
 const Char UPPER_BIRTH = 3;
 const Char LOWER_SURVIVAL = 2;

@@ -2,16 +2,15 @@
 
 ////////////////////////////////////////////////////////////
 
-vector<vector<CellState>> RULE_MATRIX; // const after being set
+Matrix RULES;
 
-void setRULE_MATRIX() {
-  RULE_MATRIX = vector<vector<CellState>>(2,
-    vector<CellState>(9, FALSE));
+void setRULES() {
+  RULES = Matrix(2, Row(9, FALSE));
   for (Char j = LOWER_BIRTH; j <= UPPER_BIRTH; j++) {
-    RULE_MATRIX[0][j] = TRUE;
+    RULES[0][j] = TRUE;
   }
   for (Char j = LOWER_SURVIVAL; j <= UPPER_SURVIVAL; j++) {
-    RULE_MATRIX[1][j] = TRUE;
+    RULES[1][j] = TRUE;
   }
 }
 
@@ -30,6 +29,9 @@ Space::Space(Char order) {
   grid = Grid(ORDER, Row(ORDER, FALSE));
   postGrid = Grid(POST_ORDER, Row(POST_ORDER, FALSE));
   preGrid = Grid(PRE_ORDER, Row(PRE_ORDER, FALSE));
+
+  verticalPreEdge = Grid(PRE_ORDER, Row(2, FALSE));
+  horizontalPreEdge = Grid(2, Row(2, PRE_ORDER));
 }
 
 void Space::inspectSpace() {
@@ -124,6 +126,44 @@ Bool Space::are3wayJoinable(Long gridIndex,
   return FALSE;
 }
 
+Bool Space::isEachGrid3tuplePossiblyJoinable() {
+  setEdgePreImages();
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
+    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE; rightGridIndex++) {
+      for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE; bottomGridIndex++) {
+        if (!(arePossibly3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
+          cout << "Not possibly joinable grid 3-tuple: " << gridIndex <<
+            ", right " << rightGridIndex <<
+            ", bottom " << bottomGridIndex << ".\n";
+          return FALSE;
+        }
+      }
+    }
+  }
+  cout << "Each grid 3-tuple is possibly joinable.\n";
+  return TRUE;
+}
+
+Bool Space::arePossibly3wayJoinable(Long gridIndex,
+    Long rightGridIndex, Long bottomGridIndex) {
+  for (Long right : rightEdgePreImage[gridIndex]) {
+    for (Long left : leftEdgePreImage[rightGridIndex]) {
+      if (right == left) {
+        for (Long bottom : bottomEdgePreImage[gridIndex]) {
+          for (Long top : topEdgePreImage[bottomGridIndex]) {
+            if (bottom == top) {
+              if (canOverlap(right, bottom, verticalPreEdge, horizontalPreEdge)) {
+                return TRUE;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
+}
+
 Bool Space::isEachGrid2tupleJoinable() {
   setEdgePreImages();
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
@@ -155,13 +195,19 @@ void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
   leftEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+  bottomEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+  topEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       setGrid(preGrid, preGridIndex);
       Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
-        leftPreEdgeIndex = getLeftEdgeIndex(preGrid);
+        leftPreEdgeIndex = getLeftEdgeIndex(preGrid),
+        bottomPreEdgeIndex = getBottomEdgeIndex(preGrid),
+        topPreEdgeIndex = getTopEdgeIndex(preGrid);
       rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
       leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);
+      bottomEdgePreImage[gridIndex].insert(bottomPreEdgeIndex);
+      topEdgePreImage[gridIndex].insert(topPreEdgeIndex);
     }
   }
 }
@@ -240,21 +286,32 @@ Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
+Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
+    Edge &rightEdge, Edge &bottomEdge) {
+  setMatrix(rightEdge, rightEdgeIndex);
+  setMatrix(bottomEdge, bottomEdgeIndex);
+  Char order = rightEdge.size();
+  return rightEdge[order - 2][0] == bottomEdge[0][order - 2] &&
+    rightEdge[order - 2][1] == bottomEdge[0][order - 1] &&
+    rightEdge[order - 1][0] == bottomEdge[1][order - 2] &&
+    rightEdge[order - 1][1] == bottomEdge[1][order - 1];
+}
+
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, 0, order, order - 2, order);
+  return getMatrixIndex(grid, 0, order, order - 2, order);
 }
 Long getLeftEdgeIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, 0, order, 0, 2);
+  return getMatrixIndex(grid, 0, order, 0, 2);
 }
 Long getBottomEdgeIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, order - 2, order, 0, order);
+  return getMatrixIndex(grid, order - 2, order, 0, order);
 }
 Long getTopEdgeIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, 0, 2, 0, order);
+  return getMatrixIndex(grid, 0, 2, 0, order);
 }
 
 Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid) {
@@ -265,30 +322,33 @@ Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid) {
 
 Long getGridIndex(const Grid &grid) {
   Char order = grid.size();
-  return getSubGridIndex(grid, 0, order, 0, order);
+  return getMatrixIndex(grid, 0, order, 0, order);
 }
 
-Long getSubGridIndex(const Grid &grid,
+Long getMatrixIndex(const Matrix &matrix,
     Char startRow, Char endRow,
     Char startColumn, Char endColumn) {
-  Long subGridIndex = 0;
+  Long matrixIndex = 0;
   Int cellIndex = 0;
   for (Char ri = startRow; ri < endRow; ri++) {
     for (Char ci = startColumn; ci < endColumn; ci++) {
-      subGridIndex += grid[ri][ci] << cellIndex;
+      matrixIndex += matrix[ri][ci] << cellIndex;
       cellIndex++;
     }
   }
-  return subGridIndex;
+  return matrixIndex;
 }
 
 void setGrid(Grid &grid, Long gridIndex) {
-  Char order = grid.size();
-  for (Char ri = 0; ri < order; ri++) {
-    for (Char ci = 0; ci < order; ci++) {
-      Char leastBit = gridIndex & 1;
-      grid[ri][ci] = leastBit;
-      gridIndex >>= 1;
+  setMatrix(grid, gridIndex);
+}
+
+void setMatrix(Matrix &matrix, Long matrixIndex) {
+  for (Char ri = 0; ri < matrix.size(); ri++) {
+    for (Char ci = 0; ci < matrix[0].size(); ci++) {
+      Char leastBit = matrixIndex & 1;
+      matrix[ri][ci] = leastBit;
+      matrixIndex >>= 1;
     }
   }
 }
@@ -306,7 +366,7 @@ CellState getPostCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   Char i = getCellState(grid, rowIndex, columnIndex);
   Char j = getAliveNeighborCount(grid, rowIndex, columnIndex);
-  return RULE_MATRIX[i][j];
+  return RULES[i][j];
 }
 
 Char getAliveNeighborCount(const Grid &grid,
@@ -328,5 +388,3 @@ CellState getCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   return grid[rowIndex][columnIndex];
 }
-
-////////////////////////////////////////////////////////////
