@@ -128,9 +128,24 @@ Bool Space::are3wayJoinable(Long gridIndex,
 
 Bool Space::isEachGrid3tuplePossiblyJoinable() {
   setEdgePreImages();
-  for (Long gridIndex = 0; gridIndex < SPACE_SIZE; gridIndex++) {
-    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE; rightGridIndex++) {
-      for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE; bottomGridIndex++) {
+  auto startTime = chrono::system_clock::now();
+  Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
+      gridIndex++, currentCount++) {
+    for (Long rightGridIndex = 0; rightGridIndex < SPACE_SIZE;
+        rightGridIndex++, currentCount++) {
+      for (Long bottomGridIndex = 0; bottomGridIndex < SPACE_SIZE;
+          bottomGridIndex++, currentCount++) {
+        if (!(currentCount & COUT_PERIOD)) {
+          Float percent = 100.0 * currentCount / totalCount;
+          auto currentTime = chrono::system_clock::now();
+          auto currentDuration = chrono::duration_cast
+            <chrono::seconds>(currentTime - startTime).count();
+          Float remainingDuration = currentDuration * (100.0 / percent - 1) / 3600;
+          cout << "Grid 3-tuple " << COUT_WIDTH << currentCount <<
+            COUT_WIDTH << COUT_PRECISION << fixed << percent << "%" <<
+            COUT_WIDTH << remainingDuration << "h left.\n";
+        }
         if (!(arePossibly3wayJoinable(gridIndex, rightGridIndex, bottomGridIndex))) {
           cout << "Not possibly joinable grid 3-tuple: " << gridIndex <<
             ", right " << rightGridIndex <<
