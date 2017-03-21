@@ -84,7 +84,6 @@ Bool Space::isEachGrid3tupleJoinable() {
 
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex) {
-  // cout << "are3wayJoinable\n";
   Time startTime = getTime();
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
@@ -119,10 +118,11 @@ Bool Space::are3wayJoinable(Long gridIndex,
         currentCount += bottomFiberSize;
       }
       if (currentCount > COUNT_CUTOFF) {
-        cout << "Skipped: " << gridIndex <<
-          ", right " << rightGridIndex <<
-          ", bottom " << bottomGridIndex <<
-          " (total count: " << totalCount << ").\n";
+        cout << "are3wayJoinable skipped" <<
+          COUT_WIDTH << gridIndex <<
+          COUT_WIDTH << rightGridIndex <<
+          COUT_WIDTH << bottomGridIndex << "\n" <<
+          COUT_WIDE_WIDTH << totalCount << "\n";
           return TRUE;
       }
       // if (!(currentCount & COUT_PERIOD)) {
