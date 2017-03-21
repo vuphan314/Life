@@ -52,7 +52,7 @@ private:
 // temporary:
   Grid grid, postGrid, preGrid; // (n+{0,-1,1})^2
   Edge verticalPreEdge, horizontalPreEdge; // 2*(n+2)
-// set only if needed:
+// set by: setImage, setPreImage, setEdgePreImages:
   Image image; // 2^(n-2)^2
   PreImage preImage; // 2^(n+2)^2
   EdgePreImage rightEdgePreImage, // 2^(2*(n+2))
@@ -61,7 +61,7 @@ private:
 public:
   Space(Char order);
 
-  void inspectSpace();
+  void inspectPreImage();
 
   Bool isEachGrid3tupleJoinable();
 

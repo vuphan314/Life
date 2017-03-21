@@ -7,7 +7,7 @@ int main(int argc, const char *argv[]) {
     setRULES();
     Char order = atoi(argv[1]);
     Space space(order);
-    // space.inspectSpace();
+    // space.inspectPreImage();
     // space.isEachGrid3tupleJoinable();
     space.isEachGrid3tuplePossiblyJoinable();
     // space.isEachGrid2tupleJoinable();

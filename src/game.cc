@@ -34,7 +34,7 @@ Space::Space(Char order) {
   horizontalPreEdge = Grid(2, Row(2, PRE_ORDER));
 }
 
-void Space::inspectSpace() {
+void Space::inspectPreImage() {
   setPreImage();
   cout << "Pre-space size: " << PRE_SPACE_SIZE << ".\n";
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
