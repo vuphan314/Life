@@ -49,6 +49,7 @@ void Space::inspectPreImage() {
 }
 
 Bool Space::isEachGrid3tupleJoinable() {
+  cout << "isEachGrid3tupleJoinable\n";
   setPreImage();
   Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
@@ -62,8 +63,10 @@ Bool Space::isEachGrid3tupleJoinable() {
         if (!(currentCount & COUT_PERIOD)) {
           Float currentPercentage = 100.0 *
             currentCount / totalCount;
-          cout << "Grid 3-tuple: " << currentCount <<
-            "\t" << currentPercentage << "%.\n";
+          cout << "Grid 3-tuple:"
+            << COUT_WIDTH << currentCount <<
+            COUT_WIDTH << COUT_PRECISION << fixed <<
+            currentPercentage << "%.\n";
         }
         if (!(are3wayJoinable(gridIndex,
             rightGridIndex, bottomGridIndex))) {
@@ -81,6 +84,7 @@ Bool Space::isEachGrid3tupleJoinable() {
 
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex) {
+  cout << "are3wayJoinable\n";
   auto startTime = getTime();
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
@@ -126,8 +130,8 @@ Bool Space::are3wayJoinable(Long gridIndex,
           currentCount / totalCount;
         Float remainingDuration =
           getRemainingDuration(startTime, currentPercentage);
-        cout << "Current count" << COUT_WIDTH <<
-          currentCount <<
+        cout << "Current count"
+          << COUT_WIDTH << currentCount <<
           COUT_WIDTH << COUT_PRECISION << fixed <<
           currentPercentage << "%" <<
           COUT_WIDTH << remainingDuration << "h left.\n";
@@ -155,8 +159,8 @@ Bool Space::isEachGrid3tuplePossiblyJoinable() {
           Float remainingDuration =
             getRemainingDuration(startTime,
               currentPercentage);
-          cout << "Grid 3-tuple " << COUT_WIDTH <<
-            currentCount <<
+          cout << "Grid 3-tuple"
+            << COUT_WIDTH << currentCount <<
             COUT_WIDTH << COUT_PRECISION << fixed <<
             currentPercentage << "%" <<
             COUT_WIDTH << remainingDuration << "h left.\n";
@@ -305,8 +309,8 @@ void Space::setImage() {
         gridIndex / SPACE_SIZE;
       Float remainingDuration =
         getRemainingDuration(startTime, currentPercentage);
-      cout << "Grid state index" << COUT_WIDTH <<
-        gridIndex <<
+      cout << "Grid state index"
+        << COUT_WIDTH << gridIndex <<
         COUT_WIDTH << COUT_PRECISION << fixed <<
         currentPercentage << "%" <<
         COUT_WIDTH << remainingDuration << "h left.\n";
