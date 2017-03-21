@@ -96,48 +96,49 @@ Bool Space::are3wayJoinable(Long gridIndex,
   //   "Bottom fiber size: " << bottomFiberSize << ".\n" <<
   //   "Total count: " << totalCount << ".\n";
   for (Long preGridIndex : preImage[gridIndex]) {
-    currentCount++;
     setGrid(preGrid, preGridIndex);
     Long right = getRightEdgeIndex(preGrid),
       bottom = getBottomEdgeIndex(preGrid);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
-      currentCount++;
       setGrid(preGrid, rightPreGridIndex);
       Long left = getLeftEdgeIndex(preGrid);
       if (right == left) {
         for (Long bottomPreGridIndex :
             preImage[bottomGridIndex]) {
-          currentCount++;
           setGrid(preGrid, bottomPreGridIndex);
           Long top = getTopEdgeIndex(preGrid);
           if (bottom == top) {
             return TRUE;
           }
+          currentCount++;
         }
       } else {
         currentCount += bottomFiberSize;
       }
       if (currentCount > COUNT_CUTOFF) {
-        cout << "are3wayJoinable skipped" <<
-          COUT_WIDTH << gridIndex <<
+        cout << "\tSkipped" << COUT_WIDTH << gridIndex <<
           COUT_WIDTH << rightGridIndex <<
-          COUT_WIDTH << bottomGridIndex << "\n" <<
-          COUT_WIDE_WIDTH << totalCount << "\n";
+          COUT_WIDTH << bottomGridIndex <<
+          ".\n\tTotal count" <<
+          COUT_WIDE_WIDTH << totalCount << ".\n";
           return TRUE;
       }
-      // if (!(currentCount & COUT_PERIOD)) {
-      //   Float currentPercentage = 100.0 *
-      //     currentCount / totalCount;
-      //   Duration remainingDuration =
-      //     getRemainingDuration(startTime,
-      //     currentPercentage);
-      //   cout << "Current count"
-      //     << COUT_WIDTH << currentCount <<
-      //     COUT_WIDTH << COUT_PRECISION << fixed <<
-      //     currentPercentage << "%" <<
-      //     COUT_WIDTH << remainingDuration << "h left.\n";
-      // }
+      if (!(currentCount & COUT_PERIOD)) {
+        cout << "are3wayJoinable\n";
+        Float currentPercentage = 100.0 *
+          currentCount / totalCount;
+        Duration remainingDuration =
+          getRemainingDuration(startTime,
+          currentPercentage);
+        cout << "\tCurrent count"
+          << COUT_WIDTH << currentCount <<
+          COUT_WIDTH << COUT_PRECISION << fixed <<
+          currentPercentage << "%" <<
+          COUT_WIDTH << remainingDuration << "h left.\n";
+      }
+      currentCount++;
     }
+    currentCount++;
   }
   return FALSE;
 }
