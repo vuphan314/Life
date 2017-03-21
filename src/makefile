@@ -8,7 +8,7 @@ OBJECTS = main.o game.o ../cplusplus/src/timing.o
 $(EXECUTABLE): $(OBJECTS)
 	$(COMPILER) -o $(EXECUTABLE) $(OBJECTS)
 
-main.o: main.cc game.h
+main.o: main.cc game.h ../cplusplus/src/timing.h
 	$(COMPILER) $(FLAGS) main.cc
 
 game.o: game.h game.cc ../cplusplus/src/timing.h
@@ -16,8 +16,8 @@ game.o: game.h game.cc ../cplusplus/src/timing.h
 
 ############################################################
 
-clean:
-	rm -f *.o $(EXECUTABLE)
-
 subsystem:
 	$(MAKE) -C ../cplusplus/src/
+
+clean:
+	rm -f *.o $(EXECUTABLE)

@@ -1,4 +1,4 @@
-isEachGrid3tupleJoinable
+// isEachGrid3tupleJoinable
 
 // order-2 space
 Started setting pre-image.
@@ -7,7 +7,7 @@ Ended setting pre-image.
 Each grid 3-tuple is joinable.
 
 ////////////////////////////////////////////////////////////
-isEachGrid2tupleJoinable
+// isEachGrid2tupleJoinable
 
 // order-3 space
 Started setting pre-image.
@@ -20,7 +20,7 @@ Started setting pre-image.
 RAM needed: 64GB.
 
 ////////////////////////////////////////////////////////////
-getImageProportion
+// getImageProportion
 
 // order-5 space
 Ended setting image after 4 seconds.
@@ -36,4 +36,5 @@ Image proportion: 1.0000.
 
 // order-7 space
 Started setting image.
-Grid state index     8388608      0.0000%  37282.7017h left. // 4y
+Grid state index     8388608      0.0000%  37282.7017h left.
+  // 4y
