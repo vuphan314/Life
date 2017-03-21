@@ -84,8 +84,8 @@ Bool Space::isEachGrid3tupleJoinable() {
 
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex) {
-  cout << "are3wayJoinable\n";
-  auto startTime = getTime();
+  // cout << "are3wayJoinable\n";
+  Time startTime = getTime();
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
@@ -125,17 +125,18 @@ Bool Space::are3wayJoinable(Long gridIndex,
           " (total count: " << totalCount << ").\n";
           return TRUE;
       }
-      if (!(currentCount & COUT_PERIOD)) {
-        Float currentPercentage = 100.0 *
-          currentCount / totalCount;
-        Float remainingDuration =
-          getRemainingDuration(startTime, currentPercentage);
-        cout << "Current count"
-          << COUT_WIDTH << currentCount <<
-          COUT_WIDTH << COUT_PRECISION << fixed <<
-          currentPercentage << "%" <<
-          COUT_WIDTH << remainingDuration << "h left.\n";
-      }
+      // if (!(currentCount & COUT_PERIOD)) {
+      //   Float currentPercentage = 100.0 *
+      //     currentCount / totalCount;
+      //   Duration remainingDuration =
+      //     getRemainingDuration(startTime,
+      //     currentPercentage);
+      //   cout << "Current count"
+      //     << COUT_WIDTH << currentCount <<
+      //     COUT_WIDTH << COUT_PRECISION << fixed <<
+      //     currentPercentage << "%" <<
+      //     COUT_WIDTH << remainingDuration << "h left.\n";
+      // }
     }
   }
   return FALSE;
@@ -143,7 +144,7 @@ Bool Space::are3wayJoinable(Long gridIndex,
 
 Bool Space::isEachGrid3tuplePossiblyJoinable() {
   setEdgePreImages();
-  auto startTime = getTime();
+  Time startTime = getTime();
   Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++, currentCount++) {
@@ -156,7 +157,7 @@ Bool Space::isEachGrid3tuplePossiblyJoinable() {
         if (!(currentCount & COUT_PERIOD)) {
           Float currentPercentage = 100.0 *
             currentCount / totalCount;
-          Float remainingDuration =
+          Duration remainingDuration =
             getRemainingDuration(startTime,
               currentPercentage);
           cout << "Grid 3-tuple"
@@ -301,13 +302,13 @@ Long Space::getImageSize() {
 void Space::setImage() {
   image = Image(POST_SPACE_SIZE, FALSE);
   cout << "Started setting image.\n";
-  auto startTime = getTime();
+  Time startTime = getTime();
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++) {
     if (!(gridIndex & COUT_PERIOD)) {
       Float currentPercentage = 100.0 *
         gridIndex / SPACE_SIZE;
-      Float remainingDuration =
+      Duration remainingDuration =
         getRemainingDuration(startTime, currentPercentage);
       cout << "Grid state index"
         << COUT_WIDTH << gridIndex <<
@@ -318,7 +319,7 @@ void Space::setImage() {
     image[getPostGridIndex(gridIndex, grid, postGrid)] =
       TRUE;
   }
-  auto totalDuration = getDuration(startTime);
+  Duration totalDuration = getDuration(startTime);
   cout << "Ended setting image after "
     << totalDuration << " seconds.\n";
 }

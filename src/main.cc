@@ -8,8 +8,8 @@ int main(int argc, const char *argv[]) {
     Char order = atoi(argv[1]);
     Space space(order);
     // space.inspectPreImage();
-    space.isEachGrid3tupleJoinable();
-    // space.isEachGrid3tuplePossiblyJoinable();
+    // space.isEachGrid3tupleJoinable();
+    space.isEachGrid3tuplePossiblyJoinable();
     // space.isEachGrid2tupleJoinable();
     // space.getImageProportion();
   }
