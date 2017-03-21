@@ -101,7 +101,8 @@ Long getLeftEdgeIndex(const Grid &grid);
 Long getBottomEdgeIndex(const Grid &grid);
 Long getTopEdgeIndex(const Grid &grid);
 
-Long getPostGridIndex(Long gridIndex, Grid &grid, Grid &postGrid);
+Long getPostGridIndex(Long gridIndex,
+  Grid &grid, Grid &postGrid);
 
 Long getGridIndex(const Grid &grid);
 
