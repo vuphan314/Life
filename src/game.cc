@@ -88,13 +88,19 @@ Bool Space::are3wayJoinable(Long gridIndex,
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
-    totalCount = fiberSize *
-      rightFiberSize * bottomFiberSize,
+    totalCount = fiberSize * rightFiberSize * bottomFiberSize,
     currentCount = 0;
-  // cout << "Fiber size: " << fiberSize << ".\n" <<
-  //   "Right fiber size: " << rightFiberSize << ".\n" <<
-  //   "Bottom fiber size: " << bottomFiberSize << ".\n" <<
-  //   "Total count: " << totalCount << ".\n";
+  if (totalCount > COUNT_CUTOFF) {
+    cout << "Skipped grid 3-tuple" <<
+      COUT_WIDTH << gridIndex <<
+      COUT_WIDTH << rightGridIndex <<
+      COUT_WIDTH << bottomGridIndex <<
+      "\nFiber size: " << fiberSize <<
+      ".\nRight fiber size: " << rightFiberSize <<
+      ".\nBottom fiber size: " << bottomFiberSize <<
+      ".\nTotal count: " << totalCount << ".\n";
+    return TRUE;
+  }
   for (Long preGridIndex : preImage[gridIndex]) {
     setGrid(preGrid, preGridIndex);
     Long right = getRightEdgeIndex(preGrid),
@@ -114,14 +120,6 @@ Bool Space::are3wayJoinable(Long gridIndex,
         }
       } else {
         currentCount += bottomFiberSize;
-      }
-      if (currentCount > COUNT_CUTOFF) {
-        cout << "\tSkipped" << COUT_WIDTH << gridIndex <<
-          COUT_WIDTH << rightGridIndex <<
-          COUT_WIDTH << bottomGridIndex <<
-          ".\n\tTotal count" <<
-          COUT_WIDE_WIDTH << totalCount << ".\n";
-          return TRUE;
       }
       if (!(currentCount & COUT_PERIOD)) {
         cout << "are3wayJoinable\n";
