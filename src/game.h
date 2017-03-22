@@ -136,8 +136,8 @@ const Char UPPER_BIRTH = 3;
 const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 
-const Long COUNT_CUTOFF = pow(2, 30);
-const Long COUT_PERIOD = pow(2, 12) - 1;
+const Long COUNT_CUTOFF = pow(2, 41);
+const Long COUT_PERIOD = pow(2, 22) - 1;
 const auto COUT_WIDTH = setw(15);
 const auto COUT_WIDE_WIDTH = setw(25);
 const auto COUT_PRECISION = setprecision(4);
