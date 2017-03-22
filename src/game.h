@@ -38,6 +38,23 @@ using EdgePreImage = vector<EdgeFiber>;
 
 ////////////////////////////////////////////////////////////
 
+const Bool FALSE = false;
+const Bool TRUE = true;
+
+// inclusive:
+const Char LOWER_BIRTH = 3;
+const Char UPPER_BIRTH = 3;
+const Char LOWER_SURVIVAL = 2;
+const Char UPPER_SURVIVAL = 3;
+
+const Long COUNT_CUTOFF = pow(2, 35);
+const Long COUT_PERIOD = pow(2, 16) - 1;
+const auto COUT_WIDTH = setw(15);
+const auto COUT_WIDE_WIDTH = setw(25);
+const auto COUT_PRECISION = setprecision(4);
+
+////////////////////////////////////////////////////////////
+
 extern Matrix RULES; // const after being set
 
 void setRULES();
@@ -66,7 +83,8 @@ public:
   Bool isEachGrid3tupleJoinable();
 
   Bool are3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex);
+    Long rightGridIndex, Long bottomGridIndex,
+    Bool verbose = FALSE);
 
   Bool isEachGrid3tuplePossiblyJoinable();
 
@@ -124,23 +142,6 @@ Char getAliveNeighborCount(const Grid &grid,
 
 CellState getCellState(const Grid &grid,
   Char rowIndex, Char columnIndex);
-
-////////////////////////////////////////////////////////////
-
-const Bool FALSE = false;
-const Bool TRUE = true;
-
-// inclusive:
-const Char LOWER_BIRTH = 3;
-const Char UPPER_BIRTH = 3;
-const Char LOWER_SURVIVAL = 2;
-const Char UPPER_SURVIVAL = 3;
-
-const Long COUNT_CUTOFF = pow(2, 41);
-const Long COUT_PERIOD = pow(2, 22) - 1;
-const auto COUT_WIDTH = setw(15);
-const auto COUT_WIDE_WIDTH = setw(25);
-const auto COUT_PRECISION = setprecision(4);
 
 ////////////////////////////////////////////////////////////
 

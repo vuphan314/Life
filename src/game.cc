@@ -83,24 +83,20 @@ Bool Space::isEachGrid3tupleJoinable() {
 }
 
 Bool Space::are3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex) {
+    Long rightGridIndex, Long bottomGridIndex,
+    Bool verbose) {
   Time startTime = getTime();
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
     totalCount = fiberSize * rightFiberSize * bottomFiberSize,
     currentCount = 0;
-  if (totalCount > COUNT_CUTOFF) {
-    cout << "Skipped grid 3-tuple" <<
-      COUT_WIDTH << gridIndex <<
-      COUT_WIDTH << rightGridIndex <<
-      COUT_WIDTH << bottomGridIndex <<
-      "\nFiber size: " << fiberSize <<
+    if (verbose) {
+      cout << "Fiber size: " << fiberSize <<
       ".\nRight fiber size: " << rightFiberSize <<
       ".\nBottom fiber size: " << bottomFiberSize <<
       ".\nTotal count: " << totalCount << ".\n";
-    return TRUE;
-  }
+    }
   for (Long preGridIndex : preImage[gridIndex]) {
     setGrid(preGrid, preGridIndex);
     Long right = getRightEdgeIndex(preGrid),
@@ -120,6 +116,13 @@ Bool Space::are3wayJoinable(Long gridIndex,
         }
       } else {
         currentCount += bottomFiberSize;
+      }
+      if (currentCount > COUNT_CUTOFF) {
+        cout << "Skipped grid 3-tuple" <<
+          COUT_WIDTH << gridIndex <<
+          COUT_WIDTH << rightGridIndex <<
+          COUT_WIDTH << bottomGridIndex << ".\n";
+        return TRUE;
       }
       if (!(currentCount & COUT_PERIOD)) {
         cout << "are3wayJoinable\n";
