@@ -354,6 +354,7 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
 
 void testGettingEdgeIndex() {
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
+  printVector2d(grid);
 }
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
