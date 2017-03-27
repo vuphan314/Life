@@ -116,7 +116,6 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
 
 void testGettingEdgeIndices();
 Long getRightEdgeIndex(const Grid &grid);
-// Long getLeftEdgeIndex(const Grid &grid);
 Long getLeftEdgeIndex(Long gridIndex, Char order);
 Long getBottomEdgeIndex(Long gridIndex, Char order);
 Long getTopEdgeIndex(Long gridIndex, Char order);

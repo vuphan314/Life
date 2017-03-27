@@ -103,7 +103,6 @@ Bool Space::are3wayJoinable(Long gridIndex,
       bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
       setGrid(preGrid, rightPreGridIndex);
-      // Long left = getLeftEdgeIndex(preGrid);
       Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER);
       if (right == left) {
         for (Long bottomPreGridIndex :
@@ -245,7 +244,6 @@ void Space::setEdgePreImages() {
     for (Long preGridIndex : preImage[gridIndex]) {
       setGrid(preGrid, preGridIndex);
       Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
-        // leftPreEdgeIndex = getLeftEdgeIndex(preGrid),
         leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
           PRE_ORDER),
         bottomPreEdgeIndex = getBottomEdgeIndex(
@@ -367,10 +365,6 @@ Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getMatrixIndex(grid, 0, order, order - 2, order);
 }
-// Long getLeftEdgeIndex(const Grid &grid) {
-//   Char order = grid.size();
-//   return getMatrixIndex(grid, 0, order, 0, 2);
-// }
 Long getLeftEdgeIndex(Long gridIndex, Char order) {
   Long leftEdgeIndex = 0;
   Char shift = 0;
