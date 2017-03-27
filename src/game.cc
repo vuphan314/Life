@@ -103,7 +103,8 @@ Bool Space::are3wayJoinable(Long gridIndex,
       bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
       setGrid(preGrid, rightPreGridIndex);
-      Long left = getLeftEdgeIndex(preGrid);
+      // Long left = getLeftEdgeIndex(preGrid);
+      Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER);
       if (right == left) {
         for (Long bottomPreGridIndex :
             preImage[bottomGridIndex]) {
@@ -244,7 +245,9 @@ void Space::setEdgePreImages() {
     for (Long preGridIndex : preImage[gridIndex]) {
       setGrid(preGrid, preGridIndex);
       Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
-        leftPreEdgeIndex = getLeftEdgeIndex(preGrid),
+        // leftPreEdgeIndex = getLeftEdgeIndex(preGrid),
+        leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
+          PRE_ORDER),
         bottomPreEdgeIndex = getBottomEdgeIndex(
           preGridIndex, PRE_ORDER),
         topPreEdgeIndex = getTopEdgeIndex(preGridIndex,
@@ -349,13 +352,27 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
     rightEdge[order - 1][1] == bottomEdge[1][order - 1];
 }
 
+void testGettingEdgeIndex() {
+  Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
+}
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getMatrixIndex(grid, 0, order, order - 2, order);
 }
-Long getLeftEdgeIndex(const Grid &grid) {
-  Char order = grid.size();
-  return getMatrixIndex(grid, 0, order, 0, 2);
+// Long getLeftEdgeIndex(const Grid &grid) {
+//   Char order = grid.size();
+//   return getMatrixIndex(grid, 0, order, 0, 2);
+// }
+Long getLeftEdgeIndex(Long gridIndex, Char order) {
+  Long leftEdgeIndex = 0;
+  Char shift = 0;
+  while (gridIndex > 0) {
+    Char leftBitPair = gridIndex % 4;
+    leftEdgeIndex += leftBitPair << shift;
+    shift += 2;
+    gridIndex /= order;
+  }
+  return leftEdgeIndex;
 }
 
 Long getBottomEdgeIndex(Long gridIndex, Char order) {
