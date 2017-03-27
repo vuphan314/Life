@@ -12,7 +12,8 @@ int main(int argc, const char *argv[]) {
     // space.isEachGrid3tupleJoinable();
 
     space.setPreImage();
-    space.are3wayJoinable(0, 0, 5, TRUE);
+    bool success = space.are3wayJoinable(0, 0, 5, TRUE);
+    cout << success << "\n";
 
     // space.isEachGrid3tuplePossiblyJoinable();
 

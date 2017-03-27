@@ -107,8 +107,8 @@ Bool Space::are3wayJoinable(Long gridIndex,
       if (right == left) {
         for (Long bottomPreGridIndex :
             preImage[bottomGridIndex]) {
-          setGrid(preGrid, bottomPreGridIndex);
-          Long top = getTopEdgeIndex(preGrid);
+          // setGrid(preGrid, bottomPreGridIndex);
+          Long top = getTopEdgeIndex(bottomPreGridIndex, PRE_ORDER);
           if (bottom == top) {
             return TRUE;
           }
@@ -246,7 +246,8 @@ void Space::setEdgePreImages() {
       Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
         leftPreEdgeIndex = getLeftEdgeIndex(preGrid),
         bottomPreEdgeIndex = getBottomEdgeIndex(preGrid),
-        topPreEdgeIndex = getTopEdgeIndex(preGrid);
+        // topPreEdgeIndex = getTopEdgeIndex(preGrid);
+        topPreEdgeIndex = getTopEdgeIndex(preGridIndex, PRE_ORDER);
       rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
       leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);
       bottomEdgePreImage[gridIndex].insert(
@@ -359,9 +360,12 @@ Long getBottomEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getMatrixIndex(grid, order - 2, order, 0, order);
 }
-Long getTopEdgeIndex(const Grid &grid) {
-  Char order = grid.size();
-  return getMatrixIndex(grid, 0, 2, 0, order);
+// Long getTopEdgeIndex(const Grid &grid) {
+//   Char order = grid.size();
+//   return getMatrixIndex(grid, 0, 2, 0, order);
+// }
+Long getTopEdgeIndex(Long gridIndex, Char order) {
+  return gridIndex % (order * 2);
 }
 
 Long getPostGridIndex(Long gridIndex,
