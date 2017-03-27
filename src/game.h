@@ -47,8 +47,8 @@ const Char UPPER_BIRTH = 3;
 const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 
-const Long COUNT_CUTOFF = pow(2, 35);
-const Long COUT_PERIOD = pow(2, 16) - 1;
+const Long COUNT_CUTOFF = pow(2, 40);
+const Long COUT_PERIOD = pow(2, 30) - 1;
 const auto COUT_WIDTH = setw(15);
 const auto COUT_WIDE_WIDTH = setw(25);
 const auto COUT_PRECISION = setprecision(4);
@@ -117,7 +117,7 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
 Long getRightEdgeIndex(const Grid &grid);
 Long getLeftEdgeIndex(const Grid &grid);
 Long getBottomEdgeIndex(const Grid &grid);
-// Long getTopEdgeIndex(const Grid &grid);
+
 Long getTopEdgeIndex(Long gridIndex, Char order);
 
 Long getPostGridIndex(Long gridIndex,
