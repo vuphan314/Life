@@ -355,8 +355,10 @@ void testGettingEdgeIndices() {
   Char order = 3;
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
   Long gridIndex = getGridIndex(grid);
-  cout << gridIndex << "\n";
-  if (getRightEdgeIndex(gridIndex, order) == 9 && getLeftEdgeIndex(gridIndex, order) == 18 && getBottomEdgeIndex(gridIndex, order) == 12 && getTopEdgeIndex(gridIndex, order) == 34) {
+  if (getRightEdgeIndex(gridIndex, order) == 9 &&
+      getLeftEdgeIndex(gridIndex, order) == 18 &&
+      getBottomEdgeIndex(gridIndex, order) == 12 &&
+      getTopEdgeIndex(gridIndex, order) == 34) {
     cout << "Test passed.\n";
   } else {
     cout << "Test failed.\n";
