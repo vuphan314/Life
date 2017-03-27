@@ -9,11 +9,11 @@ int main(int argc, const char *argv[]) {
 
     // space.inspectPreImage();
 
-    space.isEachGrid3tupleJoinable();
+    // space.isEachGrid3tupleJoinable();
 
-    // space.setPreImage();
-    // bool success = space.are3wayJoinable(6, 0, 2, TRUE);
-    // cout << success << "\n";
+    space.setPreImage();
+    bool success = space.are3wayJoinable(6, 0, 2, TRUE);
+    cout << success << "\n";
 
     // space.isEachGrid3tuplePossiblyJoinable();
 

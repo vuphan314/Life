@@ -103,7 +103,8 @@ Bool Space::are3wayJoinable(Long gridIndex,
     Long right = getRightEdgeIndex(preGridIndex, PRE_ORDER),
       bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
-      Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER);
+      Long left = getLeftEdgeIndex(rightPreGridIndex,
+        PRE_ORDER);
       if (right == left) {
         for (Long bottomPreGridIndex :
             preImage[bottomGridIndex]) {
