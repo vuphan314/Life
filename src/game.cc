@@ -15,6 +15,7 @@ void setRULES() {
 }
 
 ////////////////////////////////////////////////////////////
+// class Space:
 
 Space::Space(Char order) {
   ORDER = order;
@@ -90,7 +91,7 @@ Bool Space::are3wayJoinable(Long gridIndex,
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
     totalCount = fiberSize * rightFiberSize *
-    bottomFiberSize,
+      bottomFiberSize,
     currentCount = 0;
   if (verbose) {
     cout << "Fiber size: " << fiberSize <<
@@ -99,11 +100,9 @@ Bool Space::are3wayJoinable(Long gridIndex,
     ".\nTotal count: " << totalCount << ".\n";
   }
   for (Long preGridIndex : preImage[gridIndex]) {
-    setGrid(preGrid, preGridIndex);
-    Long right = getRightEdgeIndex(preGrid),
+    Long right = getRightEdgeIndex(preGridIndex, PRE_ORDER),
       bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
-      setGrid(preGrid, rightPreGridIndex);
       Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER);
       if (right == left) {
         for (Long bottomPreGridIndex :
@@ -243,8 +242,8 @@ void Space::setEdgePreImages() {
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
-      setGrid(preGrid, preGridIndex);
-      Long rightPreEdgeIndex = getRightEdgeIndex(preGrid),
+      Long rightPreEdgeIndex = getRightEdgeIndex(
+          preGridIndex, PRE_ORDER),
         leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
           PRE_ORDER),
         bottomPreEdgeIndex = getBottomEdgeIndex(
@@ -331,6 +330,7 @@ void Space::setImage() {
 }
 
 ////////////////////////////////////////////////////////////
+// global functions:
 
 Long getEdgeSpaceSize(Char order) {
   return pow(2, 2 * order);
@@ -353,9 +353,9 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
 
 void testGettingEdgeIndices() {
   cout << "Testing getting edge indices.\n";
-  Char order = 3;
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
-  Long gridIndex = getGridIndex(grid);
+  Char order = grid.size();
+  Long gridIndex = getGridIndex(grid); // 98
   if (getRightEdgeIndex(gridIndex, order) == 9 &&
       getLeftEdgeIndex(gridIndex, order) == 18 &&
       getBottomEdgeIndex(gridIndex, order) == 12 &&
@@ -364,10 +364,6 @@ void testGettingEdgeIndices() {
   } else {
     cout << "Test failed.\n";
   }
-}
-Long getRightEdgeIndex(const Grid &grid) {
-  Char order = grid.size();
-  return getMatrixIndex(grid, 0, order, order - 2, order);
 }
 Long getRightEdgeIndex(Long gridIndex, Char order) {
   Long rightEdgeIndex = 0, mask = 3 << (order - 2);

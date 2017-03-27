@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////
+// 2017-03-27
+
+vu@Vu-PC:~/repos/life/src$ ./main.sh 2
+make: 'life.out' is up to date.
+isEachGrid3tupleJoinable
+Started setting pre-image.
+RAM needed: 6.10352e-05GB.
+Ended setting pre-image.
+Grid 3-tuple:              0         0.0000%.
+Unjoinable grid 3-tuple: 6, right 0, bottom 2.
+
+////////////////////////////////////////////////////////////
 // isEachGrid3tupleJoinable
 
 // order-2 space

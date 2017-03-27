@@ -107,6 +107,7 @@ public:
 };
 
 ////////////////////////////////////////////////////////////
+// global functions:
 
 Long getEdgeSpaceSize(Char order);
 Long getSpaceSize(Char order);
@@ -115,7 +116,6 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
   Edge &rightEdge, Edge &bottomEdge);
 
 void testGettingEdgeIndices();
-Long getRightEdgeIndex(const Grid &grid);
 Long getRightEdgeIndex(Long gridIndex, Char order);
 Long getLeftEdgeIndex(Long gridIndex, Char order);
 Long getBottomEdgeIndex(Long gridIndex, Char order);

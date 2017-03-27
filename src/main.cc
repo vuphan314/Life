@@ -2,7 +2,6 @@
 
 int main(int argc, const char *argv[]) {
   if (argc < 2) {
-    // cout << "Provide order in $1.\n";
     testGettingEdgeIndices();
   } else {
     Space space(atoi(argv[1]));
@@ -13,7 +12,7 @@ int main(int argc, const char *argv[]) {
     space.isEachGrid3tupleJoinable();
 
     // space.setPreImage();
-    // bool success = space.are3wayJoinable(0, 0, 5, TRUE);
+    // bool success = space.are3wayJoinable(6, 0, 2, TRUE);
     // cout << success << "\n";
 
     // space.isEachGrid3tuplePossiblyJoinable();
