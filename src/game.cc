@@ -89,14 +89,15 @@ Bool Space::are3wayJoinable(Long gridIndex,
   Long fiberSize = preImage[gridIndex].size(),
     rightFiberSize = preImage[rightGridIndex].size(),
     bottomFiberSize = preImage[bottomGridIndex].size(),
-    totalCount = fiberSize * rightFiberSize * bottomFiberSize,
+    totalCount = fiberSize * rightFiberSize *
+    bottomFiberSize,
     currentCount = 0;
-    if (verbose) {
-      cout << "Fiber size: " << fiberSize <<
-      ".\nRight fiber size: " << rightFiberSize <<
-      ".\nBottom fiber size: " << bottomFiberSize <<
-      ".\nTotal count: " << totalCount << ".\n";
-    }
+  if (verbose) {
+    cout << "Fiber size: " << fiberSize <<
+    ".\nRight fiber size: " << rightFiberSize <<
+    ".\nBottom fiber size: " << bottomFiberSize <<
+    ".\nTotal count: " << totalCount << ".\n";
+  }
   for (Long preGridIndex : preImage[gridIndex]) {
     setGrid(preGrid, preGridIndex);
     Long right = getRightEdgeIndex(preGrid),
