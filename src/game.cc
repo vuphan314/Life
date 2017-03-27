@@ -352,9 +352,16 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
     rightEdge[order - 1][1] == bottomEdge[1][order - 1];
 }
 
-void testGettingEdgeIndex() {
+void testGettingEdgeIndices() {
+  cout << "Testing getting edge indices.\n";
+  Char order = 3;
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
-  printVector2d(grid);
+  Long gridIndex = getGridIndex(grid);
+  if (getLeftEdgeIndex(gridIndex, order) == 18 && getBottomEdgeIndex(gridIndex, order) == 12 && getTopEdgeIndex(gridIndex, order) == 34) {
+    cout << "Test passed.\n";
+  } else {
+    cout << "Test failed.\n";
+  }
 }
 Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
@@ -371,7 +378,7 @@ Long getLeftEdgeIndex(Long gridIndex, Char order) {
     Char leftBitPair = gridIndex % 4;
     leftEdgeIndex += leftBitPair << shift;
     shift += 2;
-    gridIndex /= order;
+    gridIndex /= pow(2, order);
   }
   return leftEdgeIndex;
 }

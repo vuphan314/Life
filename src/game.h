@@ -114,7 +114,7 @@ Long getSpaceSize(Char order);
 Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
   Edge &rightEdge, Edge &bottomEdge);
 
-void testGettingEdgeIndex();
+void testGettingEdgeIndices();
 Long getRightEdgeIndex(const Grid &grid);
 // Long getLeftEdgeIndex(const Grid &grid);
 Long getLeftEdgeIndex(Long gridIndex, Char order);
