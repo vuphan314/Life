@@ -355,7 +355,8 @@ void testGettingEdgeIndices() {
   Char order = 3;
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
   Long gridIndex = getGridIndex(grid);
-  if (getLeftEdgeIndex(gridIndex, order) == 18 && getBottomEdgeIndex(gridIndex, order) == 12 && getTopEdgeIndex(gridIndex, order) == 34) {
+  cout << gridIndex << "\n";
+  if (getRightEdgeIndex(gridIndex, order) == 9 && getLeftEdgeIndex(gridIndex, order) == 18 && getBottomEdgeIndex(gridIndex, order) == 12 && getTopEdgeIndex(gridIndex, order) == 34) {
     cout << "Test passed.\n";
   } else {
     cout << "Test failed.\n";
@@ -365,25 +366,34 @@ Long getRightEdgeIndex(const Grid &grid) {
   Char order = grid.size();
   return getMatrixIndex(grid, 0, order, order - 2, order);
 }
+Long getRightEdgeIndex(Long gridIndex, Char order) {
+  Long rightEdgeIndex = 0, mask = 3 << (order - 2);
+  Char multiplier = 0;
+  while (gridIndex > 0) {
+    Char rightBitPair = (gridIndex & mask) >> (order - 2);
+    rightEdgeIndex += rightBitPair << multiplier;
+    multiplier += 2;
+    gridIndex >>= order;
+  }
+  return rightEdgeIndex;
+}
 Long getLeftEdgeIndex(Long gridIndex, Char order) {
   Long leftEdgeIndex = 0;
-  Char shift = 0;
+  Char multiplier = 0;
   while (gridIndex > 0) {
-    Char leftBitPair = gridIndex % 4;
-    leftEdgeIndex += leftBitPair << shift;
-    shift += 2;
-    gridIndex /= pow(2, order);
+    Char leftBitPair = gridIndex & 3;
+    leftEdgeIndex += leftBitPair << multiplier;
+    multiplier += 2;
+    gridIndex >>= order;
   }
   return leftEdgeIndex;
 }
-
 Long getBottomEdgeIndex(Long gridIndex, Char order) {
-  Long dividend = pow(2, (order - 2) * order);
-  return gridIndex / dividend;
+  return gridIndex >> ((order - 2) * order);
 }
 Long getTopEdgeIndex(Long gridIndex, Char order) {
-  Long modulus = pow(2, 2 * order);
-  return gridIndex % modulus;
+  Long mask = (1 << (2 * order)) - 1;
+  return gridIndex & mask;
 }
 
 Long getPostGridIndex(Long gridIndex,
