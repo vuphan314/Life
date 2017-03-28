@@ -260,6 +260,21 @@ void Space::setEdgePreImages() {
   }
 }
 
+void Space::setSortedPreImages() {
+  setPreImage();
+  bottomSortedPreImage = SortedPreImage(SPACE_SIZE,
+    SortedFiber(EDGE_PRE_SPACE_SIZE, vector<Long>()));
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
+      gridIndex++) {
+    for (Long preGridIndex : preImage[gridIndex]) {
+      Long bottomPreEdgeIndex =
+        getBottomEdgeIndex(preGridIndex, PRE_ORDER);
+      bottomSortedPreImage[gridIndex][bottomPreEdgeIndex].
+        push_back(preGridIndex);
+    }
+  }
+}
+
 void Space::setPreImage() {
   cout << "Started setting pre-image.\n";
   if (PRE_ORDER > 7) {
@@ -366,6 +381,7 @@ void testGettingEdgeIndices() {
     cout << "Test failed.\n";
   }
 }
+
 Long getRightEdgeIndex(Long gridIndex, Char order) {
   Long rightEdgeIndex = 0, mask = 3 << (order - 2);
   Char multiplier = 0;
@@ -388,6 +404,7 @@ Long getLeftEdgeIndex(Long gridIndex, Char order) {
   }
   return leftEdgeIndex;
 }
+
 Long getBottomEdgeIndex(Long gridIndex, Char order) {
   return gridIndex >> ((order - 2) * order);
 }

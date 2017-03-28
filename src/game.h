@@ -32,6 +32,10 @@ using Fiber = vector<Long>;
 using PreImage = vector<Fiber>;
   // preImage[gridIndex][preGridIndex]
 
+using SortedFiber = vector<vector<Long>>;
+using SortedPreImage = vector<SortedFiber>;
+  // sortedPreImage[gridIndex][preEdgeIndex][preGridIndex]
+
 using EdgeFiber = unordered_set<Long>;
 using EdgePreImage = vector<EdgeFiber>;
   // edgePreImage[gridIndex][preEdgeIndex]
@@ -48,7 +52,7 @@ const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 
 const Long COUNT_CUTOFF = pow(2, 40);
-const Long COUT_PERIOD = pow(2, 30) - 1;
+const Long COUT_PERIOD = pow(2, 25) - 1;
 const auto COUT_WIDTH = setw(15);
 const auto COUT_WIDE_WIDTH = setw(25);
 const auto COUT_PRECISION = setprecision(4);
@@ -69,11 +73,14 @@ private:
 // temporary:
   Grid grid, postGrid, preGrid; // (n+{0,-1,1})^2
   Edge verticalPreEdge, horizontalPreEdge; // 2*(n+2)
-// set by setImage, setPreImage, setEdgePreImages:
-  Image image; // 2^(n-2)^2
-  PreImage preImage; // 2^(n+2)^2
-  EdgePreImage rightEdgePreImage, // 2^(2*(n+2))
-    leftEdgePreImage, bottomEdgePreImage, topEdgePreImage;
+// containers:
+  Image image; // 2^(n-2)^2, set by setImage
+  PreImage preImage; // 2^(n+2)^2, set by setPreImage
+  SortedPreImage bottomSortedPreImage;
+    // 2^(2*(n+2)), set by setSortedPreImages
+  EdgePreImage rightEdgePreImage, leftEdgePreImage,
+    bottomEdgePreImage, topEdgePreImage;
+    // 2^(2*(n+2)), set by setEdgePreImages
 
 public:
   Space(Char order);
@@ -97,6 +104,8 @@ public:
 
   void setEdgePreImages();
 
+  void setSortedPreImages();
+
   void setPreImage();
 
   Float getImageProportion();
@@ -116,8 +125,12 @@ Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
   Edge &rightEdge, Edge &bottomEdge);
 
 void testGettingEdgeIndices();
+
+// \Theta(n)
 Long getRightEdgeIndex(Long gridIndex, Char order);
 Long getLeftEdgeIndex(Long gridIndex, Char order);
+
+// \Theta(1)
 Long getBottomEdgeIndex(Long gridIndex, Char order);
 Long getTopEdgeIndex(Long gridIndex, Char order);
 
