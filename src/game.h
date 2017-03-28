@@ -76,7 +76,7 @@ private:
 // containers:
   Image image; // 2^(n-2)^2, set by setImage
   PreImage preImage; // 2^(n+2)^2, set by setPreImage
-  SortedPreImage bottomSortedPreImage;
+  SortedPreImage bottomSortedPreImage, topSortedPreImage;
     // 2^(2*(n+2)), set by setSortedPreImages
   EdgePreImage rightEdgePreImage, leftEdgePreImage,
     bottomEdgePreImage, topEdgePreImage;
