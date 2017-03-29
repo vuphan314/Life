@@ -288,47 +288,6 @@ void Space::setSortedPreImages() {
     }
   }
 }
-// void Space::setSortedPreImages() {
-//   setPreImage();
-//   rightSortedPreImage = leftSortedPreImage =
-//     bottomSortedPreImage = topSortedPreImage =
-//     SortedPreImage(SPACE_SIZE, SortedFiber(
-//       EDGE_PRE_SPACE_SIZE, vector<Long>()));
-//   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
-//       gridIndex++) {
-//     for (Long preGridIndex : preImage[gridIndex]) {
-//       Long rightPreEdgeIndex = getRightEdgeIndex(
-//           preGridIndex, PRE_ORDER),
-//         leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
-//           PRE_ORDER),
-//         bottomPreEdgeIndex = getBottomEdgeIndex(
-//           preGridIndex, PRE_ORDER),
-//         topPreEdgeIndex = getTopEdgeIndex(preGridIndex,
-//           PRE_ORDER);
-//       rightSortedPreImage[gridIndex][rightPreEdgeIndex].
-//         push_back(preGridIndex);
-//       leftSortedPreImage[gridIndex][leftPreEdgeIndex].
-//         push_back(preGridIndex);
-//       bottomSortedPreImage[gridIndex][bottomPreEdgeIndex].
-//         push_back(preGridIndex);
-//       topSortedPreImage[gridIndex][topPreEdgeIndex].
-//         push_back(preGridIndex);
-//     }
-//   }
-//   Long empties = 0;
-//   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
-//       gridIndex++) {
-//     for (Long preEdgeIndex = 0; preEdgeIndex <
-//         EDGE_PRE_SPACE_SIZE; preEdgeIndex++) {
-//       if (bottomSortedPreImage[gridIndex][preEdgeIndex].
-//           empty()) {
-//         empties++;
-//       }
-//     }
-//   }
-//   cout << "bottom empties: " << empties << "\t" << 100.0 *
-//     empties / SPACE_SIZE / EDGE_PRE_SPACE_SIZE << "%\n";
-// }
 
 void Space::setPreImage() {
   cout << "Started setting pre-image.\n";
