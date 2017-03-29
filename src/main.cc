@@ -9,9 +9,9 @@ int main(int argc, const char *argv[]) {
 
     // space.inspectPreImage();
 
-    // space.isEachGrid3tupleJoinable();
+    space.isEachGrid3tupleJoinable();
 
-    space.setSortedPreImages();
+    // space.setSortedPreImages();
     // bool success = space.are3wayJoinable(6, 0, 2, TRUE);
     // cout << success << "\n";
 
