@@ -82,8 +82,7 @@ public:
   Bool isEachGrid3tupleJoinable();
 
   Bool are3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex,
-    Bool verbose = FALSE);
+    Long rightGridIndex, Long bottomGridIndex);
 
   Bool isEachGrid2tupleJoinable();
 
@@ -107,12 +106,10 @@ Long getEdgeSpaceSize(Char order);
 Long getSpaceSize(Char order);
 
 void testGettingEdgeIndices();
-
-// Theta(n)
+// Theta(n):
 Long getRightEdgeIndex(Long gridIndex, Char order);
 Long getLeftEdgeIndex(Long gridIndex, Char order);
-
-// Theta(1)
+// Theta(1):
 Long getBottomEdgeIndex(Long gridIndex, Char order);
 Long getTopEdgeIndex(Long gridIndex, Char order);
 

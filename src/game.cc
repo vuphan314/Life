@@ -76,7 +76,8 @@ Bool Space::isEachGrid3tupleJoinable() {
         }
         if (!(are3wayJoinable(gridIndex,
             rightGridIndex, bottomGridIndex))) {
-          cout << "Unjoinable grid 3-tuple: " << gridIndex <<
+          cout << "Unjoinable grid 3-tuple: "
+            << gridIndex <<
             ", right " << rightGridIndex <<
             ", bottom " << bottomGridIndex << ".\n";
           return FALSE;
@@ -89,15 +90,16 @@ Bool Space::isEachGrid3tupleJoinable() {
 }
 
 Bool Space::are3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex,
-    Bool verbose) {
+    Long rightGridIndex, Long bottomGridIndex) {
   const EdgeFiber &topsOfBottom =
     topEdgePreImage[bottomGridIndex],
-    leftsOfRight = leftEdgePreImage[rightGridIndex];
+    &leftsOfRight = leftEdgePreImage[rightGridIndex];
   for (Long preGridIndex : preImage[gridIndex]) {
-    Long bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
+    Long bottom = getBottomEdgeIndex(preGridIndex,
+      PRE_ORDER);
     if (topsOfBottom.find(bottom) != topsOfBottom.end()) {
-      Long right = getRightEdgeIndex(preGridIndex, PRE_ORDER);
+      Long right = getRightEdgeIndex(preGridIndex,
+        PRE_ORDER);
       if (leftsOfRight.find(right) != leftsOfRight.end()) {
         return TRUE;
       }
@@ -144,14 +146,15 @@ void Space::setEdgePreImages() {
       gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       Long rightPreEdgeIndex = getRightEdgeIndex(
-          preGridIndex, PRE_ORDER),
+        preGridIndex, PRE_ORDER),
         leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
-          PRE_ORDER),
+        PRE_ORDER),
         bottomPreEdgeIndex = getBottomEdgeIndex(
-          preGridIndex, PRE_ORDER),
+        preGridIndex, PRE_ORDER),
         topPreEdgeIndex = getTopEdgeIndex(preGridIndex,
-          PRE_ORDER);
-      rightEdgePreImage[gridIndex].insert(rightPreEdgeIndex);
+        PRE_ORDER);
+      rightEdgePreImage[gridIndex].insert(
+        rightPreEdgeIndex);
       leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);
       bottomEdgePreImage[gridIndex].insert(
         bottomPreEdgeIndex);
@@ -226,8 +229,8 @@ void Space::setImage() {
       TRUE;
   }
   Duration totalDuration = getDuration(startTime);
-  cout << "Ended setting image after "
-    << totalDuration << " seconds.\n";
+  cout << "Ended setting image after " << totalDuration <<
+    " seconds.\n";
 }
 
 ////////////////////////////////////////////////////////////
