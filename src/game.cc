@@ -236,10 +236,9 @@ Bool Space::are2wayJoinable(Long gridIndex,
 
 void Space::setEdgePreImages() {
   setPreImage();
-  rightEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  leftEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  bottomEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
-  topEdgePreImage = EdgePreImage(SPACE_SIZE, EdgeFiber());
+  rightEdgePreImage = leftEdgePreImage =
+    bottomEdgePreImage = topEdgePreImage =
+    EdgePreImage(SPACE_SIZE, EdgeFiber());
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
