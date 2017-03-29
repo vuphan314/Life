@@ -160,35 +160,6 @@ void Space::setEdgePreImages() {
   }
 }
 
-void Space::setSortedPreImages() {
-  setPreImage();
-  rightSortedPreImage = leftSortedPreImage =
-    // bottomSortedPreImage =
-    topSortedPreImage =
-    SortedPreImage(SPACE_SIZE, SortedFiber());
-  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
-      gridIndex++) {
-    for (Long preGridIndex : preImage[gridIndex]) {
-      Long rightPreEdgeIndex = getRightEdgeIndex(
-          preGridIndex, PRE_ORDER),
-        leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
-          PRE_ORDER),
-        // bottomPreEdgeIndex = getBottomEdgeIndex(
-        //   preGridIndex, PRE_ORDER),
-        topPreEdgeIndex = getTopEdgeIndex(preGridIndex,
-          PRE_ORDER);
-      rightSortedPreImage[gridIndex][rightPreEdgeIndex].
-        push_back(preGridIndex);
-      leftSortedPreImage[gridIndex][leftPreEdgeIndex].
-        push_back(preGridIndex);
-      // bottomSortedPreImage[gridIndex][bottomPreEdgeIndex].
-      //   push_back(preGridIndex);
-      topSortedPreImage[gridIndex][topPreEdgeIndex].
-        push_back(preGridIndex);
-    }
-  }
-}
-
 void Space::setPreImage() {
   cout << "Started setting pre-image.\n";
   if (PRE_ORDER > 7) {
