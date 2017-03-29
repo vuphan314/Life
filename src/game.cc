@@ -76,16 +76,21 @@ Bool Space::isEachGrid3tupleJoinable() {
         }
         if (!(are3wayJoinable(gridIndex,
             rightGridIndex, bottomGridIndex))) {
+          Duration totalDuration = getDuration(startTime);
           cout << "Unjoinable grid 3-tuple: "
             << gridIndex <<
             ", right " << rightGridIndex <<
-            ", bottom " << bottomGridIndex << ".\n";
+            ", bottom " << bottomGridIndex <<
+            ".\nEnded after " << totalDuration <<
+            " seconds.\n";
           return FALSE;
         }
       }
     }
   }
-  cout << "Each grid 3-tuple is joinable.\n";
+  Duration totalDuration = getDuration(startTime);
+  cout << "Each grid 3-tuple is joinable.\nEnded after "
+    << totalDuration << " seconds.\n";
   return TRUE;
 }
 
