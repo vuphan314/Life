@@ -88,67 +88,6 @@ Bool Space::isEachGrid3tupleJoinable() {
   return TRUE;
 }
 
-// Bool Space::are3wayJoinable(Long gridIndex,
-//     Long rightGridIndex, Long bottomGridIndex,
-//     Bool verbose) {
-//   Time startTime = getTime();
-//   Long fiberSize = preImage[gridIndex].size(),
-//     rightFiberSize = preImage[rightGridIndex].size(),
-//     bottomFiberSize = preImage[bottomGridIndex].size(),
-//     totalCount = fiberSize * rightFiberSize *
-//       bottomFiberSize,
-//     currentCount = 0;
-//   if (verbose) {
-//     cout << "Fiber size: " << fiberSize <<
-//     ".\nRight fiber size: " << rightFiberSize <<
-//     ".\nBottom fiber size: " << bottomFiberSize <<
-//     ".\nTotal count: " << totalCount << ".\n";
-//   }
-//   for (Long preGridIndex : preImage[gridIndex]) {
-//     Long right = getRightEdgeIndex(preGridIndex, PRE_ORDER),
-//       bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER);
-//     for (Long rightPreGridIndex : preImage[rightGridIndex]) {
-//       Long left = getLeftEdgeIndex(rightPreGridIndex,
-//         PRE_ORDER);
-//       if (right == left) {
-//         for (Long bottomPreGridIndex :
-//             preImage[bottomGridIndex]) {
-//           Long top = getTopEdgeIndex(bottomPreGridIndex,
-//             PRE_ORDER);
-//           if (bottom == top) {
-//             return TRUE;
-//           }
-//           currentCount++;
-//         }
-//       } else {
-//         currentCount += bottomFiberSize;
-//       }
-//       if (currentCount > COUNT_CUTOFF) {
-//         cout << "Skipped grid 3-tuple" <<
-//           COUT_WIDTH << gridIndex <<
-//           COUT_WIDTH << rightGridIndex <<
-//           COUT_WIDTH << bottomGridIndex << ".\n";
-//         return TRUE;
-//       }
-//       if (!(currentCount & COUT_PERIOD)) {
-//         cout << "are3wayJoinable\n";
-//         Float currentPercentage = 100.0 *
-//           currentCount / totalCount;
-//         Duration remainingDuration =
-//           getRemainingDuration(startTime,
-//           currentPercentage);
-//         cout << "\tCurrent count"
-//           << COUT_WIDTH << currentCount <<
-//           COUT_WIDTH << COUT_PRECISION << fixed <<
-//           currentPercentage << "%" <<
-//           COUT_WIDTH << remainingDuration << "h left.\n";
-//       }
-//       currentCount++;
-//     }
-//     currentCount++;
-//   }
-//   return FALSE;
-// }
 Bool Space::are3wayJoinable(Long gridIndex,
     Long rightGridIndex, Long bottomGridIndex,
     Bool verbose) {
