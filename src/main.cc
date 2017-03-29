@@ -15,8 +15,6 @@ int main(int argc, const char *argv[]) {
     // bool success = space.are3wayJoinable(6, 0, 2, TRUE);
     // cout << success << "\n";
 
-    // space.isEachGrid3tuplePossiblyJoinable();
-
     // space.isEachGrid2tupleJoinable();
 
     // space.getImageProportion();

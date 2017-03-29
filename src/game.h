@@ -96,11 +96,6 @@ public:
     Long rightGridIndex, Long bottomGridIndex,
     Bool verbose = FALSE);
 
-  Bool isEachGrid3tuplePossiblyJoinable();
-
-  Bool arePossibly3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex);
-
   Bool isEachGrid2tupleJoinable();
 
   Bool are2wayJoinable(Long gridIndex, Long rightGridIndex);

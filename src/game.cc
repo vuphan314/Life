@@ -106,66 +106,6 @@ Bool Space::are3wayJoinable(Long gridIndex,
   return FALSE;
 }
 
-Bool Space::isEachGrid3tuplePossiblyJoinable() {
-  setEdgePreImages();
-  Time startTime = getTime();
-  Long totalCount = pow(SPACE_SIZE, 3), currentCount = 0;
-  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
-      gridIndex++, currentCount++) {
-    for (Long rightGridIndex = 0;
-        rightGridIndex < SPACE_SIZE;
-        rightGridIndex++, currentCount++) {
-      for (Long bottomGridIndex = 0;
-          bottomGridIndex < SPACE_SIZE;
-          bottomGridIndex++, currentCount++) {
-        if (!(currentCount & COUT_PERIOD)) {
-          Float currentPercentage = 100.0 *
-            currentCount / totalCount;
-          Duration remainingDuration =
-            getRemainingDuration(startTime,
-              currentPercentage);
-          cout << "Grid 3-tuple"
-            << COUT_WIDTH << currentCount <<
-            COUT_WIDTH << COUT_PRECISION << fixed <<
-            currentPercentage << "%" <<
-            COUT_WIDTH << remainingDuration << "h left.\n";
-        }
-        if (!(arePossibly3wayJoinable(gridIndex,
-            rightGridIndex, bottomGridIndex))) {
-          cout << "Not possibly joinable grid 3-tuple: " <<
-            gridIndex <<
-            ", right " << rightGridIndex <<
-            ", bottom " << bottomGridIndex << ".\n";
-          return FALSE;
-        }
-      }
-    }
-  }
-  cout << "Each grid 3-tuple is possibly joinable.\n";
-  return TRUE;
-}
-
-Bool Space::arePossibly3wayJoinable(Long gridIndex,
-    Long rightGridIndex, Long bottomGridIndex) {
-  for (Long right : rightEdgePreImage[gridIndex]) {
-    for (Long left : leftEdgePreImage[rightGridIndex]) {
-      if (right == left) {
-        for (Long bottom : bottomEdgePreImage[gridIndex]) {
-          for (Long top : topEdgePreImage[bottomGridIndex]) {
-            if (bottom == top) {
-              if (canOverlap(right, bottom,
-                  verticalPreEdge, horizontalPreEdge)) {
-                return TRUE;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  return FALSE;
-}
-
 Bool Space::isEachGrid2tupleJoinable() {
   setEdgePreImages();
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
