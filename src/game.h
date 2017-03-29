@@ -119,9 +119,6 @@ public:
 Long getEdgeSpaceSize(Char order);
 Long getSpaceSize(Char order);
 
-Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
-  Edge &rightEdge, Edge &bottomEdge);
-
 void testGettingEdgeIndices();
 
 // \Theta(n)

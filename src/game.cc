@@ -269,18 +269,6 @@ Long getSpaceSize(Char order) {
   return pow(2, pow(order, 2));
 }
 
-Bool canOverlap(Long rightEdgeIndex, Long bottomEdgeIndex,
-    Edge &rightEdge, Edge &bottomEdge) {
-  setMatrix(rightEdge, rightEdgeIndex);
-  setMatrix(bottomEdge, bottomEdgeIndex);
-  Char order = rightEdge.size();
-  return
-    rightEdge[order - 2][0] == bottomEdge[0][order - 2] &&
-    rightEdge[order - 2][1] == bottomEdge[0][order - 1] &&
-    rightEdge[order - 1][0] == bottomEdge[1][order - 2] &&
-    rightEdge[order - 1][1] == bottomEdge[1][order - 1];
-}
-
 void testGettingEdgeIndices() {
   cout << "Testing getting edge indices.\n";
   Grid grid{{0, 1, 0}, {0, 0, 1}, {1, 0, 0}};
