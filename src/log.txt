@@ -1,10 +1,8 @@
 // isEachGrid3tupleJoinable
 
-// order-2 space
-Started setting pre-image.
-RAM needed: 6.10352e-05GB.
-Ended setting pre-image.
+// order-3 space
 Each grid 3-tuple is joinable.
+Ended after 388.0000 seconds. // 6m
 
 ////////////////////////////////////////////////////////////
 // isEachGrid2tupleJoinable
