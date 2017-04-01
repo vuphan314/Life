@@ -268,7 +268,7 @@ Long getRightEdgeIndex(Long gridIndex, Char order) {
   Char multiplier = 0;
   while (gridIndex > 0) {
     Char rightBitPair = (gridIndex & mask) >> (order - 2);
-    rightEdgeIndex += rightBitPair << multiplier;
+    rightEdgeIndex |= rightBitPair << multiplier;
     multiplier += 2;
     gridIndex >>= order;
   }
@@ -279,7 +279,7 @@ Long getLeftEdgeIndex(Long gridIndex, Char order) {
   Char multiplier = 0;
   while (gridIndex > 0) {
     Char leftBitPair = gridIndex & 3;
-    leftEdgeIndex += leftBitPair << multiplier;
+    leftEdgeIndex |= leftBitPair << multiplier;
     multiplier += 2;
     gridIndex >>= order;
   }
