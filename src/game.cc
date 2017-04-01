@@ -313,7 +313,7 @@ Long getMatrixIndex(const Matrix &matrix,
   Int cellIndex = 0;
   for (Char ri = startRow; ri < endRow; ri++) {
     for (Char ci = startColumn; ci < endColumn; ci++) {
-      matrixIndex += matrix[ri][ci] << cellIndex;
+      matrixIndex |= matrix[ri][ci] << cellIndex;
       cellIndex++;
     }
   }
@@ -347,8 +347,8 @@ void setPostGrid(Grid &postGrid, const Grid &grid) {
 CellState getPostCellState(const Grid &grid,
     Char rowIndex, Char columnIndex) {
   Char i = getCellState(grid, rowIndex, columnIndex);
-  Char j =
-    getAliveNeighborCount(grid, rowIndex, columnIndex);
+  Char j = getAliveNeighborCount(grid, rowIndex,
+    columnIndex);
   return RULES[i][j];
 }
 
