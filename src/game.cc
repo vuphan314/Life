@@ -49,6 +49,17 @@ void Space::inspectPreImage() {
   }
 }
 
+Bool Space::isEachGrid4tupleJoinable() {
+  cout << "isEachGrid4tupleJoinable\n";
+
+  return FALSE;
+}
+
+Bool Space::are4wayJoinable(Long, Long, Long, Long) {
+
+  return FALSE;
+}
+
 Bool Space::isEachGrid3tupleJoinable() {
   cout << "isEachGrid3tupleJoinable\n";
   Time startTime = getTime();

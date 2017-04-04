@@ -79,6 +79,8 @@ public:
 
   void inspectPreImage();
 
+  Bool isEachGrid4tupleJoinable();
+
   Bool are4wayJoinable(Long, Long, Long, Long);
 
   Bool isEachGrid3tupleJoinable();
