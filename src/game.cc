@@ -155,7 +155,22 @@ Bool Space::are2wayJoinable(Long gridIndex,
 
 void Space::setEdgeMapPreImages() {
   setPreImage();
-  topToRights = EdgeMapPreImage(SPACE_SIZE, EdgeMapFiber());
+  topRightEdgeMapPreImage = EdgeMapPreImage(SPACE_SIZE,
+    EdgeMapFiber());
+  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
+      gridIndex++) {
+    EdgeMapFiber &topRightEdgeMapFiber =
+      topRightEdgeMapPreImage[gridIndex];
+    for (Long preGridIndex : preImage[gridIndex]) {
+      Long top = getTopEdgeIndex(preGridIndex, PRE_ORDER),
+        right = getRightEdgeIndex(preGridIndex, PRE_ORDER);
+      if (topRightEdgeMapFiber.find(top) ==
+          topRightEdgeMapFiber.end()) {
+        topRightEdgeMapFiber[top] = unordered_set<Long>();
+      }
+      topRightEdgeMapFiber[top].insert(right);
+    }
+  }
 }
 
 void Space::setEdgePreImages() {
@@ -167,13 +182,13 @@ void Space::setEdgePreImages() {
       gridIndex++) {
     for (Long preGridIndex : preImage[gridIndex]) {
       Long rightPreEdgeIndex = getRightEdgeIndex(
-        preGridIndex, PRE_ORDER),
+          preGridIndex, PRE_ORDER),
         leftPreEdgeIndex = getLeftEdgeIndex(preGridIndex,
-        PRE_ORDER),
+          PRE_ORDER),
         bottomPreEdgeIndex = getBottomEdgeIndex(
-        preGridIndex, PRE_ORDER),
+          preGridIndex, PRE_ORDER),
         topPreEdgeIndex = getTopEdgeIndex(preGridIndex,
-        PRE_ORDER);
+          PRE_ORDER);
       rightEdgePreImage[gridIndex].insert(
         rightPreEdgeIndex);
       leftEdgePreImage[gridIndex].insert(leftPreEdgeIndex);

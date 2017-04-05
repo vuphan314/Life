@@ -39,7 +39,8 @@ using EdgeFiber = unordered_set<Long>;
 using EdgePreImage = vector<EdgeFiber>;
   // edgePreImage[gridIndex][preEdgeIndex]
 
-using EdgeMapFiber = unordered_map<Long, unordered_set<Long>>;
+using EdgeMapFiber = unordered_map<Long,
+  unordered_set<Long>>;
 using EdgeMapPreImage = vector<EdgeMapFiber>;
   // edgeMapPreImage[gridIndex][preEdgeIndex][preEdgeIndex]
 
@@ -80,7 +81,7 @@ private:
   EdgePreImage rightEdgePreImage, leftEdgePreImage,
     bottomEdgePreImage, topEdgePreImage;
     // 2^(2*(n+2)), set by setEdgePreImages
-  EdgeMapPreImage topToRights;
+  EdgeMapPreImage topRightEdgeMapPreImage;
 
 public:
   Space(Char order);
