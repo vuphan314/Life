@@ -105,6 +105,7 @@ Bool Space::are4wayJoinable(Long gridIndex0,
           if (tops3.find(t3) != tops3.end()) {
             Long l3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
             if (lefts3.find(l3) != lefts3.end()) {
+              cout << "edges:\ntop3 " << t3 << "\nleft3 " << l3 << "\nbottom0 " << b0 <<"\nright0 " << r0 << "\n";
               return TRUE;
             }
           }

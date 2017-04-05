@@ -56,7 +56,7 @@ const Char UPPER_BIRTH = 3;
 const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 
-const Long COUT_PERIOD = pow(2, 5) - 1;
+const Long COUT_PERIOD = pow(2, 10) - 1;
 const auto COUT_WIDTH = setw(15);
 const auto COUT_PRECISION = setprecision(4);
 
@@ -69,7 +69,8 @@ void setRULES();
 ////////////////////////////////////////////////////////////
 
 class Space {
-private:
+// private:
+public:
   Char ORDER, POST_ORDER, PRE_ORDER;
   Long SPACE_SIZE, POST_SPACE_SIZE, PRE_SPACE_SIZE,
     EDGE_PRE_SPACE_SIZE;
