@@ -51,6 +51,7 @@ void Space::inspectPreImage() {
 
 Bool Space::isEachGrid4tupleJoinable() {
   cout << "isEachGrid4tupleJoinable\n";
+  setEdgeMapPreImages();
 
   return FALSE;
 }
@@ -155,18 +156,26 @@ Bool Space::are2wayJoinable(Long gridIndex,
 
 void Space::setEdgeMapPreImages() {
   setPreImage();
-  topRightEdgeMapPreImage = EdgeMapPreImage(SPACE_SIZE,
-    EdgeMapFiber());
+  leftBottomEdgeMapPreImage = topRightEdgeMapPreImage =
+    EdgeMapPreImage(SPACE_SIZE, EdgeMapFiber());
   for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
       gridIndex++) {
-    EdgeMapFiber &topRightEdgeMapFiber =
-      topRightEdgeMapPreImage[gridIndex];
+    EdgeMapFiber &leftBottomEdgeMapFiber =
+        leftBottomEdgeMapPreImage[gridIndex],
+      &topRightEdgeMapFiber = topRightEdgeMapPreImage[gridIndex];
     for (Long preGridIndex : preImage[gridIndex]) {
-      Long top = getTopEdgeIndex(preGridIndex, PRE_ORDER),
+      Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER),
+        bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER),
+        top = getTopEdgeIndex(preGridIndex, PRE_ORDER),
         right = getRightEdgeIndex(preGridIndex, PRE_ORDER);
+      if (leftBottomEdgeMapFiber.find(left) ==
+          leftBottomEdgeMapFiber.end()) {
+        leftBottomEdgeMapFiber[left] = LongSet();
+      }
+      leftBottomEdgeMapFiber[left].insert(bottom);
       if (topRightEdgeMapFiber.find(top) ==
           topRightEdgeMapFiber.end()) {
-        topRightEdgeMapFiber[top] = unordered_set<Long>();
+        topRightEdgeMapFiber[top] = LongSet();
       }
       topRightEdgeMapFiber[top].insert(right);
     }
