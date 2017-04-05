@@ -51,9 +51,41 @@ void Space::inspectPreImage() {
 
 Bool Space::isEachGrid4tupleJoinable() {
   cout << "isEachGrid4tupleJoinable\n";
+  Time startTime = getTime();
   setEdgeMapPreImages();
-
-  return FALSE;
+  Long totalCount = pow(SPACE_SIZE, 4), cc = 0;
+  for (Long gi0 = 0; gi0 < SPACE_SIZE; gi0++, cc++) {
+    for (Long gi1 = 0; gi1 < SPACE_SIZE; gi1++, cc++) {
+      for (Long gi2 = 0; gi2 < SPACE_SIZE; gi2++, cc++) {
+        for (Long gi3 = 0; gi3 < SPACE_SIZE; gi3++, cc++) {
+          if (!(cc & COUT_PERIOD)) {
+            Float currentPercentage = 100.0 *
+              cc / totalCount;
+            Duration remainingDuration =
+              getRemainingDuration(startTime,
+                currentPercentage);
+            cout << "Grid 4-tuple"
+              << COUT_WIDTH << cc <<
+              COUT_WIDTH << COUT_PRECISION << fixed <<
+              currentPercentage << "%" <<
+              COUT_WIDTH << remainingDuration << "h left.\n";
+          }
+          if (!(are4wayJoinable(gi0, gi1, gi2, gi3))) {
+            Duration totalDuration = getDuration(startTime);
+            cout << "Unjoinable grid 4-tuple: " << gi0 <<
+              ", " << gi1 << ", " << gi2 << ", " << gi3 <<
+              ".\nEnded after " << totalDuration <<
+              " seconds.\n";
+            return FALSE;
+          }
+        }
+      }
+    }
+  }
+  Duration totalDuration = getDuration(startTime);
+  cout << "Each grid 4-tuple is joinable.\nEnded after "
+    << totalDuration << " seconds.\n";
+  return TRUE;
 }
 
 Bool Space::are4wayJoinable(Long gridIndex0,
@@ -62,17 +94,17 @@ Bool Space::are4wayJoinable(Long gridIndex0,
       topRightEdgeMapPreImage[gridIndex2],
     &leftBottom1 = leftBottomEdgeMapPreImage[gridIndex1];
   for (Long preGridIndex0 : preImage[gridIndex0]) {
-    Long bottom0 = getBottomEdgeIndex(preGridIndex0, PRE_ORDER);
-    if (topRight2.find(bottom0) != topRight2.end()) {
-      Long right0 = getRightEdgeIndex(preGridIndex0, PRE_ORDER);
-      if (leftBottom1.find(right0) != leftBottom1.end()) {
-        /*const*/ LongSet &lefts3 = topRight2[bottom0],
-          &tops3 = leftBottom1[right0];
+    Long b0 = getBottomEdgeIndex(preGridIndex0, PRE_ORDER);
+    if (topRight2.find(b0) != topRight2.end()) {
+      Long r0 = getRightEdgeIndex(preGridIndex0, PRE_ORDER);
+      if (leftBottom1.find(r0) != leftBottom1.end()) {
+        /*const*/ LongSet &lefts3 = topRight2[b0],
+          &tops3 = leftBottom1[r0];
         for (Long preGridIndex3 : preImage[gridIndex3]) {
-          Long top3 = getTopEdgeIndex(preGridIndex3, PRE_ORDER);
-          if (tops3.find(top3) != tops3.end()) {
-            Long left3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
-            if (lefts3.find(left3) != lefts3.end()) {
+          Long t3 = getTopEdgeIndex(preGridIndex3, PRE_ORDER);
+          if (tops3.find(t3) != tops3.end()) {
+            Long l3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
+            if (lefts3.find(l3) != lefts3.end()) {
               return TRUE;
             }
           }
@@ -180,16 +212,15 @@ void Space::setEdgeMapPreImages() {
   setPreImage();
   leftBottomEdgeMapPreImage = topRightEdgeMapPreImage =
     EdgeMapPreImage(SPACE_SIZE, EdgeMapFiber());
-  for (Long gridIndex = 0; gridIndex < SPACE_SIZE;
-      gridIndex++) {
+  for (Long gi = 0; gi < SPACE_SIZE; gi++) {
     EdgeMapFiber &leftBottomEdgeMapFiber =
-        leftBottomEdgeMapPreImage[gridIndex],
-      &topRightEdgeMapFiber = topRightEdgeMapPreImage[gridIndex];
-    for (Long preGridIndex : preImage[gridIndex]) {
-      Long left = getLeftEdgeIndex(preGridIndex, PRE_ORDER),
-        bottom = getBottomEdgeIndex(preGridIndex, PRE_ORDER),
-        top = getTopEdgeIndex(preGridIndex, PRE_ORDER),
-        right = getRightEdgeIndex(preGridIndex, PRE_ORDER);
+        leftBottomEdgeMapPreImage[gi],
+      &topRightEdgeMapFiber = topRightEdgeMapPreImage[gi];
+    for (Long pgi : preImage[gi]) {
+      Long left = getLeftEdgeIndex(pgi, PRE_ORDER),
+        bottom = getBottomEdgeIndex(pgi, PRE_ORDER),
+        top = getTopEdgeIndex(pgi, PRE_ORDER),
+        right = getRightEdgeIndex(pgi, PRE_ORDER);
       if (leftBottomEdgeMapFiber.find(left) ==
           leftBottomEdgeMapFiber.end()) {
         leftBottomEdgeMapFiber[left] = LongSet();
