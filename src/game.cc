@@ -56,8 +56,30 @@ Bool Space::isEachGrid4tupleJoinable() {
   return FALSE;
 }
 
-Bool Space::are4wayJoinable(Long, Long, Long, Long) {
-
+Bool Space::are4wayJoinable(Long gridIndex0,
+    Long gridIndex1, Long gridIndex2, Long gridIndex3) {
+  /*const*/ EdgeMapFiber &topRight2 =
+      topRightEdgeMapPreImage[gridIndex2],
+    &leftBottom1 = leftBottomEdgeMapPreImage[gridIndex1];
+  for (Long preGridIndex0 : preImage[gridIndex0]) {
+    Long bottom0 = getBottomEdgeIndex(preGridIndex0, PRE_ORDER);
+    if (topRight2.find(bottom0) != topRight2.end()) {
+      Long right0 = getRightEdgeIndex(preGridIndex0, PRE_ORDER);
+      if (leftBottom1.find(right0) != leftBottom1.end()) {
+        /*const*/ LongSet &lefts3 = topRight2[bottom0],
+          &tops3 = leftBottom1[right0];
+        for (Long preGridIndex3 : preImage[gridIndex3]) {
+          Long top3 = getTopEdgeIndex(preGridIndex3, PRE_ORDER);
+          if (tops3.find(top3) != tops3.end()) {
+            Long left3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
+            if (lefts3.find(left3) != lefts3.end()) {
+              return TRUE;
+            }
+          }
+        }
+      }
+    }
+  }
   return FALSE;
 }
 

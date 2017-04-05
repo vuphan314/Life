@@ -84,6 +84,7 @@ private:
     // 2^(2*(n+2)), set by setEdgePreImages
   EdgeMapPreImage leftBottomEdgeMapPreImage,
     topRightEdgeMapPreImage;
+    // set by setEdgeMapPreImages
 
 public:
   Space(Char order);
@@ -92,7 +93,8 @@ public:
 
   Bool isEachGrid4tupleJoinable();
 
-  Bool are4wayJoinable(Long, Long, Long, Long);
+  Bool are4wayJoinable(Long gridIndex0, Long gridIndex1,
+    Long gridIndex2, Long gridIndex3);
 
   Bool isEachGrid3tupleJoinable();
 
