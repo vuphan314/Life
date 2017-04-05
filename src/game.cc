@@ -153,6 +153,11 @@ Bool Space::are2wayJoinable(Long gridIndex,
   return FALSE;
 }
 
+void Space::setEdgeMapPreImages() {
+  setPreImage();
+  topToRights = EdgeMapPreImage(SPACE_SIZE, EdgeMapFiber());
+}
+
 void Space::setEdgePreImages() {
   setPreImage();
   rightEdgePreImage = leftEdgePreImage =

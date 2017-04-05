@@ -8,6 +8,7 @@ using namespace std;
 #include <cmath>
 #include <iomanip>
 #include <unordered_set>
+#include <unordered_map>
 
 #include "../cplusplus/src/timing.h"
 
@@ -37,6 +38,10 @@ using PreImage = vector<Fiber>;
 using EdgeFiber = unordered_set<Long>;
 using EdgePreImage = vector<EdgeFiber>;
   // edgePreImage[gridIndex][preEdgeIndex]
+
+using EdgeMapFiber = unordered_map<Long, unordered_set<Long>>;
+using EdgeMapPreImage = vector<EdgeMapFiber>;
+  // edgeMapPreImage[gridIndex][preEdgeIndex][preEdgeIndex]
 
 ////////////////////////////////////////////////////////////
 
@@ -75,6 +80,7 @@ private:
   EdgePreImage rightEdgePreImage, leftEdgePreImage,
     bottomEdgePreImage, topEdgePreImage;
     // 2^(2*(n+2)), set by setEdgePreImages
+  EdgeMapPreImage topToRights;
 
 public:
   Space(Char order);
@@ -93,6 +99,8 @@ public:
   Bool isEachGrid2tupleJoinable();
 
   Bool are2wayJoinable(Long gridIndex, Long rightGridIndex);
+
+  void setEdgeMapPreImages();
 
   void setEdgePreImages();
 
