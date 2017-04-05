@@ -26,6 +26,8 @@ using Matrix = vector<Row>;
 using Grid = Matrix;
 using Edge = Matrix;
 
+// containers:
+
 using Image = vector<Bool>; // image[postGridIndex]
 
 using Fiber = vector<Long>;
