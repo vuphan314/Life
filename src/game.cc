@@ -53,11 +53,16 @@ Bool Space::isEachGrid4tupleJoinable() {
   cout << "isEachGrid4tupleJoinable\n";
   Time startTime = getTime();
   setEdgeMapPreImages();
-  Long totalCount = pow(SPACE_SIZE, 4), cc = 0;
-  for (Long gi0 = 0; gi0 < SPACE_SIZE; gi0++, cc++) {
-    for (Long gi1 = 0; gi1 < SPACE_SIZE; gi1++, cc++) {
-      for (Long gi2 = 0; gi2 < SPACE_SIZE; gi2++, cc++) {
-        for (Long gi3 = 0; gi3 < SPACE_SIZE; gi3++, cc++) {
+  Long totalCount = pow(SPACE_SIZE, 4),
+    cc = 0; // currentCount
+  // for (Long gi0 = 0; gi0 < SPACE_SIZE; gi0++, cc++) {
+  //   for (Long gi1 = 0; gi1 < SPACE_SIZE; gi1++, cc++) {
+  //     for (Long gi2 = 0; gi2 < SPACE_SIZE; gi2++, cc++) {
+  //       for (Long gi3 = 0; gi3 < SPACE_SIZE; gi3++, cc++) {
+  for (long long gi0 = SPACE_SIZE - 1; gi0 >= 0; gi0--, cc++) {
+    for (long long gi1 = SPACE_SIZE - 1; gi1 >= 0; gi1--, cc++) {
+      for (long long gi2 = SPACE_SIZE - 1; gi2 >= 0; gi2--, cc++) {
+        for (long long gi3 = SPACE_SIZE - 1; gi3 >= 0; gi3--, cc++) {
           if (!(cc & COUT_PERIOD)) {
             Float currentPercentage = 100.0 *
               cc / totalCount;
@@ -105,7 +110,9 @@ Bool Space::are4wayJoinable(Long gridIndex0,
           if (tops3.find(t3) != tops3.end()) {
             Long l3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
             if (lefts3.find(l3) != lefts3.end()) {
-              cout << "edges:\ntop3 " << t3 << "\nleft3 " << l3 << "\nbottom0 " << b0 <<"\nright0 " << r0 << "\n";
+              // cout << "edges:\ntop3 " << t3 <<
+              //   "\nleft3 " << l3 << "\nbottom0 " <<
+              //   b0 << "\nright0 " << r0 << "\n";
               return TRUE;
             }
           }
