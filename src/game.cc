@@ -79,8 +79,7 @@ Bool Space::isEachGrid4tupleJoinable() {
             Duration totalDuration = getDuration(startTime);
             cout << "Unjoinable grid 4-tuple: " << gi0 <<
               ", " << gi1 << ", " << gi2 << ", " << gi3 <<
-              ".\nEnded after " << totalDuration <<
-              " seconds.\n";
+              ".\nEnded after " << totalDuration << "s.\n";
             return FALSE;
           }
         }
@@ -88,8 +87,8 @@ Bool Space::isEachGrid4tupleJoinable() {
     }
   }
   Duration totalDuration = getDuration(startTime);
-  cout << "Each grid 4-tuple is joinable.\nEnded after "
-    << totalDuration << " seconds.\n";
+  cout << "Each grid 4-tuple is joinable.\nEnded after " <<
+    totalDuration << "s.\n";
   return TRUE;
 }
 
@@ -155,16 +154,15 @@ Bool Space::isEachGrid3tupleJoinable() {
             << gridIndex <<
             ", right " << rightGridIndex <<
             ", bottom " << bottomGridIndex <<
-            ".\nEnded after " << totalDuration <<
-            " seconds.\n";
+            ".\nEnded after " << totalDuration << "s.\n";
           return FALSE;
         }
       }
     }
   }
   Duration totalDuration = getDuration(startTime);
-  cout << "Each grid 3-tuple is joinable.\nEnded after "
-    << totalDuration << " seconds.\n";
+  cout << "Each grid 3-tuple is joinable.\nEnded after " <<
+    totalDuration << "s.\n";
   return TRUE;
 }
 
@@ -336,7 +334,7 @@ void Space::setImage() {
   }
   Duration totalDuration = getDuration(startTime);
   cout << "Ended setting image after " << totalDuration <<
-    " seconds.\n";
+    "s.\n";
 }
 
 ////////////////////////////////////////////////////////////
