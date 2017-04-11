@@ -94,24 +94,21 @@ Bool Space::isEachGrid4tupleJoinable() {
 
 Bool Space::are4wayJoinable(Long gridIndex0,
     Long gridIndex1, Long gridIndex2, Long gridIndex3) {
-  /*const*/ EdgeMapFiber &topRight2 =
-      topRightEdgeMapPreImage[gridIndex2],
+  EdgeMapFiber &topRight2 =
+    topRightEdgeMapPreImage[gridIndex2],
     &leftBottom1 = leftBottomEdgeMapPreImage[gridIndex1];
   for (Long preGridIndex0 : preImage[gridIndex0]) {
     Long b0 = getBottomEdgeIndex(preGridIndex0, PRE_ORDER);
     if (topRight2.find(b0) != topRight2.end()) {
       Long r0 = getRightEdgeIndex(preGridIndex0, PRE_ORDER);
       if (leftBottom1.find(r0) != leftBottom1.end()) {
-        /*const*/ LongSet &lefts3 = topRight2[b0],
+        LongSet &lefts3 = topRight2[b0],
           &tops3 = leftBottom1[r0];
         for (Long preGridIndex3 : preImage[gridIndex3]) {
           Long t3 = getTopEdgeIndex(preGridIndex3, PRE_ORDER);
           if (tops3.find(t3) != tops3.end()) {
             Long l3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
             if (lefts3.find(l3) != lefts3.end()) {
-              // cout << "edges:\ntop3 " << t3 <<
-              //   "\nleft3 " << l3 << "\nbottom0 " <<
-              //   b0 << "\nright0 " << r0 << "\n";
               return TRUE;
             }
           }
