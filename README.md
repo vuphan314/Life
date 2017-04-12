@@ -7,31 +7,23 @@ k > 1: multiplier
 space(n) == 2 ^ (n ^ 2)
 space(k * n) == (space(n)) ^ (k ^ 2)
 
-prespace(n) == space(n + 2)
+postspace(n + 2) == space(n)
 
-preimage(n) <= prespace(n)
+image(n + 2) <= postspace(n + 2)
 
-proportion(n) == preimage(n) / prespace(n)
-proportion(k * n) == preimage(k * n) / prespace(k * n)
+proportion(n + 2) == image(n + 2) / postspace(n + 2)
 
-preimage(k * n) <= (preimage(n)) ^ (k ^ 2)
+proportion(k * n + 2) ==
+image(k * n + 2) / postspace(k * n + 2)
 
-prespace(k * n) ==
-space(k * n + 2) <
-space(k * (n + 2)) ==
-(space(n + 2)) ^ (k ^ 2) ==
-(prespace(n)) ^ (k ^ 2)
+image(k * n + 2) <= (image(n + 2)) ^ (k ^ 2)
 
-proportion(k * n) ?=
-(preimage(n) / prespace(n)) ^ (k ^ 2) ==
-(proportion(n)) ^ (k ^ 2)
-```
-
-```
-prespace(k * n) ==
-space(k * n + 2) >
+postspace(k * n + 2) ==
 space(k * n) ==
-(space(n)) ^ (k ^ 2)
+(space(n)) ^ (k ^ 2) ==
+(postspace(n + 2)) ^ (k + 2)
 
-proportion(k * n) < (preimage(n) / space(n)) ^ (k ^ 2)
+proportion(k * n + 2) <=
+(image(n + 2) / postspace(n + 2)) ^ (k ^ 2) ==
+(proportion(n + 2)) ^ (k ^ 2)
 ```
