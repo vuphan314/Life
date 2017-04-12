@@ -108,9 +108,11 @@ Bool Space::are4wayJoinable(Long gridIndex0,
         LongSet &lefts3 = topRight2[b0],
           &tops3 = leftBottom1[r0];
         for (Long preGridIndex3 : preImage[gridIndex3]) {
-          Long t3 = getTopEdgeIndex(preGridIndex3, PRE_ORDER);
+          Long t3 = getTopEdgeIndex(preGridIndex3,
+            PRE_ORDER);
           if (tops3.find(t3) != tops3.end()) {
-            Long l3 = getLeftEdgeIndex(preGridIndex3, PRE_ORDER);
+            Long l3 = getLeftEdgeIndex(preGridIndex3,
+              PRE_ORDER);
             if (lefts3.find(l3) != lefts3.end()) {
               return TRUE;
             }
