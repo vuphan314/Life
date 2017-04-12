@@ -3,6 +3,8 @@
 // order-3 space
 Grid 4-tuple       70352896         0.1024%     13409.9619h left.
   // after 12h
+Grid 4-tuple      137854976         0.2006%      6199.2917h left.
+  // after 12h
 
 ////////////////////////////////////////////////////////////
 // isEachGrid3tupleJoinable
