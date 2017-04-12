@@ -60,6 +60,8 @@ const Long COUT_PERIOD = pow(2, 15) - 1;
 const auto COUT_WIDTH = setw(15);
 const auto COUT_PRECISION = setprecision(4);
 
+const Long START_COUNT = 166723584; // log.txt
+
 ////////////////////////////////////////////////////////////
 
 extern Matrix RULES; // const after being set

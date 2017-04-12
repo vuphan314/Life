@@ -63,7 +63,7 @@ Bool Space::isEachGrid4tupleJoinable() {
     for (long long gi1 = SPACE_SIZE - 1; gi1 >= 0; gi1--, cc++) {
       for (long long gi2 = SPACE_SIZE - 1; gi2 >= 0; gi2--, cc++) {
         for (long long gi3 = SPACE_SIZE - 1; gi3 >= 0; gi3--, cc++) {
-          if (cc < 137854976) { // log.txt
+          if (cc < START_COUNT) {
             continue;
           }
           if (!(cc & COUT_PERIOD)) {
