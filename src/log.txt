@@ -9,6 +9,8 @@ Grid 4-tuple      166723584         0.2426%      3121.9688h left.
   // after 8h
 Grid 4-tuple      208175104         0.3029%      3734.0529h left.
   // after 12h
+Grid 4-tuple      242483200         0.3529%      2528.4901h left.
+  // after 8h
 
 ////////////////////////////////////////////////////////////
 // isEachGrid3tupleJoinable
