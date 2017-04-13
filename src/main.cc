@@ -9,12 +9,12 @@ int main(int argc, const char *argv[]) {
 
     // space.inspectPreImage();
 
-    // space.isEachGrid4tupleJoinable();
+    space.isEachGrid4tupleJoinable();
 
     // space.isEachGrid3tupleJoinable();
 
     // space.isEachGrid2tupleJoinable();
 
-    space.getImageProportion();
+    // space.getImageProportion();
   }
 }
