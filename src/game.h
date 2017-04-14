@@ -57,8 +57,8 @@ const Char LOWER_SURVIVAL = 2;
 const Char UPPER_SURVIVAL = 3;
 
 const Long COUT_PERIOD = pow(2, 15) - 1;
-const auto COUT_WIDTH = setw(15);
-const auto COUT_PRECISION = setprecision(4);
+const auto COUT_WIDTH = setw(12);
+const auto COUT_PRECISION = setprecision(1);
 
 const Long START_COUNT = 242483200; // log.txt
 
