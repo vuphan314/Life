@@ -60,7 +60,7 @@ const Long COUT_PERIOD = pow(2, 15) - 1;
 const auto COUT_WIDTH = setw(12);
 const auto COUT_PRECISION = setprecision(1);
 
-const Long START_COUNT = 384663552; // log.txt
+const Long START_COUNT = 418217984; // log.txt
 
 ////////////////////////////////////////////////////////////
 
