@@ -21,8 +21,8 @@
 \usepackage{amssymb}
 
 \theoremstyle{definition} % non-italic
-\newtheorem{theorem}{Theorem}[subsection]
-\newtheorem{conjecture}[theorem]{Proposition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -52,7 +52,8 @@
     \newcommand{\Ftwo}{\F_2}
 
 \renewcommand{\sp}[1]{S_{#1}} % space
-\renewcommand{\l}{\lambda} % life
+\newcommand{\lf}[1]{\lambda_{#1}} % life function
+\newcommand{\cs}[1]{C_{#1}} % conjecture surjectivity
 
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\sete}{\varnothing}
@@ -72,7 +73,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\textdef}[1]{\textbf{#1}}
 
-\newcommand{\mytitle}{Life}
+\newcommand{\mytitle}{Game of Life}
 
 \newcommand{\cm}{Dr.\ Chris Monico}
 \newcommand{\vp}{Vu Phan}

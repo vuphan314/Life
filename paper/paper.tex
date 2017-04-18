@@ -5,16 +5,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{center}
-{\Large \mytitle}
+\Large{\mytitle}
 \end{center}
-
-\bigskip
-
-\begin{abstract}
-Game of Life.
-\end{abstract}
-
-\bigskip
 
 \tableofcontents
 
@@ -26,16 +18,26 @@ Game of Life.
 
 For each $n \in \Zplus$:
 \begin{enumerate}
-\item let $\sp{n} = \Ftwo ^ {\Zn ^ 2}$
-\item let $\l: \sp{n+2} \to \sp{n}$
+\item let set $\sp{n} = \Ftwo ^ {\Zn ^ 2}$
+\item let function $\lf{n}: \sp{n+2} \to \sp{n}$
+\item let proposition $\cs{n} \equi \lf{n}
+  \text{ is surjective}$
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Results}
 
-\begin{conjecture}
+\begin{remark}
+For $n \in \set{1, 2, 3, 4}$, $\cs{n}$ is true.
+\end{remark}
 
+\begin{remark}
+For $n \in \set{5, 6}$, $\cs{n}$ is \emph{probably} true.
+\end{remark}
+
+\begin{conjecture}
+For each $n \in \Zplus$, $\cs{n}$ is true.
 \end{conjecture}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
