@@ -1,7 +1,7 @@
-\LoadClass[letterpaper, 14pt]{extarticle}
+\LoadClass[letterpaper, 17pt]{extarticle}
 % 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
 
-\usepackage[vmargin=1in, hmargin=0.45in]{geometry}
+\usepackage[scale=0.9]{geometry}
 
 \setlength{\parindent}{0pt}
 
@@ -22,6 +22,7 @@
 
 \theoremstyle{definition} % non-italic
 \newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{conjecture}[theorem]{Proposition}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -41,9 +42,17 @@
 \rfoot{Page \thepage{} of \pageref{LastPage}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%:cr-prolog commands
+%:math commands
 
-\newcommand{\textdef}[1]{\textbf{#1}}
+\newcommand{\group}[1]{\mathbb{#1}}
+  \newcommand{\Z}{\group{Z}}
+    \newcommand{\Zplus}{\Z^+}
+    \newcommand{\Zn}{\Z_n}
+  \newcommand{\F}{\group{F}}
+    \newcommand{\Ftwo}{\F_2}
+
+\renewcommand{\sp}[1]{S_{#1}} % space
+\renewcommand{\l}{\lambda} % life
 
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\sete}{\varnothing}
@@ -57,89 +66,14 @@
 \newcommand{\impl}{\Rightarrow}
 \newcommand{\equi}{\equiv}
 
-\newcommand{\negd}[1]{not\ {#1}}
-
-\newcommand{\ind}{i}
-\newcommand{\nhl}{k} % head literals
-\newcommand{\nbl}{m} % body literals
-\newcommand{\nel}{n} % extended literals
-
-\newcommand{\rlseq}[2]{\n{\rl}{#1}, \ldots, \n{\rl}{#2}}
-
-\newcommand{\when}{\longleftarrow}
-\newcommand{\whencr}{\overset{+}{\when}}
-
-\newcommand{\regRuleNoDefNegNoDot}
-  {l_1\ or \ldots or\ l_\nhl \when
-	l_{\nhl+1}, \ldots, l_\nbl}
-\newcommand{\regrulenodefneg}{\regRuleNoDefNegNoDot.}
-\newcommand{\regrule}
-  {\regRuleNoDefNegNoDot,\
-	\negd{l_{\nbl+1}}, \ldots, \negd{l_\nel}.}
-
-\newcommand{\head}[1]{head(#1)}
-\newcommand{\posbody}[1]{body_+(#1)}
-
-\newcommand{\ot}[1]{{#1}'}
-\newcommand{\n}[2]{{#1}_{#2}}
-
-\newcommand{\rl}{r}
-\newcommand{\rls}{R}
-
-\newcommand{\lit}{l}
-\newcommand{\lits}{S}
-
-\newcommand{\g}[1]{G_{#1}}
-\newcommand{\cy}{C}
-
-\newcommand{\reduct}[2]{{#1}^{#2}}
-
-\newcommand{\p}{\Pi}
-\newcommand{\preg}{\p^{reg}}
-\newcommand{\pcr}{\p^{cr}}
-
-\newcommand{\appl}[1]{\alpha(#1)}
-\newcommand{\applp}[1]{\preg \setu \appl{#1}}
-\newcommand{\pappl}[1]{\p_{#1}}
-\newcommand{\pappld}[1]{\pappl{#1} = \applp{#1}}
-
-\newcommand{\factify}[1]{\phi(#1)}
-
-\newcommand{\pr}{p}
-\newcommand{\prs}[3]{P({#1}, {#2}, {#3})}
-
-\newcommand{\rkt}[3]{rank({#1}, {#2}, {#3})} % ternary
-\newcommand{\rkn}{f} % nullary
-\newcommand{\rku}[1]{\rkn(#1)} % unary
-
-\newcommand{\code}[1]{\texttt{#1}}
-
-\newcommand{\ap}{\code{AS-Prolog}}
-\newcommand{\aplong}{\code{Answer Set Prolog}}
-
-\newcommand{\cp}{\code{CR-Prolog}}
-\newcommand{\cplong}{\code{Consistency Restoring Prolog}}
-
-\newcommand{\inconspreg}{$\preg$ is inconsistent}
-\newcommand{\twocrrules}{$|\pcr| \ge 2$}
-
-\newcommand{\hc}{head-cycle}
-\newcommand{\hcf}{\hc-free}
-
-\newcommand{\dn}{default-negation}
-\newcommand{\dnf}{\dn-free}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %:format commands
 
-\newcommand{\versions}
-  {This version: 2017/03/19 \bigskip}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\textdef}[1]{\textbf{#1}}
 
-\newcommand{\myweb}{\url{https://www.myweb.ttu.edu/vuphan/}}
+\newcommand{\mytitle}{Life}
 
-\newcommand{\mytitle}
-  {Syntactic Conditions for Antichain Property in \cp}
-
-\newcommand{\mg}{Dr.\ Michael Gelfond}
+\newcommand{\cm}{Dr.\ Chris Monico}
 \newcommand{\vp}{Vu Phan}
 \newcommand{\ttu}{Texas Tech University}
