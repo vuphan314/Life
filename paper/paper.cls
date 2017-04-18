@@ -48,8 +48,10 @@
   \newcommand{\Z}{\group{Z}}
     \newcommand{\Zplus}{\Z^+}
     \newcommand{\Zn}{\Z_n}
+    \newcommand{\Zns}{{\Zn}^2}
   \newcommand{\F}{\group{F}}
     \newcommand{\Ftwo}{\F_2}
+  \newcommand{\FZnsTwo}{{\Ftwo}^{\Zns}}
 
 \renewcommand{\sp}[1]{S_{#1}} % space
 \newcommand{\lf}[1]{\lambda_{#1}} % life function
