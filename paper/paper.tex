@@ -1,0 +1,1448 @@
+\documentclass{paper}
+
+\begin{document}
+
+\versions
+
+Revising my paper before submitting for publication.
+
+\bigskip
+
+\begin{center}
+
+{\Large \mytitle} \\ \medskip
+\vp \\
+\textit{\ttu}
+
+\end{center}
+
+\bigskip
+
+\begin{abstract}
+
+We study syntactic conditions which guarantee when
+a \cplong{} program has antichain property
+(no answer set is a proper subset of another).
+A notable such condition is that
+the program's dependency graph being acyclic
+and having no directed path from one cr-rule head literal
+to another.
+
+\end{abstract}
+
+\bigskip
+
+\tableofcontents
+
+\newpage
+
+\begin{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\aplong{} (\ap) is a programming language
+for knowledge representation and reasoning.
+Every \ap{} program has antichain property:
+no answer set is a proper subset of another.
+This property is desirable,
+because we want minimal solutions
+to planning and diagnostic problems.
+
+\bigskip
+
+\cplong{} (\cp) extends \ap{} with cr-rules.
+In \cp, indirect exceptions can be elegantly encoded.
+However, there exist \cp{} programs
+without antichain property.
+We investigate some syntactic conditions
+guaranteeing that a \cp{} program
+has this desired semantic property.
+Such conditions are specified in Theorem \ref{last_theorem}
+(most notable) as well as
+Theorem \ref{antichain_a_prolog},
+Corollary \ref{one_cr_rule},
+and Propositions \ref{unique_cr_literals} \&
+\ref{same_abductive_support_heads}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Preliminary Results}
+
+\subsection{Background}
+
+Note: the complete specifications of \ap{} and \cp{}
+can be found in \cite[Sections 2.1, 2.2, 5.5]{krb}.
+We focus on the \cp{} variant in which
+minimality of abductive supports is based on cardinality.
+
+\begin{definition}
+[Regular Rule]
+
+A \textdef{regular rule} has the form:
+$$\regrule$$
+where each $\lit_\ind$ is a ground literal and
+$0 \le \nhl \le \nbl \le \nel$.
+
+\end{definition}
+
+\begin{definition}
+[CR-Rule]
+
+Similar to a regular rule,
+a \textdef{cr-rule} has the form:
+$$l_0 \whencr
+l_1, \ldots, l_\nbl,\
+not\ l_{\nbl + 1}, \ldots, not\ l_\nel.$$
+
+\end{definition}
+
+\begin{definition}
+[\ap{} Program]
+
+An \textdef{\ap{} program} is a finite set of
+regular rules.
+
+\end{definition}
+
+\begin{definition}
+[\cp{} Program]
+
+A \textdef{\cp{} program} is a finite set of
+regular rules and cr-rules.
+Notations: $\preg$ and $\pcr$ denote
+the corresponding subsets of regular rules and cr-rules.
+
+\end{definition}
+
+\begin{definition}
+[Applications of CR-Rules]
+
+Let $\rl$ be a cr-rule.
+Then the \textdef{application} $\appl\rl$ is
+the regular rule obtained from $\rl$ by
+replacing $\whencr$ with $\when$.
+If $\rls$ is a set of cr-rules, then let
+$\appl\rls = \set{\appl\rl : \rl \in \rls}$.
+When $\rls$ is a subset of a \cp{} program $\p$,
+let $\pappld\rls$.
+
+\end{definition}
+
+\begin{definition}
+[Antichain Property]
+
+Let $\p$ be a \cp{} program.
+We say $\p$ has \textdef{antichain property} if:
+for all answer sets $\n\lits1$ and $\n\lits2$ of $\p$,
+we have $\n\lits1 \sets \n\lits2 \impl \n\lits1 = \n\lits2$.
+
+\end{definition}
+
+\begin{example}
+[\cp{} Program without Antichain Property]
+
+Consider the following program:
+\begin{gather*}
+a. \\
+\neg a \when \negd{b}, \negd{c}. \\
+b \when c. \\
+b \whencr. \tag{$\n\rl1$} \\
+c \whencr. \tag{$\n\rl2$}
+\end{gather*} \\
+This program has answer sets $\n\lits1 = \{a, b\}$ and
+$\n\lits2 = \{a, b, c\}$.
+Observe that $\n\lits1 \setsp \n\lits2$ (proper subset).
+The corresponding abductive supports are
+$\n\rls1 = \set{\n\rl1}$ and $\n\rls2 = \set{\n\rl2}$.
+
+\end{example}
+
+\subsection{Up to One CR-Rule}
+
+\begin{remark}
+\label{vacuous_antichain}
+
+Every inconsistent \cp{} program vacuously has
+antichain property.
+So only consistent programs are of interest.
+
+\end{remark}
+
+\begin{definition}
+[Reduct]
+
+Let $\rls$ be a set of regular rules and $\lits$ be a
+consistent set of literals.
+We write $\reduct{\rls}{\lits}$ for the \textdef{reduct} of
+$\rls$ wrt $\lits$.
+
+\end{definition}
+
+\begin{lemma}
+\label{reducts_subset}
+
+Let $\p$ be an \ap{} program.
+Let $\n\lits1$ and $\n\lits2$ be consistent sets of
+literals.
+If $\n\lits1 \sets \n\lits2$, then
+$\reduct{\p}{\n\lits2} \sets \reduct{\p}{\n\lits1}$.
+
+\end{lemma}
+
+\begin{proof}
+
+Assume $\reduct{\p}{\n\lits2}$ has an arbitrary rule $\rl$:
+$$\regrulenodefneg$$
+The corresponding rule in $\p$ is:
+$$\regrule$$
+For each $\ind$ in $\set{\nbl + 1, \ldots, \nel}$, we have
+$l_\ind \notin \n\lits2$,
+so $l_\ind \notin \n\lits1$ (as $\n\lits1 \sets \n\lits2$).
+Therefore, $\rl$ is also a rule in $\reduct{\p}{\n\lits1}$.
+
+\end{proof}
+
+%:antichain A-Prolog
+\begin{theorem}
+[Antichain Property of \ap{} Programs, proved by \mg]
+\label{antichain_a_prolog}
+
+Let $\p$ be an \ap{} program.
+Let $\n\lits1 \sets \n\lits2$ be answer sets of $\p$.
+Then $\n\lits1 = \n\lits2$.
+
+\end{theorem}
+
+\begin{proof}
+
+We will show $\n\lits2 \sets \n\lits1$.
+
+\begin{enumerate}
+\item
+First, $\n\lits2$ is an answer set of
+$\reduct{\p}{\n\lits2}$.
+So $\n\lits2$ is a minimal (wrt set inclusion)
+consistent set of literals which
+satisfies $\reduct{\p}{\n\lits2}$.
+We shall prove $\n\lits2 \sets \n\lits1$ by showing
+$\n\lits1$ also satisfies $\reduct{\p}{\n\lits2}$.
+\item
+By \ref{reducts_subset}, we have $\reduct{\p}{\n\lits2}
+\sets\reduct{\p}{\n\lits1}$.
+Because $\n\lits1$ satisfies $\reduct{\p}{\n\lits1}$,
+we know $\n\lits1$ also satisfies $\reduct{\p}{\n\lits2}$.
+\end{enumerate}
+
+\end{proof}
+
+\begin{definition}
+[Equivalence of \cp{} Programs]
+
+Let $\n\p1$ and $\n\p2$ be \cp{} programs.
+We say $\n\p1$ and $\n\p2$ are \textdef{equivalent},
+denoted by $\n\p1 \equi \n\p2$, when
+$\lits$ is an answer set of $\n\p1$ iff $\lits$ is an
+answer set of $\n\p2$ for every consistent set of literals
+$\lits$.
+\end{definition}
+
+\begin{remark}
+\label{consistent_p_reg}
+
+Let $\p$ be a \cp{} program.
+If $\preg$ is consistent, then $\p$ is equivalent to
+$\preg$, which has antichain property due to Theorem
+\ref{antichain_a_prolog}.
+The interesting case is when $\preg$ is inconsistent.
+
+\end{remark}
+
+\begin{corollary}
+\label{one_cr_rule}
+
+Let $\p$ be a \cp{} program where \inconspreg{}.
+If $\p$ has only one cr-rule, then $\p$ has
+antichain property.
+
+\end{corollary}
+
+\begin{proof}
+
+Assume $\pcr = \set\rl$ for some cr-rule $\rl$.
+Then $\p$ is equivalent to the \ap{} program
+$\pappld{\set\rl}$.
+Simply apply Theorem \ref{antichain_a_prolog} to
+$\pappl{\set\rl}$.
+
+\end{proof}
+
+\subsection{Unique CR-Literals}
+
+\begin{definition}
+[Useless Regular Rule]
+
+Let $\p$ be an \ap{} program containing some rule $\rl$.
+For an answer set $\lits$ of $\p$, we say $\rl$ is
+\textdef{useless} wrt $\lits$ if $\lits$ is an answer set
+of $\p \setd \set\rl$.
+
+\end{definition}
+
+\begin{definition}
+[Regular Rule Firing]
+
+Given a regular rule $\rl$ and a consistent set of literals
+$\lits$, we say $\rl$ \textdef{fires} wrt $\lits$ if
+$\lits$ satisfies the body of $\rl$.
+
+\end{definition}
+
+\begin{lemma}
+\label{unreduced_rule_fires_iff}
+
+Let $\rl$ be a regular rule and $\lits$ be a
+consistent set of literals.
+Assume $\reduct{\set\rl}\lits = \set{\ot\rl}$ for some
+\dnf{} rule $\ot\rl$.
+Then $\rl$ fires iff $\ot\rl$ fires, wrt $\lits$.
+
+\end{lemma}
+
+\begin{proof}
+
+The two rules are:
+\begin{gather*}
+\regrule \tag{$\rl$} \\
+\regrulenodefneg \tag{$\ot\rl$}
+\end{gather*} \\
+By construction of $\ot\rl$ from $\rl$,
+we know $\n\lit\ind \not\in \lits$ for all $\ind \in
+\set{\nbl + 1, \ldots, \nel}$.
+Then $\rl$ fires wrt $\lits$ iff
+$\n\lit\ind \in \lits$ for all
+$\ind \in \set{\nhl + 1, \ldots, \nbl}$ iff
+$\ot\rl$ fires wrt $\lits$.
+
+\end{proof}
+
+\begin{remark}
+\label{superset_fires}
+
+Let $\rl$ be a regular \dnf{} rule and
+$\n\lits1 \sets \n\lits2$ be consistent sets of literals.
+If $\rl$ fires wrt $\n\lits1$, then $\rl$ fires wrt
+$\n\lits2$.
+
+\end{remark}
+
+\begin{lemma}
+\label{useless_unless_fires}
+
+Let $\p$ be an \ap{} program containing some rule $\rl$.
+Let $\lits$ be an answer set of $\p$.
+If $\rl$ does not fire, then $\rl$ is useless, wrt $\lits$.
+
+\end{lemma}
+
+\begin{proof}
+
+Let $\n\p1 = \reduct\p\lits$ and
+$\n\p2 = \reduct{(\p \setd \set\rl)}\lits$.
+We know $\lits$ is an answer set of $\n\p1$.
+We will prove $\lits$ is an answer set of $\n\p2$.
+
+\begin{enumerate}
+
+\item
+First, $\lits$ satisfies $\n\p1$. Notice
+$\n\p2 \sets \n\p1$.
+Then $\lits$ satisfies $\n\p2$.
+
+\item
+Assume some consistent set of literals
+$\ot\lits \sets \lits$ also satisfies $\n\p2$.
+We shall show $\ot\lits = \lits$.
+\begin{enumerate}
+\item
+Case 1 of 2: $\reduct{\set\rl}\lits = \sete$.
+Then $\n\p1 = \n\p2$, so $\ot\lits$ satisfies $\n\p1$.
+\item
+Case 2 of 2: $\reduct{\set\rl}\lits = \set{\ot\rl}$ for
+some \dnf{} rule $\ot\rl$.
+Recall that we hypothesized $\rl$ does not fire wrt
+$\lits$. By Lemma \ref{unreduced_rule_fires_iff}, we know
+$\ot\rl$ does not fire wrt $\lits$.
+Since $\ot\lits \sets \lits$, using the contrapositive of
+Remark \ref{superset_fires},
+we deduce that $\ot\rl$ does not fire wrt $\ot\lits$.
+Then $\ot\lits$ vacuously satisfies $\ot\rl$.
+So $\ot\lits$ satisfies $\n\p1 = \n\p2 \setu \set{\ot\rl}$.
+\end{enumerate}
+In both cases, $\ot\lits$ satisfies $\n\p1$.
+As $\lits$ is an answer set of $\n\p1$, due to minimality,
+we know $\lits \sets \ot\lits$.
+Since we assumed $\ot\lits \sets \lits$, we can now
+conclude that $\ot\lits = \lits$.
+
+\item
+We have shown that $\lits$ is a minimal consistent set of
+literals which satisfies $\n\p2$.
+Hence, $\lits$ is an answer set of $\n\p2$.
+
+\end{enumerate}
+
+\end{proof}
+
+\begin{lemma}
+\label{cr_rule_not_useless}
+
+Let $\p$ be a \cp{} program.
+Let $\lits$ be an answer set of $\p$ and $\rls$ be a
+corresponding abductive support.
+Let cr-rule $\rl \in \rls$.
+Then $\appl\rl$ is not useless wrt $\lits$.
+
+\end{lemma}
+
+\begin{proof}
+
+By way of contradiction, assume $\appl\rl$ is useless wrt
+$\lits$.
+Let $\pappld\rls$.
+Then $\lits$ is an answer set of
+$\pappl\rls \setd \set{\appl\rl}$,
+whereas this program is precisely $\pappld{\ot\rls}$ with
+$\ot\rls = \rls \setd \set\rl$.
+So $\pappl{\ot\rls}$ is consistent.
+Since $\rls$ is a minimal (wrt cardinality) set of cr-rules
+whose applications make $\p$ consistent,
+we have $|\rls| \le |\ot\rls|$.
+However, $|\ot\rls| = |\rls| - 1$
+(recall $\ot\rls = \rls \setd \set\rl$), contradiction.
+
+\end{proof}
+
+\begin{lemma}
+\label{abductive_support_fires}
+
+Let $\p$ be a \cp{} program.
+Let $\lits$ be an answer set of $\p$ and $\rls$ be a
+corresponding abductive support.
+Let cr-rule $\rl \in \rls$.
+Then the application $\appl\rl$ fires wrt $\lits$.
+
+\end{lemma}
+
+\begin{proof}
+
+First, $\lits$ is an answer set of $\pappld\rls$.
+By way of contradiction, assume there exists some cr-rule
+$\rl \in \rls$ such that
+$\appl\rl$ does not fire wrt $\lits$.
+By Lemma \ref{useless_unless_fires}, $\appl\rl$ is useless
+wrt $\lits$.
+However, by \ref{cr_rule_not_useless}, $\appl\rl$ is not
+useless wrt $\lits$, contradiction.
+
+\end{proof}
+
+\begin{definition}
+[Head]
+
+If $\rl$ is a rule, then let $\head\rl$ denotes the set of
+literals which appear in the head of $\rl$.
+If $\rls$ is a set of rules, then let
+$\head\rls = \bigcup_{\rl \in \rls} \head\rl$.
+
+\end{definition}
+
+%:supported literal
+\begin{definition}
+[Supported Literal]
+
+Let $\rl$ be a regular rule,
+$\lit$ be a literal,
+and $\lits$ be a consistent set of literals.
+We say $\lit$ is \textdef{supported} by $\rl$ wrt $\lits$
+if all of the following hold:
+\begin{enumerate}
+\item
+$\rl$ fires wrt $\lits$
+\item
+$\head\rl \seti \lits = \set\lit$
+\end{enumerate}
+\cite[page 43, Proposition 2.2.1]{krb}
+
+\end{definition}
+
+\begin{proposition}
+\label{unique_cr_literals}
+
+Let $\p$ be a \cp{} program.
+If the literal in the head of each cr-rule does not appear
+in the head of any other rule,
+then $\p$ has antichain property.
+
+\end{proposition}
+
+\begin{proof}
+
+Let $\n\lits1$ and $\n\lits2$ be answer sets of $\p$.
+Assume $\n\lits1 \sets \n\lits2$.
+We will show $\n\lits1 = \n\lits2$.
+
+\begin{enumerate}
+
+\item
+Let $\n\rls1$ and $\n\rls2$ respectively be abductive
+supports for $\n\lits1$ and $\n\lits2$.
+We first prove $\n\rls1 \sets \n\rls2$.
+Let $\rl$ be an arbitrary cr-rule in $\n\rls1$.
+By Lemma \ref{abductive_support_fires},
+$\rl$ fires wrt $\n\lits1$, and
+$\n\lits1$ satisfies $\head\rl = \set{\lit}$
+where $\lit$ is a literal.
+So $\lit \in \n\lits1$, then $\lit \in \n\lits2$
+(as $\n\lits1 \sets \n\lits2$).
+By the hypothesized syntactic condition, $\rl$ is the sole
+rule in $\p$ whose head contains $\lit$.
+Then only $\rl$ can support $\lit$ wrt $\n\lits2$.
+So $\rl \in \n\rls2$.
+
+\item
+Now that we showed $\n\rls1 \sets \n\rls2$,
+recall $|\n\rls1| = |\n\rls2|$,
+as both are abductive supports.
+Then $\n\rls1 = \n\rls2$, since they are finite sets.
+Consequently, $\pappld{\n\rls1}$ equals $\pappld{\n\rls2}$.
+So $\n\lits1$ and $\n\lits2$ are answer sets of the same
+\ap{} program.
+By Theorem \ref{antichain_a_prolog}, $\n\lits1 = \n\lits2$.
+
+\end{enumerate}
+
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Main Results}
+
+\subsection{Dependency Graphs}
+
+\begin{definition}
+[Positive Body of Rule]
+
+Let $\rl$ be a rule.
+The \textdef{positive body} of $\rl$,
+denoted by $\posbody\rl$,
+is the set of literals in the body of $\rl$ which are
+\dnf.
+
+\end{definition}
+
+\begin{definition}
+[Dependency Graph]
+
+Let $\p$ be a \cp{} program.
+Let $\g\p$ be a graph whose vertices are literals of $\p$.
+For each pair of vertices $\n\lit1$ and $\n\lit2$ of
+$\g\p$, there is a directed edge to $\n\lit1$ from
+$\n\lit2$ if $\p$ has some rule $\rl$ where
+$\n\lit1 \in \head\rl$ and $\n\lit2 \in \posbody\rl$.
+We say $\g\p$ is the \textdef{dependency graph} of $\p$.
+Note: a self-loop forms a directed cycle.
+
+\end{definition}
+
+\begin{remark}
+[Answer Set of Acyclic Program]
+\label{acyclic_answer_set}
+
+Let $\p$ be an acyclic \ap{} program and $\lits$ be a
+consistent set of literals.
+Then $\lits$ is an answer set of $\p$ iff every literal in
+$\lits$ is supported by a rule in $\p$ wrt $\lits$
+\cite[page 58, Theorem 2.7]{hcfb}.
+
+\end{remark}
+
+%:ex self-loop
+\begin{example}
+[Self-Loop Forming Cycle]
+
+To the contrary, assume a self-loop does not form a cycle.
+Consider this \ap{} program:
+\begin{gather*}
+\lit \when \lit. \tag{$\rl$}
+\end{gather*}
+Let $\lits = \set{\lit}$.
+Notice that $\lit$ is supported by $\rl$ wrt $\lits$.
+However, $\lits$ is not an answer set of $\p$.
+Then Remark \ref{acyclic_answer_set} is wrong,
+contradiction.
+
+\end{example}
+
+\begin{definition}
+[Head-Cycle]
+
+Let $\p$ be a \cp{} program with dependency graph $\g\p$.
+Let $\cy$ be a cycle in $\g\p$.
+Assume:
+\begin{enumerate}
+\item
+vertices $\n\lit1$ and $\n\lit2$ are in $\cy$
+\item
+there exists $\rl \in \p$ where
+$\n\lit1$ and $\n\lit2$ are in $\head\rl$
+\end{enumerate}
+Then $\cy$ is called a \textdef{\hc} in $\p$.
+
+\end{definition}
+
+\begin{definition}
+[Dependent Literals]
+
+Let $\p$ be a \cp{} program with dependency graph $\g\p$.
+Let $\n\lit1$ and $\n\lit2$ be two literals appearing in
+$\p$.
+We say $\n\lit1$ \textdef{depends} on $\n\lit2$ if
+$\g\p$ has a directed path to $\n\lit1$ from $\n\lit2$.
+
+\end{definition}
+
+\begin{definition}
+[CR-Literal]
+
+Let $\p$ be \cp{} program with cr-rule $\rl$ where
+$\head\rl = \set\lit$.
+We say $\lit$ is a \textdef{cr-literal} of $\p$.
+
+\end{definition}
+
+\begin{definition}
+[CR-Independence]
+
+Let $\p$ be a \cp{} program.
+Then $\p$ is \textdef{cr-independent} if
+$\n\lit1$ does not depend on $\n\lit2$
+for all cr-literals $\n\lit1$ and $\n\lit2$.
+
+\end{definition}
+
+\subsection{Same Abductive Support Heads}
+
+\begin{remark}
+
+Let $\p$ be a \cp{} program with some answer set $\lits$.
+Then $\lits \sets \head\p$.
+
+\end{remark}
+
+\begin{remark}
+\label{empty_reduct_unless_fires}
+
+Let $\rl$ be a regular rule and $\lits$ be a consistent set
+of literals.
+If $\rl$ fires wrt $\lits$, then
+$\reduct{\set\rl}\lits \ne \sete$.
+
+\end{remark}
+
+\begin{remark}
+\label{nonempty_reduced_cr_rule}
+
+Let $\p$ be a \cp{} program with some answer set $\lits$
+and a corresponding abductive support $\rls$.
+Let cr-rule $\rl \in \rls$. Then
+$\reduct{\set{\appl\rl}}\lits \ne \sete$.
+(Use Lemma \ref{abductive_support_fires} and Remark
+\ref{empty_reduct_unless_fires}.)
+
+\end{remark}
+
+\begin{example}
+
+Consider an inconsistent \ap{} program $\p$:
+$$\lit \when \negd\lit.$$
+Let $\lits = \set\lit$.
+Notice $\lits$ is a minimal consistent set of literals
+which satisfies $\p$.
+However, $\lits$ is not an answer set of $\p$, because
+$\lits$ nonminimally satisfies $\reduct\p\lits = \sete$.
+(Note that $\ot\lits = \sete$ satisfies neither $\p$ nor
+$\reduct\p{\ot\lits} = \set{\lit.}$.)
+
+\end{example}
+
+\begin{example}
+
+Consider a consistent \cp{} program $\p$:
+\begin{gather*}
+\when \negd {\n\lit1}, \negd {\n\lit2}. \\
+\n\lit1 \whencr \negd {\n\lit2}. \tag{$\rl$}
+\end{gather*} \\
+Then $\rls = \set\rl$ is an abductive support of $\p$.
+Indeed, let $\pappld\rls$,
+then $\lits = \set{\n\lit1}$ is an answer set of
+$\reduct{\pappl\rls}\lits = \set{\n\lit1}$.
+Notice $\ot\lits = \set{\n\lit2}$ satisfies $\pappl\rls$,
+but $\n\lit1 \not\in \ot\lits$.
+
+\end{example}
+
+\begin{lemma}
+\label{intersection_satisfies}
+
+Let $\p$ be a nondisjunctive \dnf{} \ap{} program.
+If consistent sets of literals $\n\lits1$ and $\n\lits2$
+satisfy $\p$,
+then $\n\lits0 = \n\lits1 \seti \n\lits2$ also satisfies
+$\p$.
+
+\end{lemma}
+
+\begin{proof}
+
+Let $\rl$ be a rule in $\p$.
+Assume $\rl$ fires wrt $\n\lits0$.
+Then $\rl$ also fires wrt $\n\lits1$ and $\n\lits2$
+(as $\p$ is \dnf).
+So $\n\lits1$ and $\n\lits2$ satisfy $\head\rl = \set\lit$
+(since $\p$ is nondisjunctive).
+Thus $\lit$ is in $\n\lits1$, $\n\lits2$, and $\n\lits0$.
+
+\end{proof}
+
+\begin{lemma}
+[Proved by \mg]
+\label{answer_set_subprogram}
+
+Let $\p$ be a nondisjunctive \dnf{} \ap{} program.
+Assume $\p$ has rules $\n\rl1 \ne \n\rl2$ such that
+$\head{\n\rl1} = \head{\n\rl2}$.
+Let $\n\p0 = \p \setd \set{\n\rl1, \n\rl2}$,
+$\n\p1 = \n\p0 \setu \set{\n\rl1}$,
+and $\n\p2 = \n\p0 \setu \set{\n\rl2}$.
+If $\lits$ is an answer set of $\p$, then $\lits$ is also
+an answer set of either $\n\p1$ or $\n\p2$.
+
+\end{lemma}
+
+\begin{proof}
+
+To the contrary, assume $\lits$ is an answer set of neither
+$\n\p1$ nor $\n\p2$.
+Still, $\lits$ satisfies both $\n\p1$ and $\n\p2$
+(as $\lits$ satisfies $\p$).
+So there exist two proper subsets of $\lits$, say
+$\n\lits1$ and $\n\lits2$,
+which respectively satisfy $\n\p1$ and $\n\p2$
+(the programs are \dnf{}).
+
+\begin{enumerate}
+
+\item
+Case 1 of 2: either $\n\rl1$ fires wrt $\n\lits1$, or
+$\n\rl2$ fires wrt $\n\lits2$.
+WOLOG, assume the former. Then $\n\lits1$ satisfies
+$\head{\n\rl1} = \head{\n\rl2}$.
+So $\n\lits1$ also satisfies both the rule $\n\rl2$ and the
+program $\p = \n\p1 \setu \set{\n\rl2}$.
+Recall that $\lits$ is an answer set of $\p$ whereas
+$\n\lits1 \setsp \lits$, contradiction.
+
+\item
+Case 2 of 2: neither $\n\rl1$ fires wrt $\n\lits1$, nor
+$\n\rl2$ fires wrt $\n\lits2$.
+So neither $\n\rl1$ nor $\n\rl2$ fires wrt
+$\n\lits0 = \n\lits1 \seti \n\lits2$
+(the rules are \dnf).
+Then $\n\lits0$ vacuously satisfies $\n\rl1$ and $\n\rl2$.
+Because $\n\lits1$ and $\n\lits2$ satisfy $\n\p0$,
+by \ref{intersection_satisfies},
+$\n\lits0$ satisfies $\n\p0$ too.
+Therefore, $\n\lits0$ satisfies
+$\p = \n\p0 \setu \set{\n\rl1, \n\rl2}$.
+But $\lits$ is an answer set of $\p$, and
+$\n\lits0 \setsp \lits$, contradiction.
+
+\end{enumerate}
+
+\end{proof}
+
+%:diff cr-literals
+\begin{lemma}
+\label{diff_cr_literals}
+
+Let $\p$ be a nondisjunctive \cp{} program with some
+abductive support $\rls$.
+Then for all cr-rules $\n\rl1$ and $\n\rl2$ in $\rls$,
+we have
+$\head{\n\rl1} = \head{\n\rl2} \impl \n\rl1 = \n\rl2$.
+
+\end{lemma}
+
+\begin{proof}
+
+By way of contradiction, assume there exist cr-rules
+$\n\rl1\ne \n\rl2$ in $\rls$ where
+$\head{\n\rl1} = \head{\n\rl2}$.
+Some notations:
+\begin{enumerate}
+\item
+Let $\n\rls1 = \rls \setd \set{\n\rl2}$ and
+$\n\rls2 = \rls \setd \set{\n\rl1}$.
+\item
+Let $\n\p1 = \applp{\n\rls1}$ and
+$\n\p2 = \applp{\n\rls2}$.
+\item
+Let $\lits$ be an answer set of $\p$ wrt $\rls$.
+\item
+Let $\n\p a = \reduct{\n\p1}\lits$ and
+$\n\p b = \reduct{\n\p2}\lits$.
+Note that by \ref{nonempty_reduced_cr_rule},
+$\reduct{\set{\appl{\n\rl1}}}\lits = \set{\ot{\n\rl1}}$ and
+$\reduct{\set{\appl{\n\rl2}}}\lits = \set{\ot{\n\rl2}}$ for
+some \dnf{} rules $\ot{\n\rl1}$ and $\ot{\n\rl2}$.
+\end{enumerate}
+
+By \ref{answer_set_subprogram}, $\lits$ is an answer set of
+either $\n\p a$ or $\n\p b$.
+WOLOG, assume the former.
+Then $\lits$ is an answer set of $\n\p1$.
+So $\n\rls1$ is an abductive support of $\p$,
+but $|\n\rls1| < |\rls|$, contradiction.
+
+\end{proof}
+
+%:sole supporting rule
+\begin{lemma}
+\label{sole_supporting_rule}
+
+Let $\p$ be an acyclic \cp{} program having some answer set
+$\lits$ wrt an abductive support $\rls$.
+Let cr-rule $\rl \in \rls$ where $\head\rl = \set\lit$.
+Then $\appl\rl$ is the only rule in $\pappld\rls$ which
+supports $\lit$ wrt $\lits$.
+
+\end{lemma}
+
+\begin{proof}
+
+By way of contradiction, assume $\lit$ is also supported by
+a rule $\ot\rl \ne \appl\rl$ in $\pappl\rls$.
+Let $\ot\rls = \rls \setd \set{\rl}$ and
+$\ot\p = \applp{\ot\rls}$.
+We will prove $\lits$ is an answer set of $\ot\p$:
+\begin{enumerate}
+\item
+First, $\lits$ satisfies $\ot\p \sets \pappl\rls$.
+\item
+Let $\ot\lit$ be an arbitrary literal in $\lits$. We show
+$\ot\lit$ is supported wrt $\lits$ by some rule in $\ot\p$.
+Recall that $\lits$ is an answer set of $\pappl\rls$.
+By \ref{acyclic_answer_set}, $\ot\lit$ is supported wrt
+$\lits$ by some rule $\n\rl0$ in $\pappl\rls$.
+\begin{enumerate}
+\item
+Case 1 of 2: $\n\rl0 = \appl\rl$.
+Recall $\head\rl = \set\lit$.
+Then $\ot\lit = \lit$.
+Notice $\ot\rl$ also supports $\ot\lit$ wrt $\lits$, and
+$\ot\rl \in \ot\p$.
+\item
+Case 2 of 2: $\n\rl0 \ne \appl\rl$.
+Then $\n\rl0 \in \ot\p$.
+\end{enumerate}
+\end{enumerate}
+So $\ot\p$ is consistent, and $\ot\rls$ is an abductive
+support of $\p$.
+But $|\ot\rls| < |\rls|$, contradiction.
+
+\end{proof}
+
+\begin{definition}
+[Factified Rule]
+
+Let $\rl$ be a regular rule.
+Let $\factify\rl$ denote the \textdef{factified rule}
+obtained from $\rl$ by dropping its body.
+If $\rls$ is a set of rules, then let
+$\factify\rls = \set{\factify\rl : \rl \in \rls}$.
+
+\end{definition}
+
+%:factify answer set
+\begin{lemma}
+\label{factify_answer_set}
+
+Let $\p$ be a \cp{} program with answer set $\lits$ and
+corresponding abductive support $\rls$.
+Then $\lits$ is an answer set of
+$\ot\p = \preg \setu \factify{\appl\rls}$.
+
+\end{lemma}
+
+\begin{proof}
+We prove $\lits$ is a minimal consistent set of literals
+which satisfies $\reduct{\ot\p}\lits$:
+\begin{enumerate}
+\item
+Let $\pappld\rls$.
+Note that $\head\rls \sets \lits$ as $\lits$ is an answer
+set of $\pappl\rls$.
+Then $\lits$ satisfies
+$\reduct{\ot\p}\lits =
+\reduct{(\preg)}{\lits} \setu \factify{\appl\rls}$.
+\item
+Assume some $\ot\lits \sets \lits$ also satisfies
+$\reduct{\ot\p}\lits$.
+We know $\head\rls \sets \ot\lits$.
+Then $\ot\lits$ satisfies
+$\reduct{(\pappl\rls)}\lits =
+\reduct{(\preg)}\lits \setu \reduct{(\appl\rls)}\lits$.
+So $\lits \sets \ot\lits$
+(as $\lits$ is an answer set of
+$\pappl\rls$). Therefore $\ot\lits = \lits$.
+\end{enumerate}
+
+\end{proof}
+
+%:same abductive support heads
+\begin{proposition}
+\label{same_abductive_support_heads}
+
+Let $\p$ be a \cp{} program.
+Then $\p$ has antichain property if
+$\head{\n\rls1} = \head{\n\rls2}$ for
+all abductive supports $\n\rls1$ and $\n\rls2$ of $\p$.
+
+\end{proposition}
+
+\begin{proof}
+
+Let $\n\lits1$ and $\n\lits2$ be arbitrary answer sets of
+$\p$ corresponding to
+some abductive supports $\n\rls1$ and $\n\rls2$.
+By \ref{factify_answer_set}, $\n\lits1$ and $\n\lits2$ are
+respectively answer sets of
+$\preg \setu \factify{\appl{\n\rls1}}$ and
+$\preg \setu \factify{\appl{\n\rls2}}$,
+which are the same \ap{} program because
+$\head{\n\rls1} = \head{\n\rls2}$.
+By Theorem \ref{antichain_a_prolog},
+$\n\lits1 \sets \n\lits2 \impl \n\lits1 = \n\lits2$.
+
+\end{proof}
+
+\subsection{CR-Independence and Acyclicity}
+
+%:proof of literal
+\begin{definition}
+[Proof of Literal]
+
+Let $\p$ be an \ap{} program,
+$\lits$ be a consistent set of literals,
+and $\lit$ be a literal.
+A \textdef{proof} of $\lit$ wrt $\lits$ in $\p$ is
+a nonempty sequence of rules
+$\pr = \n\rl1, \ldots, \n\rl n$ in $\p$ such that:
+\begin{enumerate}
+\item
+for each rule $\n\rl i$, there is a (sole) literal
+$\ot\lit$ supported by $\rl$ wrt $\lits$;
+let $h_\lits(\rl)$ denote $\ot\lit$
+\item
+$\lit = h_\lits(\n\rl n)$
+\item
+$\posbody{\n\rl1} = \sete$
+%:hcf error
+\footnote
+{Their original definition states: $\n\rl1$ is a fact.
+However, there is an error in their Lemma B.5 on page 83.
+Consider an acyclic \ap{} program $\set{a \when \negd b.}$
+with answer set $\set{a}$.}
+\item
+for each rule $\n\rl i$,
+every literal in $\posbody{\n\rl i}$ is $h_\lits(\n\rl j)$
+for some $j < i$
+\end{enumerate}
+\cite[page 57]{hcfb}
+
+\end{definition}
+
+\begin{definition}
+
+Additional notations:
+\begin{enumerate}
+\item
+$\prs{\lit}{\lits}{\p}$ denotes the set of all proofs $\pr$
+of $\lit$ wrt $\lits$ in $\p$
+\item
+$h_\lits(\pr)$ denotes $\set{h_\lits(\rl) : \rl \in \pr}$
+\item
+$\posbody\pr$ denotes $\set{\posbody\rl : \rl \in \pr}$
+\end{enumerate}
+
+\end{definition}
+
+\begin{remark}
+
+Let $\pr = \rlseq1n \in \prs\lit\lits\p$.
+We adopt the convention that the rules in $\pr$ are
+pairwise distinct.
+Indeed, if there were $\n\rl i = \n\rl j$ where
+$i < j$, then $\ot\pr =
+\rlseq1{j - 1}, \rlseq{j + 1}n \in \prs\lit\lits\p$,
+so $\n \rl j$ would be redundant.
+
+\end{remark}
+
+\begin{remark}
+
+Let $\p$ be a \hcf{} \ap{} program with answer set $\lits$.
+Then each literal in $\lits$ has a proof wrt $\lits$ in
+$\p$ \cite[page 57]{hcfb}.
+
+\end{remark}
+
+\begin{definition}
+[Rank of Literal]
+
+Let $\p$ be a \hcf{} \ap{} program and
+$\lits$ be a consistent set of literals.
+The \textdef{rank} of a literal $\lit$ wrt $\lits$ in $\p$,
+denoted by $\rkt\lit\lits\p$, is
+$min\set{|\pr| : \pr \in \prs\lit\lits\p}$.
+
+\end{definition}
+
+\begin{definition}
+[Ranking Function]
+
+Let:
+\begin{enumerate}
+\item
+$\p$ be a \hcf{} \ap{} program
+\item
+$\lits$ be an answer set of $\p$
+\item
+function $\rkn : \lits \to \mathbb{N}$
+\end{enumerate}
+
+Then $\rkn$ is the \textdef{ranking function}
+wrt $\lits$ in $\p$ if $\rku\lit = \rkt\lit\lits\p$
+for all $\lit \in \lits$.
+
+\end{definition}
+
+\begin{definition}
+[Normal Proof of Literal]
+
+Let:
+\begin{enumerate}
+\item
+$\p$ be a \hcf{} \ap{} program
+\item
+$\lits$ be an answer set of $\p$
+\item
+$\lit \in \lits$
+\item
+$\pr \in \prs\lit\lits\p$
+\item
+$\rkn$ be the ranking function wrt $\lits$ in $\p$
+\end{enumerate}
+
+We say $\pr$ is a \textdef{normal proof} if
+for all $\rl \in \pr$ and $\ot\lit \in \posbody\rl$,
+we have $\rku{\ot\lit} < \rku{h_\lits(\rl)}$.
+
+\end{definition}
+
+\begin{remark}
+
+Let:
+\begin{enumerate}
+\item
+$\p$ be a \hcf{} \ap{} program
+\item
+$\lits$ be an answer set of $\p$
+\item
+$\rkn$ be the ranking function wrt $\lits$ in $\p$
+\item
+$\lit \in \lits$
+\item
+normal $\pr = \rlseq1n \in \prs\lit\lits\p$
+\item
+$\n\rl i \in \pr$
+\item
+$\n\lit i \in \posbody{\n\rl i}$.
+\end{enumerate}
+
+Then:
+\begin{enumerate}
+\item
+$\rku{\n\lit i} < \rku\lit$
+\item
+$\rlseq1i$ is a normal proof of $h_\lits(\n\rl i)$
+\end{enumerate}
+
+\end{remark}
+
+%:ex nonminimal subproof
+\begin{example}
+[Nonminimal Subproof of Minimal Proof]
+
+Consider this acylic \ap{} program $\p$:
+\begin{gather}
+a \when b, c. \\
+b \when c1x. \\
+c \when c1x. \\
+c1x \when c1y. \\
+c1y. \\
+c \when c2. \\
+c2.
+\end{gather} \\
+The sole answer set of $\p$ is
+$\lits = \set{a, b, c, c1x, c1y, c2}$.
+The only minimal proofs of literal $a$ wrt
+$\lits$ in $\p$ are
+the two sequences of rules $<5, 4, 3, 2, 1>$ and
+$<5, 4, 2, 3, 1>$.
+In both these proofs, the subproof of $c$ is $<5, 4, 3>$,
+which is nonminimal.
+(The minimal proof of $c$ wrt $\lits$ in $\p$ is $<7, 6>$.)
+
+\end{example}
+
+%:rule in P2
+\begin{lemma}
+\label{rule_in_P2}
+
+Let:
+\begin{enumerate}
+\item
+$\n\p1$ and $\n\p2$ be \hcf{} \ap{} programs with
+corresponding answer sets $\n\lits1 \setsp \n\lits2$
+\item
+$\lit \in \n\lits2 \setd \n\lits1$
+\end{enumerate}
+
+Then for each normal
+$\pr = \rlseq1n \in \prs\lit{\n\lits2}{\n\p2}$,
+there exists $\rl \in \pr$ such that
+$\rl \in \n\p2 \setd \n\p1$.
+
+\end{lemma}
+
+\begin{proof}
+
+Let $\rkn$ be the ranking function
+wrt $\n\lits2$ in $\n\p2$.
+We employ induction on $\rku\lit$.
+
+\begin{enumerate}
+
+\item
+Base step: $\rku\lit = min\set{\rku{\ot\lit} :
+\ot\lit \in \n\lits2 \setd \n\lits1}$.
+\begin{enumerate}
+\item
+To the contrary, assume for every $\rl \in \pr$, we have
+$\rl \in \n\p1 \seti \n\p2$.
+\item
+Then $\n\rl n \in \n\p1$.
+\item
+As $\pr$ is normal, for each
+$\ot\lit \in \posbody{\n\rl n}$,
+we have $\rku{\ot\lit} < \rku\lit$,
+so $\ot\lit \in \n\lits1$.
+\item
+Then $\n\rl n$ fires wrt $\n\lits1$.
+\item
+As $\n\lits1$ is an answer set of $\n\p1$, we know
+$\n\lits1$ satisfies $\head{\n\rl n}$.
+\item
+Let $\ot\lit \in \head{\n\rl n}$.
+\begin{enumerate}
+\item
+Case 1 of 2: $\ot\lit = \lit$.
+We already assumed $\lit \in \n\lits2 \setd \n\lits1$.
+\item
+Case 2 of 2: $\ot\lit \ne \lit$.
+We have $\ot\lit \not\in \n\lits2$,
+so $\ot\lit \not\in \n\lits1$.
+\end{enumerate}
+\item
+So $\n\lits1$ does not satisfy $\head{\n\rl n}$,
+contradiction.
+\end{enumerate}
+\item
+Induction step: $\rku\lit \le max\set{\rku{\ot\lit} :
+\ot\lit \in \n\lits2 \setd \n\lits1}$.
+\begin{enumerate}
+\item
+Induction hypothesis: for each
+$\ot\lit \in \n\lits2 \setd \n\lits1$,
+let normal $\ot\pr \in \prs{\ot\lit}{\n\lits2}{\n\p2}$,
+if $\rku{\ot\lit} < \rku\lit$,
+then there exists ${\rl} \in \ot\pr$
+such that ${\rl} \in \n\p2 \setd \n\p1$.
+\item
+To the contrary, assume for every $\rl \in \pr$, we have
+$\rl \in \n\p1 \seti \n\p2$.
+\begin{enumerate}
+\item
+Case 1 of 2: there exists $\ot\lit \in \posbody{\n\rl n}$
+where $\ot\lit \in \n\lits2 \setd \n\lits1$.
+\begin{enumerate}
+\item
+Choose some $1 \le m \le n$ where
+$h_{\n\lits2}(\n\rl m) = \ot\lit$.
+\item
+As $\pr$ is normal, $\ot\pr = \n\rl1, \ldots, \n\rl m$ is a
+normal proof of
+$\ot\lit$ wrt $\n\lits2$ in $\n\p2$.
+\item
+Notice $\rku{\ot\lit} < \rku\lit$.
+\item
+By the induction hypothesis, $\ot\pr$ contains some
+${\rl} \in \n\p2 \setd \n\p1$.
+\item
+So $\pr$ also contains ${\rl}$.
+\item
+By our assumption, $\rl \in \n\p1 \seti \n\p2$,
+contradiction.
+\end{enumerate}
+\item
+Case 2 of 2: for every $\ot\lit \in \posbody{\n\rl n}$,
+we have $\ot\lit \in \n\lits1$.
+\begin{enumerate}
+\item
+Then $\n\rl n$ fires wrt $\n\lits1$.
+\item
+By our assumption, $\n\rl n \in \n\p1$.
+\item
+As $\n\lits1$ is an answer set of $\n\p1$, we know
+$\n\lits1$ satisfies $\head{\n\rl n}$.
+\item
+But $\head{\n\rl n} \seti \n\lits1 = \sete$, contradiction.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{proof}
+
+\begin{remark}
+
+Let $\pr = \n\rl1, \ldots, \n\rl n \in \prs\lit\lits\p$. If
+$\pr$ is minimal, then:
+\begin{enumerate}
+\item
+$\pr$ is normal
+\item
+$\lit$ depends on $h_\lits(\n\rl i)$ for all $i < n$
+\end{enumerate}
+
+\end{remark}
+
+%:last lemma
+\begin{lemma}
+\label{last_lemma}
+
+Let $\p$ be a nondisjunctive acyclic \cp{} program.
+If $\p$ has answer sets $\n\lits1 \setsp \n\lits2$,
+then there exist literals $\n\lit1$ and $\n\lit2$ in
+$\head\pcr$ such that
+$\n\lit1$ depends on $\n\lit2$.
+
+\end{lemma}
+
+\begin{proof}
+
+Notations:
+\begin{enumerate}
+\item
+By the contrapositive of Proposition \ref{same_abductive_support_heads},
+there exist abductive supports
+$\n\rls1$ and $\n\rls2$ of $\p$ where
+$\head{\n\rls1} \ne \head{\n\rls2}$.
+\item
+Let $\ot{\n\rls1} = \factify{\appl{\n\rls1}}$ and
+$\ot{\n\rls2} = \factify{\appl{\n\rls2}}$.
+\item
+Let $\n\p1 = \preg \setu \ot{\n\rls1}$ and
+$\n\p2 = \preg \setu \ot{\n\rls2}$.
+By Lemma \ref{factify_answer_set},
+$\n\lits1$ and $\n\lits2$ are respectively answer sets of
+$\n\p1$ and $\n\p2$.
+\end{enumerate}
+
+We follow these steps:
+\begin{enumerate}
+\item
+By Lemma \ref{diff_cr_literals},
+since $\p$ is nondisjunctive, we have
+$|\ot{\n\rls1}| = |\n\rls1|$ and
+$|\ot{\n\rls2}| = |\n\rls2|$.
+\item
+Notice $|\n\rls1| = |\n\rls2| > 0$.
+\item
+Then $|\ot{\n\rls1}| = |\ot{\n\rls2}| > 0$.
+\item
+Observe $|\head{\ot{\n\rls1}}| = |\ot{\n\rls1}|$ and
+$|\head{\ot{\n\rls2}}| = |\ot{\n\rls2}|$.
+\item
+Thus $|\head{\ot{\n\rls1}}| = |\head{\ot{\n\rls2}}| > 0$.
+\item
+Recall $\head{\ot{\n\rls1}} = \head{\n\rls1} \ne
+\head{\n\rls2} = \head{\ot{\n\rls2}}$.
+\item
+Then $\head{\ot{\n\rls1}} \setd \head{\ot{\n\rls2}} \ne
+\sete$.
+\item
+Select some $\n\lit1 \in \head{\ot{\n\rls1}} \setd
+\head{\ot{\n\rls2}}$.
+\item
+Let $\n\rl1$ be the fact $(\n\lit1.)$ in
+$\ot{\n\rls1} \setd\ot{\n\rls2}$.
+\item
+Since $\n\lits1$ is an answer set of $\n\p1$, we have
+$\n\lit1 \in \n\lits1$.
+\item
+Recall $\n\lits1 \setsp \n\lits2$.
+Then $\n\lit1 \in \n\lits2$.
+
+\item
+As $\n\lits2$ is an answer set of $\n\p2$, there exists
+$\rl\in \n\p2$ which
+supports $\n\lit1$ wrt $\n\lits2$.
+\begin{enumerate}
+\item
+Case 1 of 2: there exists $\lit \in \posbody{\rl}$ where
+$\lit \in \n\lits2 \setd \n\lits1$.
+\begin{enumerate}
+\item
+Let minimal $\pr \in \prs\lit{\n\lits2}{\n\p2}$.
+\item
+By Lemma \ref{rule_in_P2}, there exists $\n\rl2 \in \pr$
+where $\n\rl2 \in \n\p2 \setd \n\p1$.
+\item
+Then $\n\rl2 \in \ot{\n\rls2} \setd \ot{\n\rls1} \sets
+\appl\pcr$.
+\item
+Let $h_{\n\lits2}(\n\rl2) = {\n\lit2} \in \head\pcr$.
+\item
+As $\pr$ is minimal, $\lit$ depends on $\n\lit2$.
+\item
+Recall $\n\lit1$ depends on $\lit$ in $\rl$.
+\item
+By transitivity, $\n\lit1$ depends on $\n\lit2$.
+\end{enumerate}
+\item
+Case 2 of 2: $\posbody{\rl} \sets \n\lits1$.
+We show this case is impossible.
+\begin{enumerate}
+\item
+Subcase 1 of 2: $\rl \in \n\p1 \seti \n\p2$.
+\begin{enumerate}
+\item
+Notice $\rl$ supports $\n\lit1$ wrt $\n\lits1$.
+\item
+By Lemma \ref{sole_supporting_rule}, since $\p$ is acyclic,
+we have $\rl = \n\rl1$.
+\item
+However, $\rl \in \n\p2$ whereas
+$\n\rl1 \in \n\p1 \setd \n\p2$, contradiction.
+\end{enumerate}
+\item
+Subcase 2 of 2: $\rl \in \n\p2 \setd \n\p1$.
+\begin{enumerate}
+\item
+So $\rl \in \ot{\n\rls2} \setd \ot{\n\rls1}$.
+\item
+Then $\rl$ is the fact $(\n\lit1.)$,
+which is exactly $\n\rl1$.
+\item
+However, we selected $\n\rl1$ from
+$\ot{\n\rls1} \setd \ot{\n\rls2}$
+while $\rl \in \ot{\n\rls2}$, contradiction.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\end{proof}
+
+%:hcf nondisjunctive
+\begin{remark}
+\label{hcf_nondisjunctive}
+
+If a \cp{} program $\p$ is acyclic,
+then there exists a nondisjunctive acyclic \cp{} program
+$\ot\p$ equivalent to $\p$
+\cite[page 73, Theorem 4.17]{hcfb}.
+
+\end{remark}
+
+%:last theorem
+\begin{theorem}
+[Antichain Property of CR-Independent Acyclic
+\cp{} Programs]
+\label{last_theorem}
+
+Let $\p$ be an acyclic \cp{} program.
+If $\p$ is cr-independent,
+then $\p$ has antichain property.
+
+\end{theorem}
+
+\begin{proof}
+
+By Remark \ref{hcf_nondisjunctive},
+there exists a nondisjunctive acyclic \cp{} $\ot\p$
+equivalent to $\p$.
+By the contrapositive of Lemma \ref{last_lemma},
+$\ot\p$ has antichain property.
+Therefore, $\p$ has antichain property too.
+
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+
+We have found a reasonably weak syntactic condition
+which guarantees that
+a \cp{} program has antichain property:
+the program being acyclic and cr-independent.
+The future goal is to further relax
+this sufficient condition to extend the class of
+\cp{} programs known to have
+this desired semantic property.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Acknowledgment}
+
+We sincerely appreciate the significant guidance of \mg.
+This paper includes his proofs of
+Theorem \ref{antichain_a_prolog} and
+Lemma \ref{answer_set_subprogram}.
+We also thank Evgenii Balai for the
+informative discussions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{flushleft}
+
+\newpage
+
+\bibliography{bibl}
+
+\end{document}
