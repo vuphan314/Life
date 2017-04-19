@@ -1,8 +1,8 @@
 // isEachGrid4tupleJoinable // gi--
 
 // order-3 space
-Grid 4-tuple   460521472         0.7%      1421.5h left.
-  // 129h elapsed, 52d left
+Grid 4-tuple   471728128         0.7%       944.0h left.
+  // 136h elapsed, 40d left
 
 ////////////////////////////////////////////////////////////
 // isEachGrid3tupleJoinable
