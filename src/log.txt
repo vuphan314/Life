@@ -2,7 +2,7 @@
 
 // order-3 space
 Grid 4-tuple   654082048         1.0%      2867.4h left.
-  // 217h elapsed, 120d left
+  // 10d elapsed, 120d left (should be 1000d)
 
 ////////////////////////////////////////////////////////////
 // isEachGrid3tupleJoinable
