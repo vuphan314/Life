@@ -45,7 +45,8 @@ void Space::inspectPreImage() {
       fiberSize / PRE_SPACE_SIZE;
     cout << "Grid index" << COUT_WIDTH << gridIndex <<
       COUT_WIDTH << COUT_PRECISION << fixed <<
-      currentPercentage << "%\n";
+      currentPercentage << "%" <<
+      COUT_WIDTH << fiberSize << "\n";
   }
 }
 
