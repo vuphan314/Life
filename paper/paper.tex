@@ -1,4 +1,9 @@
-\documentclass{paper}
+\documentclass[letterpaper, 14pt]{extarticle}
+% 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
+
+\usepackage[scale=0.85]{geometry}
+
+\usepackage{paper}
 
 \begin{document}
 
@@ -14,8 +19,35 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Notations}
+\section{Combinatorics}
 
+\begin{remark}
+case count: precell state $\to$ cell state:
+\begin{itemize}
+\item $0 \to 1$ $$\binom{8}{3}$$
+\item $0 \to 0$ $$2^8 - \binom{8}{3}$$
+\item $1 \to 1$ $$\binom{8}{2} + \binom{8}{3}$$
+\item $1 \to 0$ $$2^8 - \binom{8}{2} - \binom{8}{3}$$
+\end{itemize}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Game}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Cell}
+
+\begin{definition}
+$f(x)$
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Grid}
+
+\begin{definition}
 For each $n \in \Zplus$:
 \begin{enumerate}
 \item let set $\sp{n} = \FZnsTwo =
@@ -23,30 +55,14 @@ For each $n \in \Zplus$:
 \item let function $\lf{n}: \sp{n+2} \to \sp{n}$
 \item let proposition $\cs{n}$ be: $\lf{n}$ is surjective
 \end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Results}
+\end{definition}
 
 \begin{remark}
-Sizes:
+$\lf{n}$ sizes:
 \begin{itemize}
-\item $\lf{n}$:
-  \begin{itemize}
-  \item domain: $2^{(n+2)^2}$
-  \item codomain: $2^{n^2}$
-  \item average fiber: $2^{4(n+1)}$
-  \end{itemize}
-\end{itemize}
-\end{remark}
-
-\begin{remark}
-$precell \to cell$:
-\begin{itemize}
-\item $0 \to 1$ $$\binom{8}{3}$$
-\item $0 \to 0$ $$2^8 - \binom{8}{3}$$
-\item $1 \to 1$ $$\binom{8}{2} + \binom{8}{3}$$
-\item $1 \to 0$ $$2^8 - \binom{8}{2} - \binom{8}{3}$$
+\item domain: $2^{(n+2)^2}$
+\item codomain: $2^{n^2}$
+\item average fiber: $2^{4(n+1)}$
 \end{itemize}
 \end{remark}
 
