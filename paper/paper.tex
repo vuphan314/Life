@@ -50,18 +50,32 @@ Life polynomial:
 \end{itemize}
 \end{definition}
 
+\begin{remark}
+\begin{dmath*}
+\lp = (\cell + 1) *
+\sum_{i \ne j \ne k, k \ne i}\parentheses
+{\cell_i \cell_j \cell_k
+\prod_{m \ne i, j, k}(\cell_m + 1)} + \\
+\cell * \parentheses
+{\sum_{i \ne j}\parentheses
+{\cell_i \cell_j \prod_{m \ne i, j}(\cell_m + 1)} +
+\sum_{i \ne j \ne k, k \ne i}\parentheses
+{\cell_i \cell_j \cell_k
+\prod_{m \ne i, j, k}(\cell_m + 1)}}
+\end{dmath*}
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Grid}
 
 \begin{definition}
 For each $n \in \Zplus$:
-\begin{enumerate}
-\item let set $\sp{n} = \FtZns =
-  \set{f: \Zn \times \Zn \to \Ft}$
-\item let function $\lf{n}: \sp{n+2} \to \sp{n}$
-\item let proposition $\cs{n}$ be: $\lf{n}$ is surjective
-\end{enumerate}
+\begin{itemize}
+\item Let set $\sp{n} = \FtZns =
+  \set{grid: \Zn \times \Zn \to \Ft}$.
+\item Let function $\lf{n}: \sp{n+2} \to \sp{n}$.
+\end{itemize}
 \end{definition}
 
 \begin{remark}
@@ -72,6 +86,10 @@ $\lf{n}$ sizes:
 \item average fiber: $2^{4(n+1)}$
 \end{itemize}
 \end{remark}
+
+\begin{definition}
+Let proposition $\cs{n}$ be: $\lf{n}$ is surjective.
+\end{definition}
 
 \begin{remark}
 For each $n \in \set{1, 2, 3, 4}$, $\cs{n}$ is true.
