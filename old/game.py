@@ -66,7 +66,9 @@ class Game:
         image = set()
         superself = Game(self.grid_edge + 2)
         for supergrid in superself.get_domain():
-            next_supergrid = superself.get_next_grid(supergrid)
+            next_supergrid = superself.get_next_grid(
+                supergrid
+            )
             next_grid = superself.get_subgrid(next_supergrid)
             image.add(next_grid)
         return image
@@ -84,7 +86,7 @@ class Game:
         image = set()
         for grid in self.get_domain():
             next_grid = self.get_next_grid(grid)
-            image.add(self.get_next_grid(grid))
+            image.add(next_grid)
         return image
 
     def get_domain_size(self) -> int:
@@ -126,7 +128,9 @@ class Game:
                 self.lower_birth, self.upper_birth
             )
 
-    def get_cell_state(self, grid: Grid, cell: Cell) -> CellState:
+    def get_cell_state(
+        self, grid: Grid, cell: Cell
+    ) -> CellState:
         for ind in cell:
             if ind < 0 or ind >= self.grid_edge:
                 return False
@@ -136,7 +140,10 @@ class Game:
         D = {-1, 0, 1}
         row_inds = {cell[0] + d for d in D}
         col_inds = {cell[1] + d for d in D}
-        cells = {(row, col) for row in row_inds for col in col_inds}
+        cells = {
+            (row, col)
+            for row in row_inds for col in col_inds
+        }
         cells.remove(cell)
         return cells
 

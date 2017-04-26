@@ -10,19 +10,29 @@ GRID_EDGE_MAX_PROP = 3 # auto +2 if superly; 5 crashes Vu-PC
 
 def get_speedup_str() -> str:
     sts = [get_aligned_str('grid edge', 'speedup')]
-    for grid_edge in range(game.GRID_EDGE_MIN, GRID_EDGE_MAX_SPEEDUP + 1):
+    for grid_edge in range(
+        game.GRID_EDGE_MIN, GRID_EDGE_MAX_SPEEDUP + 1
+    ):
         speedup = trapdoor.get_trapdoor_speedup(grid_edge)
         sts.append(get_aligned_str(grid_edge, speedup))
     return '\n'.join(sts)
 
 def get_prop_str() -> str:
-    sts = [get_aligned_str('grid edge', 'proportion', 'time (secs)')]
-    for grid_edge in range(game.GRID_EDGE_MIN, GRID_EDGE_MAX_PROP + 1):
+    sts = [
+        get_aligned_str(
+            'grid edge', 'proportion', 'time (secs)'
+        )
+    ]
+    for grid_edge in range(
+        game.GRID_EDGE_MIN, GRID_EDGE_MAX_PROP + 1
+    ):
         time_start = time.time()
         g = game.Game(grid_edge)
         prop = g.get_image_prop(superly=True)
         time_taken = time.time() - time_start
-        sts.append(get_aligned_str(grid_edge, prop, time_taken))
+        sts.append(
+            get_aligned_str(grid_edge, prop, time_taken)
+        )
     return '\n'.join(sts)
 
 def get_aligned_str(*args) -> str:
