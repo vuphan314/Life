@@ -37,19 +37,30 @@
 \rfoot{Page \thepage{} of \pageref{LastPage}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%:math commands
+% math commands
 
 \newcommand{\group}[1]{\mathbb{#1}}
-  \newcommand{\Z}{\group{Z}}
-    \newcommand{\Zplus}{\Z^+}
-    \newcommand{\Zn}{\Z_n}
-    \newcommand{\Zns}{{\Zn}^2}
-  \newcommand{\F}{\group{F}}
-    \newcommand{\Ftwo}{\F_2}
-  \newcommand{\FZnsTwo}{{\Ftwo}^{\Zns}}
+\newcommand{\Z}{\group{Z}}
+\newcommand{\Zplus}{\Z^+}
+\newcommand{\Zn}{\Z_n}
+\newcommand{\Zns}{{\Zn}^2} % squared
+\newcommand{\F}{\group{F}}
+\newcommand{\Ft}{\F_2}
+\newcommand{\FtZns}{{\Ft}^{\Zns}}
+\newcommand{\Fte}{{\Ft}^8}
 
-\renewcommand{\sp}[1]{S_{#1}} % space
+\newcommand{\cell}{x}
+\newcommand{\neighbor}[1]{\cell_{#1}}
+\newcommand{\neighbors}{\neighbor{0}, \ldots, \neighbor{7}}
+
+\newcommand{\pf}{p} % polynomial function
+\newcommand{\pr}{\Ft \brackets{\cell} \brackets{\neighbors}}
+  % polynomial ring
+\newcommand{\lp}{\pf \parentheses{\cell, \neighbors}}
+  % life polynomial
+
 \newcommand{\lf}[1]{\lambda_{#1}} % life function
+\renewcommand{\sp}[1]{S_{#1}} % space
 \newcommand{\cs}[1]{C_{#1}} % conjecture surjectivity
 
 \newcommand{\set}[1]{\{#1\}}
@@ -64,8 +75,16 @@
 \newcommand{\impl}{\Rightarrow}
 \newcommand{\equi}{\equiv}
 
+% surrounders
+\newcommand{\parentheses}[1]{\left( #1 \right)}
+\newcommand{\braces}[1]{\left\{ #1 \right\}}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\pipes}[1]{\left| #1 \right|}
+\newcommand{\floors}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceils}[1]{\lceil #1 \rceil}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%:format commands
+% format commands
 
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\textdef}[1]{\textbf{#1}}
