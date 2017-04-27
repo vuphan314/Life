@@ -1,4 +1,4 @@
-# wrapped
+# torus
 grid edge      |proportion     |time (secs)
 1              |   0.5000000000|   0.0000703335
 2              |   0.1250000000|   0.0012884140
@@ -6,7 +6,7 @@ grid edge      |proportion     |time (secs)
 4              |   0.2728118896|  20.7280466557
 
 ############################################################
-# unwrapped
+# plane
 
 # dead boundary
 grid edge      |proportion     |time (secs)
