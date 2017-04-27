@@ -69,7 +69,9 @@ class Game:
             next_supergrid = superself.get_next_grid(
                 supergrid
             )
-            next_grid = superself.get_subgrid(next_supergrid)
+            next_grid = superself.get_subgrid(
+                next_supergrid
+            )
             image.add(next_grid)
         return image
 
