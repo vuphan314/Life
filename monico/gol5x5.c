@@ -103,7 +103,8 @@ void GOL_fast_init()
 
 
 /******************************************************************/
-inline void GOL_iterate_fast(uint8_t *out, uint8_t *in)
+// inline
+void GOL_iterate_fast(uint8_t *out, uint8_t *in)
 { uint32_t index;
 
   index = in[0] + (in[1]<<7) + (in[2]<<14);
@@ -177,7 +178,7 @@ int checkAll7x7Images2(uint8_t *hash, uint64_t first, uint64_t stop, int id)
 //printf("hashed out h=%d\n", h);
 
     /* Report speed info periodically. */
-      if ( (G&0xFFFFFFFF) == 0) {
+      if ( (G&0x0FFFFFFF) == 0) { // 0xFFFFFFFF
         t1 = sTime();
         itsPerSecond = (G-first)/(t1-t0);
         timeLeft = ((stop-G)/itsPerSecond)/(3600.0*24.0);
@@ -279,7 +280,7 @@ int main(int argC, char *args[])
 { double    t0, t1;
   job_t     job[MAX_CORES];
   uint32_t  k, hashSize;
-  int       i, j, numCores=4;
+  int       i, j, numCores=2; // 4
   pthread_t threads[MAX_CORES];
   int       retVal[MAX_CORES];
   FILE     *fp;
