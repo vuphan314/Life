@@ -85,7 +85,7 @@ void GOL_fast_init()
   for (i=0; i<7; i++)
     g7[i]=0x00;
 
-  GOL = (uint8_t *)malloc(128*128*128*sizeof(uint8_t));  
+  GOL = (uint8_t *)malloc(128*128*128*sizeof(uint8_t));
 
 
   for (r1=0; r1<128; r1++) {
@@ -105,7 +105,7 @@ void GOL_fast_init()
 /******************************************************************/
 inline void GOL_iterate_fast(uint8_t *out, uint8_t *in)
 { uint32_t index;
-  
+
   index = in[0] + (in[1]<<7) + (in[2]<<14);
   out[0] = GOL[index];
   index = (index>>7) + (in[3]<<14);
@@ -122,7 +122,7 @@ inline void GOL_iterate_fast(uint8_t *out, uint8_t *in)
 void GOL_iterate_fast2(uint8_t *out, uint64_t G)
 /* G is a 49 bit integer representing a 7x7 grid. */
 { uint64_t index;
-  
+
   index = G;
   out[0] = GOL[index&0x00000000001FFFFFULL];
   index = (index>>7);
@@ -151,7 +151,7 @@ int checkAll7x7Images2(uint8_t *hash, uint64_t first, uint64_t stop, int id)
   uint8_t  image[5], im0, im1, im2, im3, im4;
   int      i, k;
   double   itsPerSecond, t0, t1, timeLeft;
- 
+
 
   G=first;
   t0 = sTime();
@@ -267,7 +267,7 @@ typedef struct {
 void *launch_job(void *ptr)
 { job_t *J = (job_t *)ptr;
 
-  
+
   checkAll7x7Images2(J->hash, J->start, J->stop, J->id);
   return NULL;
 }
@@ -343,7 +343,7 @@ int main(int argC, char *args[])
   }
 
   fp = fopen("gol5.out", "a");
-  if (fp) 
+  if (fp)
     fprintf(fp, "*********** Run completed **************\n");
   missing = 0;
   for (k=0; k<(0x00000001<<25); k++) {
@@ -372,5 +372,3 @@ int main(int argC, char *args[])
   }
 
 }
-
-
