@@ -319,7 +319,7 @@ int main(int argC, char *args[])
 
   printf("Assigning tasks:\n");
   for (i=0; i<numCores; i++) {
-    printf("CPU %d : grids 0x%llx through 0x%llx\n", i, job[i].start, job[i].stop);
+    printf("CPU %d : grids 0x%lx through 0x%lx\n", i, job[i].start, job[i].stop);
   }
 
   /* Now launch the threads. */
