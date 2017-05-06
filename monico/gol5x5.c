@@ -280,7 +280,7 @@ int main(int argC, char *args[])
 { double    t0, t1;
   job_t     job[MAX_CORES];
   uint32_t  k, hashSize;
-  int       i, j, numCores=2; // 4
+  int       i, j, numCores = atoi(args[1]);
   pthread_t threads[MAX_CORES];
   int       retVal[MAX_CORES];
   FILE     *fp;
