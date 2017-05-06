@@ -1,3 +1,7 @@
-gcc gol5x5.c -lpthread -lm -O4
+BASE=gol5x5
+C=$BASE.c
+EXECUTABLE=$BASE.out
 
-./a.out $1
+gcc -o $EXECUTABLE $C -lpthread -Ofast
+
+./$EXECUTABLE $1
