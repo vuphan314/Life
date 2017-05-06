@@ -103,8 +103,7 @@ void GOL_fast_init()
 
 
 /******************************************************************/
-// inline
-void GOL_iterate_fast(uint8_t *out, uint8_t *in)
+inline void GOL_iterate_fast(uint8_t *out, uint8_t *in)
 { uint32_t index;
 
   index = in[0] + (in[1]<<7) + (in[2]<<14);
@@ -145,7 +144,7 @@ int checkAll7x7Images2(uint8_t *hash, uint64_t first, uint64_t stop, int id)
     will run over all boards G, with first7 <= G < stop7, and
     (i) compute the image I of G,
     (ii) hash out I in the array 'hash' (turn on bit I).
-    'hash' is an array of size 2^25 / 2^3 = 2^{22}.
+    'hash' is an array of size 2^{25} / 2^3 = 2^{22}.
 */
 { uint64_t G, index;
   uint32_t h;
@@ -305,7 +304,7 @@ int main(int argC, char *args[])
 
   t0 = sTime();
 
-  /* Divide the work eqully among available cores. */
+  /* Divide the work equally among available cores. */
   lastBoard =  0x0000000000000001ULL<<49;
   job[0].start = 0;
   job[0].stop = lastBoard/numCores;
