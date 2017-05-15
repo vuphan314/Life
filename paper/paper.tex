@@ -1,4 +1,4 @@
-\documentclass[letterpaper, 17pt]{extarticle}
+\documentclass[letterpaper, 14pt]{extarticle}
 % 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
 
 \usepackage[scale=0.9]{geometry}
@@ -81,10 +81,23 @@ For each $n \in \Zplus$:
 \begin{remark}
 $\lf{n}$ sizes:
 \begin{itemize}
-\item domain: $2^{(n+2)^2}$
-\item codomain: $2^{n^2}$
-\item average fiber: $2^{4(n+1)}$
+\item domain: $D_n = 2^{(n+2)^2}$
+\item codomain: $C_n = 2^{n^2}$
+\item image: $I_n \le C_n$
+\item proportion: $P_n = I_n / C_n \le 1$
+\item average fiber: $D_n / C_n = 2^{4(n+1)}$
 \end{itemize}
+\end{remark}
+
+\begin{remark}
+Let $k \in \Zplus$. Then:
+\begin{align}
+P_{k n} & = \frac{I_{k n}}{C_{k n}} \\
+& = \frac{I_{k n}}{(C_n)^{k^2}} \\
+& \le \frac{{(I_n)}^{k^2}}{(C_n)^{k^2}} \\
+& = \parentheses{\frac{I_n}{C_n}}^{k^2} \\
+& = (P_n)^{k^2}
+\end{align}
 \end{remark}
 
 \begin{definition}
