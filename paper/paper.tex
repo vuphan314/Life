@@ -19,10 +19,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Combinatorics}
+\section{Counting}
 
 \begin{remark}
-case count: precell state $\to$ cell state:
+Case counts (precell state $\to$ cell state):
 \begin{itemize}
 \item $0 \to 1$ $$\binom{8}{3}$$
 \item $0 \to 0$ $$2^8 - \binom{8}{3}$$
@@ -33,24 +33,25 @@ case count: precell state $\to$ cell state:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Game}
+\section{Functions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Cell}
+\subsection{Cell Function}
 
 \begin{definition}
-Life polynomial:
+Polynomial function:
 \begin{itemize}
 \item Let cell $\cell \in \Ft$ and
   neighbors $\neighbors \in \Ft$.
 \item Let polynomial $\lp \in \pr$.
-\item Let polynomial function
+\item Let \textdef{cell function}
   $\pf: \Ft \times \Fte \to \Ft$.
 \end{itemize}
 \end{definition}
 
 \begin{remark}
+Explicit form:
 \begin{dmath*}
 \lp = (\cell + 1) *
 \sum_{i \ne j \ne k, k \ne i}\parentheses
@@ -67,38 +68,46 @@ Life polynomial:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Grid}
+\subsection{Grid Function}
 
 \begin{definition}
 For each $n \in \Zplus$:
 \begin{itemize}
 \item Let set $\sp{n} = \FtZns =
   \set{grid: \Zn \times \Zn \to \Ft}$.
-\item Let function $\lf{n}: \sp{n+2} \to \sp{n}$.
+\item Let \textdef{grid function} $\lf{n}: \sp{n+2} \to \sp{n}$.
 \end{itemize}
 \end{definition}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Cardinalities}
+
 \begin{remark}
-$\lf{n}$ sizes:
+Cardinalities related to $\lf{n}$:
 \begin{itemize}
 \item domain: $D_n = 2^{(n+2)^2}$
 \item codomain: $C_n = 2^{n^2}$
 \item image: $I_n \le C_n$
 \item proportion: $P_n = I_n / C_n \le 1$
-\item average fiber: $D_n / C_n = 2^{4(n+1)}$
+\item average fiber: $D_n / I_n \ge D_n / C_n = 2^{4(n+1)}$
 \end{itemize}
 \end{remark}
 
-\begin{remark}
+\begin{remark}[joining small grids into a big grid]
 Let $k \in \Zplus$. Then:
-\begin{align}
-P_{k n} & = \frac{I_{k n}}{C_{k n}} \\
-& = \frac{I_{k n}}{(C_n)^{k^2}} \\
-& \le \frac{{(I_n)}^{k^2}}{(C_n)^{k^2}} \\
-& = \parentheses{\frac{I_n}{C_n}}^{k^2} \\
-& = (P_n)^{k^2}
-\end{align}
+$$P_{k n} = \frac{I_{k n}}{C_{k n}}
+= \frac{I_{k n}}{(C_n)^{k^2}}
+\le \frac{{(I_n)}^{k^2}}{(C_n)^{k^2}}
+= \parentheses{\frac{I_n}{C_n}}^{k^2}
+= (P_n)^{k^2}$$
+If $P_n < 1$ for some $n$,
+then $\lim_{k \to \infty} P_{kn} = 0$.
 \end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Surjectivity}
 
 \begin{definition}
 Let proposition $\cs{n}$ be: $\lf{n}$ is surjective.
@@ -109,11 +118,11 @@ For each $n \in \set{1, 2, 3, 4}$, $\cs{n}$ is true.
 \end{remark}
 
 \begin{remark}
-Dr. Monico: $\cs5$ is true (5 days).
+\cm's code: $\cs5$ is true (5-day runtime).
 \end{remark}
 
 \begin{remark}
-Vu: $\cs6$ is \emph{likely} true \\
+Vu's code: $\cs6$ is \emph{likely} true \\
 (1\% complete, 10 days elapsed, 3 years left).
 \end{remark}
 
