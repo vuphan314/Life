@@ -4,7 +4,7 @@
 
 ## links
 - [releases][releases]
-- [Dr. Monico's code][monico]
+- [Dr. Monico's files][monico]
 
 <!--------------------------------------------------------->
 
