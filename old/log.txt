@@ -15,7 +15,7 @@ grid edge      |proportion     |time (secs)
 3              |   0.3847656250|   0.0526430607
 4              |   0.1779022217|  11.6375138760
 
-superly # arbitrary boundary
+# arbitrary boundary (superly)
 grid edge      |proportion     |time (secs)
 1              |   1.0000000000|   0.0560016632
 2              |   1.0000000000|  12.0314927101
