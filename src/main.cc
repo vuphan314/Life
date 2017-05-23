@@ -7,9 +7,9 @@ int main(int argc, const char *argv[]) {
     Space space(atoi(argv[1]));
     setRULES();
 
-    space.inspectPreImage();
+    // space.inspectPreImage();
 
-    // space.isEachGrid4tupleJoinable();
+    space.isEachGrid4tupleJoinable();
 
     // space.isEachGrid3tupleJoinable();
 
